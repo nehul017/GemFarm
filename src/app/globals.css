@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--font-inter);
+}
+
+.animation-time {
+  @apply transition ease-in-out duration-300;
+}
+
+.card-background {
+  background: linear-gradient(180deg, #E5F8F6 0%, #F1F1E6 100%);
+}
