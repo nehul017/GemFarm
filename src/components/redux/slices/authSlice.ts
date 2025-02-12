@@ -1,0 +1,178 @@
+// Import necessary functions
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../../utils/axiosInstance";
+
+interface AuthState {
+  user: any;
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: AuthState = {
+  user: null,
+  loading: false,
+  error: null,
+};
+
+// Async Thunk for Login
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async (
+    credentials: { email: string; password: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axiosInstance.post("/auth/login", credentials);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Login failed");
+    }
+  }
+);
+
+// Async Thunk for Signup
+export const signupUser = createAsyncThunk(
+  "auth/signupUser",
+  async (
+    userData: { name: string; email: string; password: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axiosInstance.post("/auth/signup", userData);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Signup failed");
+    }
+  }
+);
+
+// Async Thunk for Fetching User Profile
+export const fetchUserProfile = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("/auth/get-profile");
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch profile"
+      );
+    }
+  }
+);
+
+// Async Thunk for Forgot Password
+export const forgotPassword = createAsyncThunk(
+  "auth/forgotPassword",
+  async (credentials: { email: string }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        "/auth/forgot-password",
+        credentials
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log("error=-====>", error.response?.data.message);
+      return rejectWithValue(
+        error.response?.data?.message || "Forgot Password failed"
+      );
+    }
+  }
+);
+
+// Async Thunk for Reset Password
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (
+    credentials: { token: string; newPassword: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axiosInstance.put(
+        "/auth/reset-password",
+        credentials
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "Password reset failed"
+      );
+    }
+  }
+);
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(signupUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(signupUser.fulfilled, (state, action) => {
+        console.log("action.payload", action.payload);
+        state.loading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(signupUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // Reset Password Cases
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+  },
+});
+
+export const { logout } = authSlice.actions;
+export default authSlice.reducer;

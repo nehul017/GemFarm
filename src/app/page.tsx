@@ -1,6 +1,7 @@
 import Button from "@/components/common/button";
 import LoginBanner from "@/components/sections/loginBanner";
 import Link from "next/link";
+import Image from "next/image";
 const Vector = '/assets/icons/vec.png';
 export default function Home() {
   return (
@@ -10,7 +11,7 @@ export default function Home() {
       </div>
       <div className="h-[calc(100vh-381px)] relative flex items-center">
         <div className="absolute left-[50%] top-[-40px] translate-x-[-50%]">
-          <img src={Vector} alt="Vector"/>
+          <Image src={Vector} alt="Vector" width={100} height={100} priority />
         </div>
         <div className="px-5">
           <h1 className="text-[40px] leading-[50px] text-white mb-8 font-heading text-center">
