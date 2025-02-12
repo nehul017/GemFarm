@@ -11,6 +11,7 @@ const NFTFarmImage = "/assets/images/NFT.jpg";
 
 
 import moment from "moment";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 export default function page() {
@@ -23,7 +24,12 @@ export default function page() {
   }, [dispatch]);
 
   if (loading) return <p>Loading...</p>;
-  console.log("user", user);
+    const router = useRouter();
+  
+  const onClickFarm = () => {
+    router.push("/watch-list");
+  }
+
 
   return (
     <div>
@@ -53,7 +59,8 @@ export default function page() {
         <div className="mt-[-100px] px-5">
           {/* {[...Array(10)].map(() => {
             return ( */}
-          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer">
+            
+          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer" onClick={onClickFarm}>
             <img
               src={FarmImage}
               alt="FarmImage"
@@ -77,7 +84,7 @@ export default function page() {
             </div>
           </div>
 
-          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer">
+          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer" onClick={onClickFarm}>
             <img
               src={TomatoesFarmImage}
               alt="FarmImage"
@@ -101,7 +108,7 @@ export default function page() {
             </div>
           </div>
 
-          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer">
+          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer" onClick={onClickFarm}>
             <img
               src={NFTFarmImage}
               alt="FarmImage"

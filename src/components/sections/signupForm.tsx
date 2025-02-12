@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { AppDispatch } from "../../components/redux/store";
+import { AppDispatch, RootState } from "../../components/redux/store";
 import { signupUser } from "../../components/redux/slices/authSlice";
 import Input from "../common/Input";
 import Button from "../common/button";
@@ -16,6 +16,8 @@ const CloseEyeIcon = "/assets/icons/eye-crossed.svg";
 export default function SignupForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [showPassword, setShowPassword] = useState(true);
+  const { loading } = useSelector((state: RootState) => state.auth);
+
   const router = useRouter();
 
   const {
@@ -66,7 +68,7 @@ export default function SignupForm() {
             />
           </div>
           <div className="pt-[30px]">
-            <Button green text="Sign Up" type="submit" />
+            <Button green text="Sign Up" type="submit"  disabled={loading} />
           </div>
           <div className="absolute bottom-5 w-full left-0">
             <div className="px-5">

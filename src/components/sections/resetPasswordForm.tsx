@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AppDispatch } from "../../components/redux/store";
+import { AppDispatch, RootState } from "../../components/redux/store";
 import { resetPassword } from "../../components/redux/slices/authSlice";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/button";
@@ -20,6 +20,7 @@ export default function ResetPasswordForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [showPassword, setShowPassword] = useState(true);
   const router = useRouter();
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   const {
     register,
@@ -72,7 +73,7 @@ export default function ResetPasswordForm() {
           />
         </div>
         <div className="pt-[30px]">
-          <Button green text="Send OTP" type="submit" />
+          <Button green text="Send OTP" type="submit" disabled={loading} />
         </div>
       </form>
 

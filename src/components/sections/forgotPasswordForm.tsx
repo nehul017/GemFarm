@@ -1,12 +1,12 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AppDispatch } from "../../components/redux/store";
+import { AppDispatch, RootState } from "../../components/redux/store";
 import { forgotPassword } from "../../components/redux/slices/authSlice";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/button";
@@ -14,6 +14,8 @@ import { forgotPasswordFormSchema } from "../utils/validations/authValidation";
 
 export default function ForgotPasswordForm() {
   const dispatch = useDispatch<AppDispatch>();
+  const { loading } = useSelector((state: RootState) => state.auth);
+
   const router = useRouter();
 
   const {
@@ -56,7 +58,7 @@ export default function ForgotPasswordForm() {
           />
         </div>
         <div className="pt-[30px]">
-          <Button green text="Send OTP" type="submit" />
+          <Button green text="Send OTP" type="submit" disabled={loading}/>
         </div>
       </form>
 

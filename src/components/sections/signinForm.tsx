@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { AppDispatch } from "../../components/redux/store";
+import { AppDispatch, RootState } from "../../components/redux/store";
 import { loginUser } from "../../components/redux/slices/authSlice";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/button";
@@ -18,6 +18,7 @@ export default function SigninForm() {
   const [showPassword, setShowPassword] = useState(true);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   const {
     register,
@@ -92,7 +93,7 @@ export default function SigninForm() {
         </div>
 
         <div className="pt-[30px]">
-          <Button green text="Sign In" type="submit" />
+          <Button green text="Sign In" type="submit" disabled={loading} />
         </div>
       </form>
 
