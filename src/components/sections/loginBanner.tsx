@@ -1,10 +1,18 @@
-import Image from 'next/image';
-import React from 'react'
-const LoginImage = '/assets/images/login-banner.png';
-export default function LoginBanner() {
+import Image from "next/image";
+import React from "react";
+
+const LoginBanner = () => {
   return (
-    <div className='h-full relative'>
-      <Image src={LoginImage} className='h-full w-full' alt='LoginImage' layout='fill' />
+    <div className="h-full relative">
+      <Image
+        src="/assets/images/login-banner.png" // ✅ Ensure the image is in `public/assets/images/`
+        alt="Login Image"
+        fill // ✅ Replaces `layout="fill"`
+        className="object-cover" // ✅ Ensures the image covers the entire container
+        priority // ✅ Loads image faster
+      />
     </div>
-  )
-}
+  );
+};
+
+export default LoginBanner;
