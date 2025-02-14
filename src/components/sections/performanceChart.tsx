@@ -24,6 +24,19 @@ export default function PerformanceChart() {
 
   const timeRanges = ["1D", "1W", "1M", "1Y", "All"];
 
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-1 shadow-lg rounded-lg border border-gray-100">
+          <p className="text-sm font-semibold text-gray-900">
+            ${payload[0].value.toLocaleString()}
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className=" bg-white ">
       <div className="max-w-md mx-auto">
@@ -32,6 +45,11 @@ export default function PerformanceChart() {
             <AreaChart
               data={data}
               margin={{ top: 10, right: -24, left: 20, bottom: 0 }}
+              onMouseMove={(e) => {
+                if (e.isTooltipActive) {
+                  // You can add additional hover effects here if needed
+                }
+              }}
             >
               <defs>
                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
@@ -55,13 +73,27 @@ export default function PerformanceChart() {
                 domain={["auto", "auto"]}
                 tickFormatter={(value) => `${value / 1000}K`}
               />
-              <Tooltip />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{
+                  stroke: "#22C55E",
+                  strokeWidth: 2,
+                  strokeDasharray: "5 5",
+                }}
+              />
               <Area
-                type="monotone"
-                dataKey="value"
-                stroke="#22C55E"
-                fillOpacity={1}
-                fill="url(#colorValue)"
+              type="monotone"
+              dataKey="value"
+              stroke="#22C55E"
+              strokeWidth={2}
+              fillOpacity={1}
+              fill="url(#colorValue)"
+              activeDot={{
+                r: 6,
+                fill: "#22C55E",
+                stroke: "#fff",
+                strokeWidth: 2,
+              }}
               />
             </AreaChart>
           </ResponsiveContainer>

@@ -13,9 +13,10 @@ export default function Header() {
   }, []);
 
   const handleLeftIconClick = () => {
-    if (previousPage && previousPage.includes(window.location.origin)) {
-      router.back(); // Go back if the previous page is from the same site
-    }
+    // if (previousPage && previousPage.includes(window.location.origin)) {
+      window.history.back()
+      // router.back(); // Go back if the previous page is from the same site
+    // }
   };
 
   return (

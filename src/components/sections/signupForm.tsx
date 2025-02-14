@@ -89,7 +89,7 @@ export default function SignupForm() {
                 href="/signin"
                 className="text-green font-semibold cursor-pointer"
               >
-                Sing in
+                Sign in
               </Link>
             </p>
           </div>
