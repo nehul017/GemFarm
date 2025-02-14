@@ -10,6 +10,7 @@ import { loginUser } from "../../components/redux/slices/authSlice";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/button";
 import { loginSchema } from "../utils/validations/authValidation";
+import { toast, ToastContainer } from "react-toastify";
 const EyeIcon = "/assets/icons/eye-open.svg";
 const CloseEyeIcon = "/assets/icons/eye-crossed.svg";
 
@@ -44,17 +45,24 @@ export default function SigninForm() {
     } else {
       localStorage.removeItem("rememberedEmail");
     }
+    try {
+      const resultAction = await dispatch(loginUser(data));
+      if (loginUser.fulfilled.match(resultAction)) {
+        localStorage.setItem("user", JSON.stringify(resultAction.payload.user));
+        localStorage.setItem("authToken", resultAction.payload.token);
 
-    const resultAction = await dispatch(loginUser(data));
-    if (loginUser.fulfilled.match(resultAction)) {
-      localStorage.setItem("user", JSON.stringify(resultAction.payload.user));
-      localStorage.setItem("authToken", resultAction.payload.token);
-
-      router.push("/home");
+        router.push("/home");
+      } else {
+        const errorMessage = resultAction.payload || "Something went wrong!";
+        toast.error(errorMessage as string);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
   return (
     <div className="pt-[30px] px-5">
+      <ToastContainer position="top-right" autoClose={3000} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="pb-[18px]">
           <Input
