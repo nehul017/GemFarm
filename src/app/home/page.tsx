@@ -1,19 +1,21 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+
 import Searchbar from "@/components/common/searchbar";
 import { fetchUserProfile } from "@/components/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/components/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import NotificationIcon from "@/icons/notificationIcon";
+
 const FarmImage = "/assets/images/farm.png";
 const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
 const NFTFarmImage = "/assets/images/NFT.jpg";
 
 
 
-import moment from "moment";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 export default function page() {
   const dispatch = useDispatch<AppDispatch>();
   const currentDate = moment().format("dddd, DD MMMM YYYY");
