@@ -15,8 +15,6 @@ export default function Header() {
   const handleLeftIconClick = () => {
     if (previousPage && previousPage.includes(window.location.origin)) {
       router.back(); // Go back if the previous page is from the same site
-    } else {
-      router.push("/serious"); // Otherwise, navigate to /serious
     }
   };
 
