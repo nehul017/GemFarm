@@ -56,7 +56,7 @@ export default function SignupForm() {
             label="Name"
             placeholder="Enter your name"
             {...register("userName")}
-            error={errors.username?.message} // Pass the error for username
+            error={errors.userName?.message} // Pass the error for username
           />
         </div>
         <div className="pb-[18px]">
