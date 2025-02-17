@@ -1,5 +1,6 @@
 "use client";
 import Tab from "@/components/common/tab";
+import Header from "@/components/layout/header";
 import PerformanceChart from "@/components/sections/performanceChart";
 import ROIChart from "@/components/sections/ROIChart";
 import GrowthIcon from "@/icons/growthIcon";
@@ -23,6 +24,7 @@ export default function page() {
 
   return (
     <div>
+      <Header isNotificationIcon={true}/>
       <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <Tab

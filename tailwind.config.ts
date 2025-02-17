@@ -21,7 +21,7 @@ export default {
         lineargradient:'linear-gradient(180deg, #E5F8F6 0%, #F1F1E6 100%)',
       },
       fontFamily: {
-        heading: 'var(--font-paytone)'
+        heading: 'Arial'
       },
       boxShadow: {
         md:'0px 0px 6px 0px rgba(113, 128, 150, 0.16)',

@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 export default function WatchListChart() {
   const [selectedRange, setSelectedRange] = useState("1W");
-  const currentValue = 380108.0;
+  const currentValue = 380108.12;
   const percentageChange = -1.5;
   const changeValue = 0.35;
 
