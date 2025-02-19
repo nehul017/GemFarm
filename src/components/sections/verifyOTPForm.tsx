@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,12 +17,20 @@ import Button from "../common/button";
 export default function VerifyOTPForm() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.auth);
-
   const router = useRouter();
+
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [email, setEmail] = useState<string | null>(null); // Store email safely
+
+  // Load email from sessionStorage on client
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setEmail(sessionStorage.getItem("email") || null);
+    }
+  }, []);
 
   useEffect(() => {
     startTimer();
@@ -32,13 +41,11 @@ export default function VerifyOTPForm() {
 
   const maskEmail = (email: string | null) => {
     if (!email) return ""; // Handle null or empty string safely
-  
     const [localPart, domain] = email.split("@");
-    if (!domain || localPart.length <= 2) return email; // Handle edge cases
-  
-    const maskedLocal = `${localPart.slice(0, 2)}******${localPart.slice(-2)}`;
-    return `${maskedLocal}@${domain}`;
+    if (!domain || localPart.length <= 2) return email;
+    return `${localPart.slice(0, 2)}******${localPart.slice(-2)}@${domain}`;
   };
+
   const startTimer = () => {
     setCanResend(false);
     setTimer(30);
@@ -55,22 +62,17 @@ export default function VerifyOTPForm() {
   };
 
   const handleResendCode = async () => {
-    if (!canResend) return;
-    // Add your resend OTP logic here
-    if (sessionStorage.getItem("email")) {
-      try {
-        const resultAction = await dispatch(
-          forgotPassword({ email: sessionStorage.getItem("email") })
-        );
-        if (forgotPassword.fulfilled.match(resultAction)) {
-          toast.success("OTP sent successfully! Check your email.");
-        } else {
-          const errorMessage = resultAction.payload || "Something went wrong!";
-          toast.error(errorMessage as string);
-        }
-      } catch (error: any) {
-        toast.error(error.message);
+    if (!canResend || !email) return;
+    try {
+      const resultAction = await dispatch(forgotPassword({ email }));
+      if (forgotPassword.fulfilled.match(resultAction)) {
+        toast.success("OTP sent successfully! Check your email.");
+      } else {
+        const errorMessage = resultAction.payload || "Something went wrong!";
+        toast.error(errorMessage as string);
       }
+    } catch (error: any) {
+      toast.error(error.message);
     }
     startTimer();
   };
@@ -78,7 +80,7 @@ export default function VerifyOTPForm() {
   const {
     register,
     handleSubmit,
-    setValue, // Add this
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(OTPVerificationFormSchema),
@@ -86,11 +88,15 @@ export default function VerifyOTPForm() {
 
   const onSubmit = async (data: any) => {
     try {
-      data.email = sessionStorage.getItem("email");
+      if (!email) {
+        toast.error("Email not found. Please restart the process.");
+        return;
+      }
+      data.email = email;
       const resultAction = await dispatch(verifyOTP(data));
 
       if (verifyOTP.fulfilled.match(resultAction)) {
-        toast.success("OTP sent successfully! Check your email.");
+        toast.success("OTP verified successfully!");
         router.push("/reset-password");
       } else {
         const errorMessage = resultAction.payload || "Something went wrong!";
@@ -103,13 +109,12 @@ export default function VerifyOTPForm() {
 
   return (
     <div className="pt-[30px] px-5">
-      {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={3000} />
       <h2 className="text-2xl font-semibold text-gray-900 mb-6">
         OTP Verification
       </h2>
       <p className="text-[13px] text-gray-600 mb-8">
-        Enter OTP Code sent to {maskEmail(sessionStorage.getItem("email"))}
+        Enter OTP Code sent to {maskEmail(email)}
       </p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -157,10 +162,7 @@ export default function VerifyOTPForm() {
       </form>
       <div className="mt-6 text-center">
         <span className="text-gray-600">Back to </span>
-        <Link
-          href="/signin"
-          className="text-green font-semibold cursor-pointer"
-        >
+        <Link href="/signin" className="text-green font-semibold cursor-pointer">
           Sign In
         </Link>
       </div>
