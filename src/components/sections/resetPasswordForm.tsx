@@ -18,7 +18,8 @@ const CloseEyeIcon = "/assets/icons/eye-crossed.svg";
 
 export default function ResetPasswordForm() {
   const dispatch = useDispatch<AppDispatch>();
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
   const { loading } = useSelector((state: RootState) => state.auth);
 
@@ -31,12 +32,19 @@ export default function ResetPasswordForm() {
   });
 
   const onSubmit = async (data: any) => {
+    if (data.password !== data.confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
     try {
+      data.email = sessionStorage.getItem("email");
       const resultAction = await dispatch(resetPassword(data));
 
       if (resetPassword.fulfilled.match(resultAction)) {
         toast.success("Password reset successful!");
-        router.push("/signin");
+        setTimeout(() => {
+          router.push("/signin");
+        }, 1000);
       } else {
         console.log("resultAction.error?.message", resultAction.payload);
         const errorMessage = resultAction.payload || "Something went wrong!";
@@ -51,16 +59,10 @@ export default function ResetPasswordForm() {
     <div className="pt-[30px] px-5">
       {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={3000} />
-
+      <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+        Set Your Password
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="pb-[18px]">
-          <Input
-            label="OTP"
-            placeholder="Enter your OTP"
-            {...register("otp")}
-            error={errors.otp?.message}
-          />
-        </div>
         <div className="pb-3">
           <Input
             label="Password"
@@ -72,8 +74,24 @@ export default function ResetPasswordForm() {
             error={errors.password?.message}
           />
         </div>
+        <div className="pb-3">
+          <Input
+            label="Confirm Password"
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            icon={showConfirmPassword ? EyeIcon : CloseEyeIcon}
+            onIconClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle password visibility
+            {...register("confirmPassword")}
+            error={errors.confirmPassword?.message}
+          />
+        </div>
         <div className="pt-[30px]">
-          <Button green text="Send OTP" type="submit" disabled={loading} />
+          <Button
+            green
+            text="Set New Password"
+            type="submit"
+            disabled={loading}
+          />
         </div>
       </form>
 

@@ -64,7 +64,7 @@ export const fetchUserProfile = createAsyncThunk(
 // Async Thunk for Forgot Password
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
-  async (credentials: { email: string }, { rejectWithValue }) => {
+  async (credentials: { email: string | null }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(
         "/auth/forgot-password",
@@ -72,7 +72,6 @@ export const forgotPassword = createAsyncThunk(
       );
       return response.data;
     } catch (error: any) {
-      console.log("error=-====>", error.response?.data.message);
       return rejectWithValue(
         error.response?.data?.message || "Forgot Password failed"
       );
@@ -84,7 +83,7 @@ export const forgotPassword = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (
-    credentials: { token: string; newPassword: string },
+    credentials: { password: string; confirmPassword: string },
     { rejectWithValue }
   ) => {
     try {
@@ -96,6 +95,24 @@ export const resetPassword = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Password reset failed"
+      );
+    }
+  }
+);
+
+// Async Thunk for the OTP verification
+export const verifyOTP = createAsyncThunk(
+  "auth/verifyOTP",
+  async (
+    credentials: { otp: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axiosInstance.post("/auth/verify-otp", credentials);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "OTP verification failed"
       );
     }
   }
@@ -128,7 +145,6 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(signupUser.fulfilled, (state, action) => {
-        console.log("action.payload", action.payload);
         state.loading = false;
         state.user = action.payload.user;
       })
@@ -168,6 +184,18 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // Verify OTP Cases
+      .addCase(verifyOTP.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyOTP.fulfilled,(state)=>{
+        state.loading = false;
+      })
+      .addCase(verifyOTP.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

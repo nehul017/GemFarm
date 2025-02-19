@@ -48,10 +48,6 @@ export const forgotPasswordFormSchema = Yup.object().shape({
 });
 
 export const resetPasswordFormSchema = Yup.object().shape({
-  otp: Yup.string()
-    .trim()
-    .required("OTP is required")
-    .matches(/^\d{4}$/, "OTP must be a 4-digit number"),
   password: Yup.string()
     .trim()
     .required("Password is required")
@@ -60,4 +56,20 @@ export const resetPasswordFormSchema = Yup.object().shape({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
       "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
     ),
+    confirmPassword: Yup.string()
+    .trim()
+    .required("Confirm Password is required")
+    .min(8, "Password must be at least 8 characters long")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+    ),
+});
+
+
+export const OTPVerificationFormSchema = Yup.object().shape({
+  otp: Yup
+    .string()
+    .required("OTP is required")
+    .matches(/^\d{6}$/, "OTP must be a 6-digit number"),
 });

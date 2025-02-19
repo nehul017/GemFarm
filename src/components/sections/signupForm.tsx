@@ -16,7 +16,7 @@ const CloseEyeIcon = "/assets/icons/eye-crossed.svg";
 
 export default function SignupForm() {
   const dispatch = useDispatch<AppDispatch>();
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const { loading } = useSelector((state: RootState) => state.auth);
 
   const router = useRouter();
@@ -30,6 +30,7 @@ export default function SignupForm() {
   });
 
   const onSubmit = async (data: any) => {
+    
     try {
       const resultAction = await dispatch(signupUser(data));
       if (signupUser.fulfilled.match(resultAction)) {
@@ -37,7 +38,6 @@ export default function SignupForm() {
         localStorage.setItem("authToken", resultAction.payload.token);
         router.push("/home");
       } else {
-        console.log("resultAction.error?.message", resultAction.payload);
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);
       }

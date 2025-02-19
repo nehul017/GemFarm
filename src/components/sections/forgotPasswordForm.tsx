@@ -31,10 +31,10 @@ export default function ForgotPasswordForm() {
       const resultAction = await dispatch(forgotPassword(data));
 
       if (forgotPassword.fulfilled.match(resultAction)) {
+        sessionStorage.setItem("email", data.email);
         toast.success("OTP sent successfully! Check your email.");
-        router.push("/reset-password");
+        router.push("/verify-otp");
       } else {
-        console.log("resultAction.error?.message", resultAction.payload);
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);
       }
@@ -47,7 +47,9 @@ export default function ForgotPasswordForm() {
     <div className="pt-[30px] px-5">
       {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={3000} />
-
+      <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+        Reset Your Password
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="pb-[18px]">
           <Input
@@ -58,22 +60,17 @@ export default function ForgotPasswordForm() {
           />
         </div>
         <div className="pt-[30px]">
-          <Button green text="Send OTP" type="submit" disabled={loading}/>
+          <Button green text="Continue" type="submit" disabled={loading} />
         </div>
       </form>
-
-      <div className="absolute bottom-5 w-full left-0">
-        <div className="px-5">
-          <p className="text-sm font-normal text-gray800 text-center">
-            Don’t have an account?{" "}
-            <Link
-              href="/signup"
-              className="text-green font-semibold cursor-pointer"
-            >
-              Sign up
-            </Link>
-          </p>
-        </div>
+      <div className="mt-6 text-center">
+        <span className="text-gray-600">Back to </span>
+        <Link
+          href="/signin"
+          className="text-green font-semibold cursor-pointer"
+        >
+          Sign In
+        </Link>
       </div>
     </div>
   );

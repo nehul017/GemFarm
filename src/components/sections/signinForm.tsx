@@ -16,7 +16,7 @@ const CloseEyeIcon = "/assets/icons/eye-crossed.svg";
 
 export default function SigninForm() {
   const dispatch = useDispatch<AppDispatch>();
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
   const { loading } = useSelector((state: RootState) => state.auth);
