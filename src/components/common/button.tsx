@@ -1,20 +1,24 @@
+import React from "react";
+
+interface ButtonProps {
+  text?: string;
+  green?: boolean;
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
+  children?: React.ReactNode;
+}
+
 export default function Button({
   text,
   green,
   disabled,
   type,
-}: {
-  text: string;
-  green?: boolean;
-  disabled?: boolean;
-  type?: "button" | "submit" | "reset";
-}) {
+  children,
+}: ButtonProps) {
   return (
     <button
       className={`text-sm text-white w-full animation-time font-semibold p-4 rounded-full 
-          ${
-            disabled ? "bg-gray-400 cursor-not-allowed" : ""
-          }  // Style when button is disabled
+          ${disabled ? "bg-gray-400 cursor-not-allowed" : ""}
           ${
             green
               ? "bg-primary border-primary hover:border-primary"
@@ -25,7 +29,7 @@ export default function Button({
       type={type} // Add the type prop here
       disabled={disabled} // Disable button functionality
     >
-      {text}
+      {children ? children : text}
     </button>
   );
 }

@@ -6,7 +6,7 @@ export const loginSchema = Yup.object().shape({
     .required("Email is required")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Email must be a valid email address"
+      "Enter a valid email."
     ),
   password: Yup.string()
     .trim()
@@ -25,7 +25,7 @@ export const signupSchema = Yup.object().shape({
     .required("Email is required")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Email must be a valid email address"
+      "Enter a valid email."
     ),
   password: Yup.string()
     .trim()
@@ -43,7 +43,7 @@ export const forgotPasswordFormSchema = Yup.object().shape({
     .required("Email is required")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Email must be a valid email address"
+      "Enter a valid email."
     ),
 });
 

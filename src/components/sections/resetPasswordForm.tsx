@@ -25,6 +25,7 @@ export default function ResetPasswordForm() {
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -33,7 +34,7 @@ export default function ResetPasswordForm() {
 
   const onSubmit = async (data: any) => {
     if (data.password !== data.confirmPassword) {
-      toast.error("Passwords do not match!");
+      toast.error("Whoops! It looks like your passwords didn't match!");
       return;
     }
     try {
@@ -58,7 +59,7 @@ export default function ResetPasswordForm() {
   return (
     <div className="pt-[30px] px-5">
       {/* Toast Container */}
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={5000} />
       <h2 className="text-2xl font-semibold text-gray-900 mb-6">
         Set Your Password
       </h2>
@@ -67,10 +68,13 @@ export default function ResetPasswordForm() {
           <Input
             label="Password"
             type={showPassword ? "text" : "password"}
-            placeholder="Enter your password"
+            placeholder="Enter password"
             icon={showPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowPassword(!showPassword)} // Toggle password visibility
-            {...register("password")}
+            {...register("password", {
+              onChange: (e) =>
+                setValue("password", e.target.value.replace(/\s/g, "")),
+            })}
             error={errors.password?.message}
           />
         </div>
@@ -78,10 +82,13 @@ export default function ResetPasswordForm() {
           <Input
             label="Confirm Password"
             type={showConfirmPassword ? "text" : "password"}
-            placeholder="Enter your password"
+            placeholder="Enter confirm password"
             icon={showConfirmPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle password visibility
-            {...register("confirmPassword")}
+            {...register("confirmPassword", {
+              onChange: (e) =>
+                setValue("confirmPassword", e.target.value.replace(/\s/g, "")),
+            })}
             error={errors.confirmPassword?.message}
           />
         </div>
@@ -91,7 +98,30 @@ export default function ResetPasswordForm() {
             text="Set New Password"
             type="submit"
             disabled={loading}
-          />
+          >
+            {loading ? (
+              <div className="flex items-center justify-center">
+                Setting New Password...
+                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  ></path>
+                </svg>
+              </div>
+            ) : (
+              "Set New Password"
+            )}
+          </Button>
         </div>
       </form>
 

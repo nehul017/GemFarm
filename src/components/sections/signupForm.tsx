@@ -23,6 +23,7 @@ export default function SignupForm() {
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -30,9 +31,13 @@ export default function SignupForm() {
   });
 
   const onSubmit = async (data: any) => {
-    
+    const trimmedData = {
+      userName: data.userName.trim(),
+      email: data.email.trim(),
+      password: data.password.trim(),
+    };
     try {
-      const resultAction = await dispatch(signupUser(data));
+      const resultAction = await dispatch(signupUser(trimmedData));
       if (signupUser.fulfilled.match(resultAction)) {
         localStorage.setItem("user", JSON.stringify(resultAction.payload.user));
         localStorage.setItem("authToken", resultAction.payload.token);
@@ -63,7 +68,10 @@ export default function SignupForm() {
           <Input
             label="Email ID"
             placeholder="Enter your email"
-            {...register("email")}
+            {...register("email", {
+              onChange: (e) =>
+                setValue("email", e.target.value.trim().toLowerCase()),
+            })}
             error={errors.email?.message} // Pass the error for email
           />
         </div>
@@ -74,7 +82,10 @@ export default function SignupForm() {
             placeholder="Enter your password"
             icon={showPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowPassword(!showPassword)} // Toggle password visibility
-            {...register("password")}
+            {...register("password", {
+              onChange: (e) =>
+                setValue("password", e.target.value.replace(/\s/g, "")),
+            })}
             error={errors.password?.message}
           />
         </div>

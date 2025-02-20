@@ -22,6 +22,7 @@ export default function VerifyOTPForm() {
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(30);
   const [canResend, setCanResend] = useState(false);
+  const [isResending, setIsResending] = useState(false); // New state for loader text
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [email, setEmail] = useState<string | null>(null); // Store email safely
 
@@ -63,6 +64,10 @@ export default function VerifyOTPForm() {
 
   const handleResendCode = async () => {
     if (!canResend || !email) return;
+
+    setOtp("");
+    setValue("otp", "");
+    setIsResending(true); // Show loader text
     try {
       const resultAction = await dispatch(forgotPassword({ email }));
       if (forgotPassword.fulfilled.match(resultAction)) {
@@ -73,8 +78,10 @@ export default function VerifyOTPForm() {
       }
     } catch (error: any) {
       toast.error(error.message);
+    } finally {
+      setIsResending(false);
+      startTimer();
     }
-    startTimer();
   };
 
   const {
@@ -141,28 +148,58 @@ export default function VerifyOTPForm() {
           )}
 
           <div className="text-center mb-2 mt-5">
-            <p className="text-gray-600 mb-2 mt-3">
+            <p className="text-sm font-normal text-gray800 mb-2 mt-3">
               Don&apos;t receive OTP code?
             </p>
             <button
               type="button"
               onClick={handleResendCode}
-              className={`text-[#004D40] font-medium ${
+              className={`text-[#004D40] font-normal ${
                 !canResend
                   ? "opacity-50 cursor-not-allowed"
                   : "hover:text-[#00352C]"
               }`}
-              disabled={!canResend}
+              disabled={!canResend || isResending}
             >
-              {canResend ? "Resend Code" : `Resend code in ${timer}s`}
+              {isResending
+                ? "Sending OTP..."
+                : canResend
+                ? "Resend Code"
+                : `Resend code in ${timer}s`}
             </button>
           </div>
-          <Button green text=" Verify OTP" type="submit" disabled={loading} />
+          <Button green text=" Verify OTP" type="submit" disabled={loading}>
+            {loading && !isResending ? (
+              <div className="flex items-center justify-center">
+                Verifying OTP...
+                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  ></path>
+                </svg>
+              </div>
+            ) : (
+              "Verify OTP"
+            )}
+          </Button>
         </div>
       </form>
       <div className="mt-6 text-center">
-        <span className="text-gray-600">Back to </span>
-        <Link href="/signin" className="text-green font-semibold cursor-pointer">
+        <span className="text-sm font-normal text-gray800 text-center">Back to </span>
+        <Link
+          href="/signin"
+          className="text-green font-semibold cursor-pointer"
+        >
           Sign In
         </Link>
       </div>

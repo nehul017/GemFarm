@@ -21,7 +21,9 @@ export default function Input({
           placeholder={placeholder}
           className={`px-4 w-full border focus:border-primary border-solid ${
             error ? "border-red-500" : "border-borderColor"
-          } rounded-md h-[50px] text-sm outline-none placeholder:text-sm font-normal text-black placeholder:text-gray-500`}
+          } rounded-md h-[50px] text-sm outline-none placeholder:text-sm font-normal text-black placeholder:text-gray-500 ${
+            icon ? "pr-12" : "pr-4"
+          }`}
         />
         {icon && (
           <button

@@ -68,7 +68,10 @@ export default function SigninForm() {
           <Input
             label="Email ID"
             placeholder="Enter your email"
-            {...register("email")}
+            {...register("email", {
+              onChange: (e) =>
+                setValue("email", e.target.value.trim().toLowerCase()),
+            })}
             error={errors.email?.message} // Pass the error for email
           />
         </div>
@@ -80,7 +83,10 @@ export default function SigninForm() {
             placeholder="Enter your password"
             icon={showPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowPassword(!showPassword)} // Toggle password visibility
-            {...register("password")}
+            {...register("password", {
+              onChange: (e) =>
+                setValue("password", e.target.value.replace(/\s/g, "")),
+            })}
             error={errors.password?.message}
           />
         </div>
@@ -96,7 +102,7 @@ export default function SigninForm() {
             href="/forgot-password"
             className="text-sm text-primary font-medium cursor-pointer"
           >
-            Forget Password?
+            Forgot Password?
           </Link>
         </div>
 
