@@ -57,7 +57,8 @@ export default function ForgotPasswordForm() {
             label="Email ID"
             placeholder="Enter your email"
             {...register("email", {
-              onChange: (e) => setValue("email", e.target.value.trim().toLowerCase()),
+              onChange: (e) =>
+                setValue("email", e.target.value.trim().toLowerCase()),
             })}
             error={errors.email?.message}
           />
@@ -88,18 +89,20 @@ export default function ForgotPasswordForm() {
             )}
           </Button>
         </div>
-      </form>
-      <div className="absolute bottom-5 w-full left-0">
-        <div className="mt-6 bottom-5 text-center">
-          <span className="text-sm font-normal text-gray800 text-center">Back to </span>
-          <Link
-            href="/signin"
-            className="text-green font-semibold cursor-pointer"
-          >
-            Sign In
-          </Link>
+        <div className="absolute bottom-5 w-full left-0">
+          <div className="px-5">
+            <p className="text-sm font-normal text-gray800 text-center">
+              Back to{" "}
+              <Link
+                href="/signin"
+                className="text-green font-semibold cursor-pointer"
+              >
+                Sign in
+              </Link>
+            </p>
+          </div>
         </div>
-      </div>
-    </div>  
+      </form>
+    </div>
   );
 }

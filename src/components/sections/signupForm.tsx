@@ -60,7 +60,10 @@ export default function SignupForm() {
           <Input
             label="Name"
             placeholder="Enter your name"
-            {...register("userName")}
+            {...register("userName", {
+              onChange: (e) =>
+                setValue("userName", e.target.value.trim().toLowerCase()),
+            })}
             error={errors.userName?.message} // Pass the error for username
           />
         </div>

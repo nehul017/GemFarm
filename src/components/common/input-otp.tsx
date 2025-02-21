@@ -54,54 +54,46 @@ export const InputOTP = forwardRef<HTMLInputElement, InputOTPProps>(
     }));
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      // Handle digit key presses
       if (/^\d$/.test(e.key)) {
         e.preventDefault();
         const digit = e.key;
-        // Create an array representing each slot.
-        const otpArray = Array.from({ length: maxLength }, (_, i) => value[i] || "");
-        otpArray[activeSlotIndex] = digit; // update the active slot
-        const updatedOtp = otpArray.join("");
-        onChange(updatedOtp);
-        // Move active slot forward if not at end.
-        setActiveSlotIndex((prev) => (prev < maxLength - 1 ? prev + 1 : prev));
-        return;
-      }
-
-      // Handle Backspace: if current slot has a digit, clear it.
-      // Otherwise, move to the previous slot and clear that.
-      if (e.key === "Backspace") {
-        e.preventDefault();
-        const otpArray = Array.from({ length: maxLength }, (_, i) => value[i] || "");
-        if (otpArray[activeSlotIndex]) {
-          otpArray[activeSlotIndex] = "";
-          onChange(otpArray.join(""));
-        } else if (activeSlotIndex > 0) {
-          const newIndex = activeSlotIndex - 1;
-          otpArray[newIndex] = "";
-          onChange(otpArray.join(""));
-          setActiveSlotIndex(newIndex);
-        }
-        return;
-      }
-
-      // Allow navigation with arrow keys.
-      if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        if (activeSlotIndex > 0) {
-          setActiveSlotIndex(activeSlotIndex - 1);
-        }
-        return;
-      }
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
+        const otpArray = value.split("").slice(0, maxLength);
+    
+        otpArray[activeSlotIndex] = digit;
+        onChange(otpArray.join(""));
+    
         if (activeSlotIndex < maxLength - 1) {
           setActiveSlotIndex(activeSlotIndex + 1);
         }
         return;
       }
+    
+      if (e.key === "Backspace") {
+        e.preventDefault();
+        const otpArray = value.split("").slice(0, maxLength);
+    
+        if (otpArray[activeSlotIndex]) {
+          otpArray[activeSlotIndex] = "";
+          onChange(otpArray.join(""));
+        } else if (activeSlotIndex > 0) {
+          otpArray[activeSlotIndex - 1] = "";
+          onChange(otpArray.join(""));
+          setActiveSlotIndex(activeSlotIndex - 1);
+        }
+        return;
+      }
+    
+      if (e.key === "ArrowLeft" && activeSlotIndex > 0) {
+        e.preventDefault();
+        setActiveSlotIndex(activeSlotIndex - 1);
+      }
+    
+      if (e.key === "ArrowRight" && activeSlotIndex < maxLength - 1) {
+        e.preventDefault();
+        setActiveSlotIndex(activeSlotIndex + 1);
+      }
     };
-
+    
     const handleSlotClick = (index:number) => {
       setActiveSlotIndex(index);
       inputRef.current?.focus();
@@ -149,12 +141,14 @@ export const InputOTPSlot = forwardRef<
 >(({ index, className, ...props }, ref) => {
   const { slots, handleSlotClick } = useContext(OTPInputContext);
   const slot = slots[index];
+  console.log('slot', slot)
 
   return (
     <div
       ref={ref}
       className={cn(
-        "w-12 h-12 flex items-center justify-center text-xl font-semibold rounded-lg border border-gray-300 cursor-pointer",
+        "w-12 h-12 flex items-center justify-center text-xl font-semibold rounded-lg border cursor-pointer transition-all",
+        slot.isActive ? "border-green" : "border-gray-300", // Apply green border when active
         className
       )}
       onClick={() => handleSlotClick(index)}
