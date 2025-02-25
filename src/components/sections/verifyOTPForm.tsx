@@ -154,21 +154,24 @@ export default function VerifyOTPForm() {
             <button
               type="button"
               onClick={handleResendCode}
-              className={`text-[#004D40] text-[14px] font-medium leading-[16.94px] tracking-[3%] 
+              className={`text-[#004D40]  font-medium leading-[16.94px] tracking-[3%] 
                 text-center underline decoration-solid 
-                ${
-                  !canResend
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:text-[#00352C]"
-                }`}
+                `}
               disabled={!canResend || isResending}
               style={{ fontFamily: "Inter" }}
             >
+            <p className={`text-sm font-normal mb-2 ${
+                  !canResend
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:text-[#00352C]"
+                }`}>
+
               {isResending
                 ? "Sending OTP..."
                 : canResend
                 ? "Resend Code"
                 : `Resend code in ${timer}s`}
+                </p>
             </button>
           </div>
           <Button green text=" Verify OTP" type="submit" disabled={loading}>
@@ -196,7 +199,7 @@ export default function VerifyOTPForm() {
             )}
           </Button>
         </div>
-        <div className="absolute w-full left-0 mt-6">
+        <div className="absolute w-full bottom-5 left-0 mt-6">
           <div className="px-5">
             <p className="text-sm font-normal text-gray800 text-center">
               Back to{" "}
