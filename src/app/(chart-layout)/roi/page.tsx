@@ -1,5 +1,6 @@
 "use client";
 import Tab from "@/components/common/tab";
+import Header from "@/components/layout/header";
 import PerformanceChart from "@/components/sections/performanceChart";
 import ROIChart from "@/components/sections/ROIChart";
 import GrowthIcon from "@/icons/growthIcon";
@@ -23,6 +24,7 @@ export default function page() {
 
   return (
     <div>
+      <Header isNotificationIcon={true}/>
       <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <Tab
@@ -40,26 +42,30 @@ export default function page() {
               </h2>
               {/* Radio Buttons */}
               <div className="flex items-center gap-5">
-                <div className="flex items-center gap-2">
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
-                    className="w-[18px] h-[18px] m-0 p-0"
+                    className="w-[18px] h-[18px] cursor-pointer appearance-none rounded-full border-2 border-gray-300 checked:border-[#36BA7E] relative
+              before:content-[''] before:block before:w-[10px] before:h-[10px] before:rounded-full before:absolute before:top-1/2 before:left-1/2 
+              before:-translate-x-1/2 before:-translate-y-1/2 checked:before:bg-[#36BA7E]"
                     value="farm"
                     checked={selectedOption === "farm"}
                     onChange={() => setSelectedOption("farm")}
                   />
                   <span className="text-sm font-medium text-black">Farm</span>
-                </div>
-                <div className="flex items-center gap-2">
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
-                    className="w-[18px] h-[18px] m-0 p-0"
+                    className="w-[18px] h-[18px] cursor-pointer appearance-none rounded-full border-2 border-gray-300 checked:border-[#36BA7E] relative
+              before:content-[''] before:block before:w-[10px] before:h-[10px] before:rounded-full before:absolute before:top-1/2 before:left-1/2 
+              before:-translate-x-1/2 before:-translate-y-1/2 checked:before:bg-[#36BA7E]"
                     value="crop"
                     checked={selectedOption === "crop"}
                     onChange={() => setSelectedOption("crop")}
                   />
-                  <span className="text-sm font-medium text-gray800">Crop</span>
-                </div>
+                  <span className="text-sm font-medium text-black">Crop</span>
+                </label>
               </div>
             </div>
             {/* <div className="h-[283px] border border-solid border-borderColor rounded-xl bg-white"></div> */}
@@ -96,9 +102,7 @@ export default function page() {
                     </div>
                   </div>
                   <div className="card-background p-2.5 border border-solid border-borderColor2 rounded-lg">
-                    <p className="text-xs text-gray800 mb-1">
-                      Total Expenses
-                    </p>
+                    <p className="text-xs text-gray800 mb-1">Total Expenses</p>
                     <h4 className="text-lg font-semibold text-black mb-3">
                       $200,000
                     </h4>
@@ -118,9 +122,7 @@ export default function page() {
               {selectedTab === "roi" && (
                 <>
                   <div className="card-background p-2.5 border border-solid border-borderColor2 rounded-lg">
-                    <p className="text-xs text-gray800 mb-1">
-                      Total Income
-                    </p>
+                    <p className="text-xs text-gray800 mb-1">Total Income</p>
                     <h4 className="text-lg font-semibold text-black mb-3">
                       $520,64.00
                     </h4>
@@ -135,9 +137,7 @@ export default function page() {
                     </div>
                   </div>
                   <div className="card-background p-2.5 border border-solid border-borderColor2 rounded-lg">
-                    <p className="text-xs text-gray800 mb-1">
-                      Total Expenses
-                    </p>
+                    <p className="text-xs text-gray800 mb-1">Total Expenses</p>
                     <h4 className="text-lg font-semibold text-black mb-3">
                       $456,99.00
                     </h4>
@@ -152,9 +152,7 @@ export default function page() {
                     </div>
                   </div>
                   <div className="card-background p-2.5 border border-solid border-borderColor2 rounded-lg">
-                    <p className="text-xs text-gray800 mb-1">
-                      Net Profit
-                    </p>
+                    <p className="text-xs text-gray800 mb-1">Net Profit</p>
                     <h4 className="text-lg font-semibold text-black mb-3">
                       $314,54.00
                     </h4>

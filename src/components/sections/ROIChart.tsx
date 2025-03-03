@@ -24,6 +24,27 @@ export default function ROIChart() {
 
   const timeRanges = ["1D", "1W", "1M", "1Y", "All"];
 
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
+          {payload.map((entry: any, index: number) => (
+            <p
+              key={index}
+              className="text-sm font-semibold"
+              style={{ color: entry.color }}
+            >
+              ${entry.value.toLocaleString()}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
+
   return (
     <div className=" bg-white ">
       <div className="max-w-md mx-auto">
@@ -59,13 +80,7 @@ export default function ROIChart() {
                 tickFormatter={(value) => `$${value / 1000}K`}
               />
               <Tooltip
-                formatter={(value: number) => [`$${value.toLocaleString()}`, 'Value']}
-                labelStyle={{ color: '#374151' }}
-                contentStyle={{
-                  backgroundColor: 'white',
-                  border: '1px solid #E5E7EB',
-                  borderRadius: '6px',
-                }}
+                content={<CustomTooltip />}
               />
               <Area
                 type="monotone"
@@ -93,10 +108,10 @@ export default function ROIChart() {
             <button
               key={range}
               onClick={() => setSelectedRange(range)}
-              className={`px-4 py-2 rounded-full text-sm ${
+              className={`px-4 py-2 rounded-full text-sm transition-colors ${
                 selectedRange === range
-                  ? "bg-gray-200 font-medium"
-                  : "text-gray-500"
+                  ? 'bg-gray-200 font-medium'
+                  : 'text-gray-500 hover:bg-gray-100'
               }`}
             >
               {range}

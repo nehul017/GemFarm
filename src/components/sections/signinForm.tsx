@@ -10,12 +10,13 @@ import { loginUser } from "../../components/redux/slices/authSlice";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/button";
 import { loginSchema } from "../utils/validations/authValidation";
+import { toast, ToastContainer } from "react-toastify";
 const EyeIcon = "/assets/icons/eye-open.svg";
 const CloseEyeIcon = "/assets/icons/eye-crossed.svg";
 
 export default function SigninForm() {
   const dispatch = useDispatch<AppDispatch>();
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
   const { loading } = useSelector((state: RootState) => state.auth);
@@ -44,23 +45,33 @@ export default function SigninForm() {
     } else {
       localStorage.removeItem("rememberedEmail");
     }
+    try {
+      const resultAction = await dispatch(loginUser(data));
+      if (loginUser.fulfilled.match(resultAction)) {
+        localStorage.setItem("user", JSON.stringify(resultAction.payload.user));
+        localStorage.setItem("authToken", resultAction.payload.token);
 
-    const resultAction = await dispatch(loginUser(data));
-    if (loginUser.fulfilled.match(resultAction)) {
-      localStorage.setItem("user", JSON.stringify(resultAction.payload.user));
-      localStorage.setItem("authToken", resultAction.payload.token);
-
-      router.push("/home");
+        router.push("/home");
+      } else {
+        const errorMessage = resultAction.payload || "Something went wrong!";
+        toast.error(errorMessage as string);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
   return (
     <div className="pt-[30px] px-5">
+      <ToastContainer position="top-right" autoClose={3000} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="pb-[18px]">
           <Input
             label="Email ID"
             placeholder="Enter your email"
-            {...register("email")}
+            {...register("email", {
+              onChange: (e) =>
+                setValue("email", e.target.value.trim().toLowerCase()),
+            })}
             error={errors.email?.message} // Pass the error for email
           />
         </div>
@@ -72,7 +83,10 @@ export default function SigninForm() {
             placeholder="Enter your password"
             icon={showPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowPassword(!showPassword)} // Toggle password visibility
-            {...register("password")}
+            {...register("password", {
+              onChange: (e) =>
+                setValue("password", e.target.value.replace(/\s/g, "")),
+            })}
             error={errors.password?.message}
           />
         </div>
@@ -88,7 +102,7 @@ export default function SigninForm() {
             href="/forgot-password"
             className="text-sm text-primary font-medium cursor-pointer"
           >
-            Forget Password?
+            Forgot Password?
           </Link>
         </div>
 

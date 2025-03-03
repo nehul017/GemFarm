@@ -1,4 +1,4 @@
-import SearchIcon from '@/icons/searchIcon'
+import SearchIcon from '@/icons/SearchIcon'
 import VoiceIcon from '@/icons/voiceIcon'
 export default function Searchbar() {
   return (

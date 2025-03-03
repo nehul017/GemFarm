@@ -3,8 +3,6 @@ import { store } from "../redux/store";
 import { logout } from "../redux/slices/authSlice";
 
 
-// Ensure the base URL is correctly logged
-console.log("API Base URL:", process.env.NEXT_PUBLIC_BASE_URL);
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL, 
@@ -32,7 +30,6 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      console.warn("Unauthorized! Logging out...");
       
       // Clear auth data
       localStorage.removeItem("authToken");

@@ -20,6 +20,7 @@ export default function ForgotPasswordForm() {
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -31,10 +32,10 @@ export default function ForgotPasswordForm() {
       const resultAction = await dispatch(forgotPassword(data));
 
       if (forgotPassword.fulfilled.match(resultAction)) {
+        sessionStorage.setItem("email", data.email);
         toast.success("OTP sent successfully! Check your email.");
-        router.push("/reset-password");
+        router.push("/verify-otp");
       } else {
-        console.log("resultAction.error?.message", resultAction.payload);
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);
       }
@@ -47,34 +48,61 @@ export default function ForgotPasswordForm() {
     <div className="pt-[30px] px-5">
       {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={3000} />
-
+      <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+        Reset Your Password
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="pb-[18px]">
           <Input
             label="Email ID"
             placeholder="Enter your email"
-            {...register("email")}
+            {...register("email", {
+              onChange: (e) =>
+                setValue("email", e.target.value.trim().toLowerCase()),
+            })}
             error={errors.email?.message}
           />
         </div>
         <div className="pt-[30px]">
-          <Button green text="Send OTP" type="submit" disabled={loading}/>
+          <Button green text="Continue" type="submit" disabled={loading}>
+            {loading ? (
+              <div className="flex items-center justify-center">
+                Sending OTP...
+                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  ></path>
+                </svg>
+              </div>
+            ) : (
+              "Continue"
+            )}
+          </Button>
+        </div>
+        <div className="absolute bottom-5 w-full left-0">
+          <div className="px-5">
+            <p className="text-sm font-normal text-gray800 text-center">
+              Back to{" "}
+              <Link
+                href="/signin"
+                className="text-green font-semibold cursor-pointer"
+              >
+                Sign in
+              </Link>
+            </p>
+          </div>
         </div>
       </form>
-
-      <div className="absolute bottom-5 w-full left-0">
-        <div className="px-5">
-          <p className="text-sm font-normal text-gray800 text-center">
-            Don’t have an account?{" "}
-            <Link
-              href="/signup"
-              className="text-green font-semibold cursor-pointer"
-            >
-              Sign up
-            </Link>
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

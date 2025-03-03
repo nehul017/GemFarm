@@ -1,9 +1,12 @@
 "use client";
 import Button from "@/components/common/button";
+import Header from "@/components/layout/header";
 import WatchListChart from "@/components/sections/watchListChart";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 const CashIcon = "/assets/icons/cash.svg";
+const PlantCareIcon = "/assets/icons/plant-care.svg";
+
 export default function page() {
   const router = useRouter();
 
@@ -15,6 +18,7 @@ export default function page() {
   };
   return (
     <>
+      <Header isNotificationIcon={true}/>
       <div className="bg-white relative min-h-[calc(90vh-52px-78px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <WatchListChart />
@@ -40,7 +44,7 @@ export default function page() {
               onClick={handleClickOnFarmHealth}
             >
               <div className="w-12 h-12 min-w-12 bg-white rounded-full flex items-center justify-center">
-                <img src={CashIcon} alt="CashIcon" />
+                <img src={PlantCareIcon} alt="PlantCareIcon" />
               </div>
               <div>
                 <p className="text-sm text-black font-semibold mb-1">
