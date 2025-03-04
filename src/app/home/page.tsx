@@ -9,6 +9,8 @@ import { fetchUserProfile } from "@/components/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/components/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import NotificationIcon from "@/icons/notificationIcon";
+import SettingIcon from "@/icons/settingIcon";
+import { Link } from "lucide-react";
 
 const FarmImage = "/assets/images/farm.png";
 const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
@@ -46,9 +48,11 @@ export default function page() {
                 {currentDate}
               </p>
             </div>
-            <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full">
-              <NotificationIcon />
-            </div>
+            <Link href="/setting">
+              <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full">
+                <SettingIcon />
+              </div>
+            </Link>
           </div>
           <Searchbar />
           <div className="pt-6 flex items-center justify-between">
@@ -140,3 +144,4 @@ export default function page() {
     </div>
   );
 }
+
