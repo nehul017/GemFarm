@@ -103,16 +103,37 @@ export const resetPassword = createAsyncThunk(
 // Async Thunk for the OTP verification
 export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
-  async (
-    credentials: { otp: string },
-    { rejectWithValue }
-  ) => {
+  async (credentials: { otp: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/auth/verify-otp", credentials);
+      const response = await axiosInstance.post(
+        "/auth/verify-otp",
+        credentials
+      );
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "OTP verification failed"
+      );
+    }
+  }
+);
+
+// Async Thunk for Updating User Profile
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async (
+    { id, userName, email }: { id: string; userName: string; email: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axiosInstance.put(`/auth/update-profile/${id}`, {
+        userName,
+        email,
+      });
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "Profile update failed"
       );
     }
   }
@@ -192,10 +213,22 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(verifyOTP.fulfilled,(state)=>{
+      .addCase(verifyOTP.fulfilled, (state) => {
         state.loading = false;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user; // Update state with new user data
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

@@ -8,13 +8,11 @@ import Searchbar from "@/components/common/searchbar";
 import { fetchUserProfile } from "@/components/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/components/redux/store";
 import LocationIcon from "@/icons/locationIcon";
-import NotificationIcon from "@/icons/notificationIcon";
+import SettingIcon from "@/icons/settingIcon";
 
 const FarmImage = "/assets/images/farm.png";
 const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
 const NFTFarmImage = "/assets/images/NFT.jpg";
-
-
 
 export default function page() {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,12 +24,15 @@ export default function page() {
   }, [dispatch]);
 
   if (loading) return <p>Loading...</p>;
-    const router = useRouter();
-  
+  const router = useRouter();
+
   const onClickFarm = () => {
     router.push("/watch-list");
-  }
+  };
 
+  const onClickSetting = () => {
+    router.push("/setting");
+  };
 
   return (
     <div>
@@ -46,8 +47,9 @@ export default function page() {
                 {currentDate}
               </p>
             </div>
-            <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full">
-              <NotificationIcon />
+
+            <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer" onClick={onClickSetting}>
+              <SettingIcon />
             </div>
           </div>
           <Searchbar />
@@ -59,10 +61,10 @@ export default function page() {
           </div>
         </div>
         <div className="mt-[-100px] px-5">
-          {/* {[...Array(10)].map(() => {
-            return ( */}
-            
-          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer" onClick={onClickFarm}>
+          <div
+            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
+            onClick={onClickFarm}
+          >
             <img
               src={FarmImage}
               alt="FarmImage"
@@ -86,13 +88,16 @@ export default function page() {
             </div>
           </div>
 
-          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer" onClick={onClickFarm}>
+          <div
+            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
+            onClick={onClickFarm}
+          >
             <img
               src={TomatoesFarmImage}
               alt="FarmImage"
               className="block w-full h-[120px] rounded-lg object-cover"
             />
-            <div className="flex items-center justify-between pt-4 " >
+            <div className="flex items-center justify-between pt-4 ">
               <div>
                 <p className="text-sm font-medium text-black ">
                   GemFarms | Tomatoes
@@ -110,7 +115,10 @@ export default function page() {
             </div>
           </div>
 
-          <div className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer" onClick={onClickFarm}>
+          <div
+            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
+            onClick={onClickFarm}
+          >
             <img
               src={NFTFarmImage}
               alt="FarmImage"
