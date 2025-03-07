@@ -46,7 +46,6 @@ export default function UpdateProfile() {
 
   // Handle form submission
   const onSubmit = async (data: ProfileFormData) => {
-    if (!user?.id) return;
 
     dispatch(updateUserProfile({ id: user.id, ...data }))
       .unwrap()
@@ -63,7 +62,10 @@ export default function UpdateProfile() {
       <div className="w-[100px] relative h-[100px] mx-auto">
         <img
           className="w-full h-full rounded-full block object-cover"
-          src={user?.profileImage || "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"}
+          src={
+            user?.profileImage ||
+            "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
+          }
           alt="Profile"
         />
         <div className="absolute bottom-0 right-0">
@@ -107,10 +109,10 @@ export default function UpdateProfile() {
             />
           </div>
         </div>
+        <div>
+          <Button green text="Save Changes" type="submit" />
+        </div>
       </form>
-      <div>
-        <Button green text="Save Changes" type="submit" />
-      </div>
     </div>
   );
 }
