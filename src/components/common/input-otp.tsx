@@ -147,7 +147,7 @@ export const InputOTPSlot = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "w-12 h-12 flex items-center justify-center text-xl font-semibold rounded-lg border cursor-pointer transition-all",
+        "w-12 h-12 flex items-center justify-center text-xl font-semibold rounded-lg border cursor-text transition-all",
         slot.isActive ? "border-green" : "border-gray-300", // Apply green border when active
         className
       )}

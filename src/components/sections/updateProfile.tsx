@@ -18,7 +18,8 @@ interface ProfileFormData {
 }
 export default function UpdateProfile() {
   const dispatch = useDispatch<AppDispatch>();
-  const { user, loading } = useSelector((state: RootState) => state.auth);
+  const { user,loading } = useSelector((state: RootState) => state.auth);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   // Use react-hook-form
   const {
@@ -39,14 +40,19 @@ export default function UpdateProfile() {
     if (user) {
       setValue("userName", user.userName || "");
       setValue("email", user.email || "");
+      setInitialLoading(false);
     }
   }, [user, setValue]);
 
-  if (loading) return <p>Loading...</p>;
+  if (initialLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+      </div>
+    );
 
   // Handle form submission
   const onSubmit = async (data: ProfileFormData) => {
-
     dispatch(updateUserProfile({ id: user.id, ...data }))
       .unwrap()
       .then(() => {
@@ -100,6 +106,7 @@ export default function UpdateProfile() {
             <Input
               inputClass="bg-[#FAFAFA]"
               label="Email"
+              readOnly
               placeholder="Enter your email"
               {...register("email", {
                 onChange: (e) =>
@@ -110,7 +117,30 @@ export default function UpdateProfile() {
           </div>
         </div>
         <div>
-          <Button green text="Save Changes" type="submit" />
+          <Button green text="Save Changes" type="submit" disabled={loading} >
+          {loading ? (
+              <div className="flex items-center justify-center">
+                Updating...
+                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  ></path>
+                </svg>
+              </div>
+            ) : (
+              "Save Changes"
+            )}
+          </Button>
         </div>
       </form>
     </div>
