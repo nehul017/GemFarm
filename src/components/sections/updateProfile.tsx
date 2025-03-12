@@ -18,8 +18,10 @@ interface ProfileFormData {
 }
 export default function UpdateProfile() {
   const dispatch = useDispatch<AppDispatch>();
-  const { user,loading } = useSelector((state: RootState) => state.auth);
+  const { user, loading } = useSelector((state: RootState) => state.auth);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   // Use react-hook-form
   const {
@@ -44,6 +46,15 @@ export default function UpdateProfile() {
     }
   }, [user, setValue]);
 
+  // Handle Image Selection
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProfileImage(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
   if (initialLoading)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -53,6 +64,20 @@ export default function UpdateProfile() {
 
   // Handle form submission
   const onSubmit = async (data: ProfileFormData) => {
+    // const formData = new FormData();
+    // formData.append("userName", data.userName);
+    // if (profileImage) {
+    //   formData.append("profileImage", profileImage);
+    // }
+
+    // dispatch(
+    //   updateUserProfile({
+    //     id: user.id,
+    //     userName: data.userName.trim(),
+    //     email: data.email,
+    //     profileImage: profileImage || undefined,
+    //   })
+    // )
     dispatch(updateUserProfile({ id: user.id, ...data }))
       .unwrap()
       .then(() => {
@@ -66,14 +91,23 @@ export default function UpdateProfile() {
   return (
     <div className="pt-3 px-5">
       <div className="w-[100px] relative h-[100px] mx-auto">
-        <img
-          className="w-full h-full rounded-full block object-cover"
-          src={
-            user?.profileImage ||
-            "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
-          }
-          alt="Profile"
-        />
+        <label htmlFor="profileImageUpload" className="cursor-pointer">
+          <img
+            className="w-full h-full rounded-full block object-cover"
+            src={
+              previewImage ||
+              "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
+            }
+            alt="Profile"
+          />
+          <input
+            type="file"
+            id="profileImageUpload"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageChange}
+          />
+        </label>
         <div className="absolute bottom-0 right-0">
           <img
             src={EditIcon}
@@ -98,7 +132,7 @@ export default function UpdateProfile() {
             placeholder="Enter your name"
             {...register("userName", {
               onChange: (e) =>
-                setValue("userName", e.target.value.trim().toLowerCase()),
+                setValue("userName", e.target.value.toLowerCase()),
             })}
             error={errors.userName?.message}
           />
@@ -117,8 +151,8 @@ export default function UpdateProfile() {
           </div>
         </div>
         <div>
-          <Button green text="Save Changes" type="submit" disabled={loading} >
-          {loading ? (
+          <Button green text="Save Changes" type="submit" disabled={loading}>
+            {loading ? (
               <div className="flex items-center justify-center">
                 Updating...
                 <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">

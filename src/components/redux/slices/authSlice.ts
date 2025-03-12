@@ -118,18 +118,32 @@ export const verifyOTP = createAsyncThunk(
   }
 );
 
-// Async Thunk for Updating User Profile
+// Async Thunk for Updating User Profile (with Image)
 export const updateUserProfile = createAsyncThunk(
   "auth/updateUserProfile",
   async (
-    { id, userName, email }: { id: string; userName: string; email: string },
+    {
+      id,
+      userName,
+      email,
+      profileImage,
+    }: { id: string; userName: string; email: string; profileImage?: File },
     { rejectWithValue }
   ) => {
     try {
-      const response = await axiosInstance.put(`/auth/update-profile/${id}`, {
-        userName,
-        email,
-      });
+      const formData = new FormData();
+      formData.append("userName", userName);
+      formData.append("email", email);
+      if (profileImage) {
+        formData.append("profileImage", profileImage);
+      }
+
+      const response = await axiosInstance.put(
+        `/auth/update-profile/${id}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -220,6 +234,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
+      // Update User Profile
       .addCase(updateUserProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
