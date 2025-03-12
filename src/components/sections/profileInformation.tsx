@@ -1,10 +1,21 @@
 "use client";
-
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 const UserIcon = "/assets/icons/profile.svg";
+interface User {
+  profileImage?: string;
+  userName?: string;
+  email?: string;
+}
+
 export default function ProfileInformation() {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  // const user = JSON.parse(localStorage.getItem("user") || "{}");
+  let user: User = {}; 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+       user = JSON.parse(localStorage.getItem("user") || "{}");
+    }
+},[])
   return (
     <div className="shadow-lg bg-white rounded-xl py-2.5 px-[15px] flex items-center justify-between">
       <div className="flex items-center gap-3">
