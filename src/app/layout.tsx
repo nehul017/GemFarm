@@ -53,7 +53,11 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${paytoneOne.variable} antialiased`}>
         <Providers>
+<<<<<<< HEAD
           {!hideFooter && <Footer />}
+=======
+          <Footer/>
+>>>>>>> eaf2494 (style:watch list modal ui)
           {children}
         </Providers>
       </body>
