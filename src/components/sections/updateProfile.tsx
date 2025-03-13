@@ -132,7 +132,7 @@ export default function UpdateProfile() {
             placeholder="Enter your name"
             {...register("userName", {
               onChange: (e) =>
-                setValue("userName", e.target.value.toLowerCase()),
+                setValue("userName", e.target.value),
             })}
             error={errors.userName?.message}
           />

@@ -10,8 +10,10 @@ import { AppDispatch, RootState } from "@/components/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import SettingIcon from "@/icons/settingIcon";
 import CropsList from "@/components/common/CropsList";
+import NotificationIcon from "@/icons/notificationIcon";
 
 const FarmImage = "/assets/images/farm.png";
+const ProfileImage = "/assets/images/Ty1.png";
 const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
 const NFTFarmImage = "/assets/images/NFT.jpg";
 
@@ -55,17 +57,25 @@ export default function page() {
                 {currentDate}
               </p>
             </div>
-
-            <div
-              className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer"
-              onClick={onClickSetting}
-            >
-              <SettingIcon />
+            <div className="flex gap-[10px]">
+              <div
+                className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer"
+                onClick={onClickSetting}
+              >
+                <img
+                  className="w-full h-full rounded-full block object-cover"
+                  src={ProfileImage}
+                  alt="Profile"
+                />
+              </div>
+              <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer">
+                <NotificationIcon />
+              </div>
             </div>
           </div>
-          <Searchbar />
+          {/* <Searchbar /> */}
           {/* Toggle Buttons */}
-          <div className="flex gap-4 mt-4 mb-1">
+          {/* <div className="flex gap-4 mt-4 mb-1">
             <button
               onClick={() => setActiveView("crops")}
               className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
@@ -86,107 +96,107 @@ export default function page() {
             >
               Containers
             </button>
+          </div> */}
+          {/* {activeView === "containers" && ( */}
+          <div className="pt-6 flex items-center justify-between">
+            <p className="text-sm font-medium text-white">Your Farms</p>
+            <p className="text-sm font-medium text-white">
+              <span className="text-green">3</span> Container
+            </p>
           </div>
-          {activeView === "containers" && (
-            <div className="pt-6 flex items-center justify-between">
-              <p className="text-sm font-medium text-white">Your Farms</p>
-              <p className="text-sm font-medium text-white">
-                <span className="text-green">3</span> Container
-              </p>
-            </div>
-          )}
+          {/* )} */}
         </div>
-        {activeView === "containers" && (
-          <div className="mt-[-100px] px-5">
-            <div
-              className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
-              onClick={onClickFarm}
-            >
-              <img
-                src={FarmImage}
-                alt="FarmImage"
-                className="block w-full h-[120px] rounded-lg object-cover"
-              />
-              <div className="flex items-center justify-between pt-4">
-                <div>
-                  <p className="text-sm font-medium text-black ">
-                    GemFarms | Strawberry
-                  </p>
-                  <div className="flex items-center gap-1">
-                    <LocationIcon />
-                    <span className="block text-sm text-black opacity-[.4]">
-                      Thorn Bridge Cir. Shiloh
-                    </span>
-                  </div>
+        {/* {activeView === "containers" && ( */}
+        <div className="mt-[-100px] px-5">
+          <div
+            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
+            onClick={onClickFarm}
+          >
+            <img
+              src={FarmImage}
+              alt="FarmImage"
+              className="block w-full h-[120px] rounded-lg object-cover"
+            />
+            <div className="flex items-center justify-between pt-4">
+              <div>
+                <p className="text-sm font-medium text-black ">
+                  GemFarms | Strawberry
+                </p>
+                <div className="flex items-center gap-1">
+                  <LocationIcon />
+                  <span className="block text-sm text-black opacity-[.4]">
+                    Thorn Bridge Cir. Shiloh
+                  </span>
                 </div>
-                <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                  $1.29%
-                </button>
               </div>
+              <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
+                $1.29%
+              </button>
             </div>
-
-            <div
-              className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
-              onClick={onClickFarm}
-            >
-              <img
-                src={TomatoesFarmImage}
-                alt="FarmImage"
-                className="block w-full h-[120px] rounded-lg object-cover"
-              />
-              <div className="flex items-center justify-between pt-4 ">
-                <div>
-                  <p className="text-sm font-medium text-black ">
-                    GemFarms | Tomatoes
-                  </p>
-                  <div className="flex items-center gap-1">
-                    <LocationIcon />
-                    <span className="block text-sm text-black opacity-[.4]">
-                      Thorn Bridge Cir. Shiloh
-                    </span>
-                  </div>
-                </div>
-                <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                  $1.40%
-                </button>
-              </div>
-            </div>
-
-            <div
-              className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
-              onClick={onClickFarm}
-            >
-              <img
-                src={NFTFarmImage}
-                alt="FarmImage"
-                className="block w-full h-[120px] rounded-lg object-cover"
-              />
-              <div className="flex items-center justify-between pt-4">
-                <div>
-                  <p className="text-sm font-medium text-black ">
-                    GemFarms | Lettuce Leafy
-                  </p>
-                  <div className="flex items-center gap-1">
-                    <LocationIcon />
-                    <span className="block text-sm text-black opacity-[.4]">
-                      Thorn Bridge Cir. Shiloh
-                    </span>
-                  </div>
-                </div>
-                <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                  $1.35%
-                </button>
-              </div>
-            </div>
-            {/* );
-          })} */}
           </div>
-        )}
-        {activeView === "crops" && (
+
+          <div
+            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
+            onClick={onClickFarm}
+          >
+            <img
+              src={TomatoesFarmImage}
+              alt="FarmImage"
+              className="block w-full h-[120px] rounded-lg object-cover"
+            />
+            <div className="flex items-center justify-between pt-4 ">
+              <div>
+                <p className="text-sm font-medium text-black ">
+                  GemFarms | Tomatoes
+                </p>
+                <div className="flex items-center gap-1">
+                  <LocationIcon />
+                  <span className="block text-sm text-black opacity-[.4]">
+                    Thorn Bridge Cir. Shiloh
+                  </span>
+                </div>
+              </div>
+              <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
+                $1.40%
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
+            onClick={onClickFarm}
+          >
+            <img
+              src={NFTFarmImage}
+              alt="FarmImage"
+              className="block w-full h-[120px] rounded-lg object-cover"
+            />
+            <div className="flex items-center justify-between pt-4">
+              <div>
+                <p className="text-sm font-medium text-black ">
+                  GemFarms | Lettuce Leafy
+                </p>
+                <div className="flex items-center gap-1">
+                  <LocationIcon />
+                  <span className="block text-sm text-black opacity-[.4]">
+                    Thorn Bridge Cir. Shiloh
+                  </span>
+                </div>
+              </div>
+              <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
+                $1.35%
+              </button>
+            </div>
+          </div>
+          {/* );
+          })} */}
+        </div>
+        {/* )} */}
+        {/* {activeView === "crops" && (
           <div className="mt-[-100px] px-5">
             <CropsList />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
