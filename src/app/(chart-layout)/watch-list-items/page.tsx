@@ -193,8 +193,6 @@ export default function page() {
               Buy
             </button>
           </div>
-          
-
           <div
             className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 flex items-center justify-between"
             onClick={() => setSelectedItem(items[2])}
@@ -361,7 +359,10 @@ export default function page() {
                   {viewMode === "graph" && (
                     <div className="h-[650px]">
                       <ResponsiveContainer width="100%" height="100%">
-                        <ComposedChart data={selectedItem.marketData} margin={{ top: 10, right: -20, left: -20, bottom: 0 }}>
+                        <ComposedChart
+                          data={selectedItem.marketData}
+                          margin={{ top: 10, right: -20, left: -20, bottom: 0 }}
+                        >
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="date" fontSize={10} tickMargin={8} />
                           <YAxis
