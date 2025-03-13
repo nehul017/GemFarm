@@ -3,6 +3,7 @@ interface ButtonProps {
   green?: boolean;
   disabled?: boolean;
   buttonClass?: string
+  onClick?: any;
   type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
 }
@@ -13,6 +14,7 @@ export default function Button({
   disabled,
   type,
   children,
+  onClick,
   buttonClass
 }: ButtonProps) {
   return (

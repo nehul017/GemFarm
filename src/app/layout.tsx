@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Inter, Paytone_One } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/common/Providers";
+import Footer from "@/components/layout/footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -40,7 +41,10 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${inter.variable} ${paytoneOne.variable} antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Footer/>
+          {children}
+        </Providers>
       </body>
     </html>
   );
