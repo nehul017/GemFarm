@@ -4,8 +4,8 @@ interface ButtonProps {
   disabled?: boolean;
   buttonClass?: string
   rotateClass?:string,
-  path?: any;
   onClick?: any;
+  path?: any;
   type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
 }
