@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import Button from '../common/button'
+const DownIcon = '/assets/icons/down.svg';
 
 export default function Footer() {
     const [toogle, setToogle] = useState(false);
     return (
         <div>
-            <div className='px-6 fixed bottom-5 w-full left-0 z-[9]'>
+            <div className='px-6 fixed bottom-5  w-full left-0 z-[9]'>
                 <div onClick={() => setToogle(!toogle)}>
-                    <Button text="Watch List" green />
+                    <Button rotateClass="rotate-180" buttonClass="flex items-center justify-center gap-3" text="Watch List" green path={DownIcon} />
                 </div>
             </div>
             {
@@ -17,13 +18,13 @@ export default function Footer() {
             }
             <div className={`bg-white w-full bottom-0  fixed left-0 z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${toogle ? 'translate-y-[0%]' : 'translate-y-[100%]'}`}>
                 <div onClick={() => setToogle(false)} className='p-5'>
-                    <Button text="Watch List" green />
+                <Button buttonClass="flex items-center justify-center gap-3" text="Watch List" green path={DownIcon} />
                 </div>
                 <div className='p-5 h-[calc(100dvh-194px)] overflow-auto'>
                     {
-                        [...Array(250)].map(() => {
+                        [...Array(250)].map((_,index) => {
                             return (
-                                <p>
+                                <p key={index}>
                                     Hello world
                                 </p>
                             )
