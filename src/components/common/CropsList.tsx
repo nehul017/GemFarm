@@ -439,7 +439,7 @@ export default function CropsList() {
                         {roi.projectionData.map((year, index) => (
                           <tr key={index}>
                             <td className="px-2 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
-                              Year {year.year}
+                              {year.year}
                             </td>
                             <td className="px-2 py-3 whitespace-nowrap text-sm text-gray-500">
                               ${year.revenue.toLocaleString()}
