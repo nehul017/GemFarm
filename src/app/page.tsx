@@ -2,7 +2,7 @@ import Button from "@/components/common/button";
 import LoginBanner from "@/components/sections/loginBanner";
 import Link from "next/link";
 import Image from "next/image";
-const Vector = '/assets/icons/vec.png';
+const Vector = '/assets/icons/vec2.svg';
 export default function Home() {
   return (
     <div className="bg-primary h-screen md:max-w-[375px] md:mx-auto">

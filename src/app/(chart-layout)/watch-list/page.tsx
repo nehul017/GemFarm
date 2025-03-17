@@ -58,11 +58,6 @@ export default function page() {
           </div>
         </div>
       </div>
-      <div className="sticky py-3 bottom-0 left-0 bg-white w-full md:max-w-[375px] md:mx-auto">
-        <Link href="/watch-list-items">
-          <Button green text="My Watch List" />
-        </Link>
-      </div>
     </>
   );
 }

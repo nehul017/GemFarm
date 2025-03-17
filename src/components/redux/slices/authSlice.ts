@@ -1,6 +1,6 @@
 // Import necessary functions
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../utils/axiosInstance";
+
 
 interface AuthState {
   user: any;
@@ -21,6 +21,7 @@ export const loginUser = createAsyncThunk(
     credentials: { email: string; password: string },
     { rejectWithValue }
   ) => {
+    const axiosInstance = (await import("../../utils/axiosInstance")).default;
     try {
       const response = await axiosInstance.post("/auth/login", credentials);
       return response.data;
@@ -38,6 +39,7 @@ export const signupUser = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
+      const axiosInstance = (await import("../../utils/axiosInstance")).default;
       const response = await axiosInstance.post("/auth/signup", userData);
       return response.data;
     } catch (error: any) {
@@ -50,6 +52,7 @@ export const signupUser = createAsyncThunk(
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async (_, { rejectWithValue }) => {
+    const axiosInstance = (await import("../../utils/axiosInstance")).default;
     try {
       const response = await axiosInstance.get("/auth/get-profile");
       return response.data;
@@ -66,6 +69,7 @@ export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (credentials: { email: string | null }, { rejectWithValue }) => {
     try {
+      const axiosInstance = (await import("../../utils/axiosInstance")).default;
       const response = await axiosInstance.post(
         "/auth/forgot-password",
         credentials
@@ -87,6 +91,7 @@ export const resetPassword = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
+      const axiosInstance = (await import("../../utils/axiosInstance")).default;
       const response = await axiosInstance.put(
         "/auth/reset-password",
         credentials
@@ -105,6 +110,7 @@ export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
   async (credentials: { otp: string }, { rejectWithValue }) => {
     try {
+      const axiosInstance = (await import("../../utils/axiosInstance")).default;
       const response = await axiosInstance.post(
         "/auth/verify-otp",
         credentials
@@ -131,6 +137,7 @@ export const updateUserProfile = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
+      const axiosInstance = (await import("../../utils/axiosInstance")).default;
       const formData = new FormData();
       formData.append("userName", userName);
       formData.append("email", email);
