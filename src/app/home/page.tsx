@@ -108,7 +108,7 @@ export default function page() {
           {/* )} */}
         </div>
         {/* {activeView === "containers" && ( */}
-        <div className="mt-[-100px] px-5">
+        <div className="mt-[-100px] px-5 pb-[100px]">
           <div
             className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
             onClick={onClickFarm}
