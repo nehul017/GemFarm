@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { updateProfileSchema } from "../utils/validations/authValidation";
 
 const EditIcon = "/assets/icons/edit.svg";
+const ProfileIcon = "/assets/images/Ty1.png";
 
 interface ProfileFormData {
   userName: string;
@@ -95,7 +96,7 @@ export default function UpdateProfile() {
           <img
             className="w-full h-full rounded-full block object-cover"
             src={
-              previewImage ||
+              ProfileIcon ||
               "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
             }
             alt="Profile"
@@ -131,8 +132,7 @@ export default function UpdateProfile() {
             label="Name"
             placeholder="Enter your name"
             {...register("userName", {
-              onChange: (e) =>
-                setValue("userName", e.target.value),
+              onChange: (e) => setValue("userName", e.target.value),
             })}
             error={errors.userName?.message}
           />
