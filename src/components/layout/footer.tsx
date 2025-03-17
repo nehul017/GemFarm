@@ -34,7 +34,7 @@ export default function Footer() {
             path={DownIcon}
           />
         </div>
-        <div className="p-5 h-[calc(100dvh-194px)] overflow-auto">
+        <div className="p-5 pt-0 h-[calc(100dvh-194px)] overflow-auto">
           <CropsList />
         </div>
       </div>
