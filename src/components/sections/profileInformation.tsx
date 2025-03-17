@@ -13,7 +13,7 @@ interface User {
 }
 
 export default function ProfileInformation() {
-  // const user = JSON.parse(localStorage.getItem("user") || "{}");
+  // const user = JSON.parse(sessionStorage.getItem("user") || "{}");
   const dispatch = useDispatch<AppDispatch>();
   const { user, loading } = useSelector((state: RootState) => state.auth);
   useEffect(() => {

@@ -7,7 +7,7 @@ export default function Footer() {
   const [toogle, setToogle] = useState(false);
   return (
     <div>
-      <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-[9] w-[380px]">
+      <div className="fixed bottom-1 left-1/2 transform -translate-x-1/2 z-[9] w-[420px]">
         <div onClick={() => setToogle(!toogle)}>
           <Button
             rotateClass="rotate-180"

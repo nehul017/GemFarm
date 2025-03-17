@@ -6,7 +6,7 @@ import Input from "@/components/common/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { fetchUserProfile, updateUserProfile } from "../redux/slices/authSlice";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { updateProfileSchema } from "../utils/validations/authValidation";
 
@@ -19,8 +19,10 @@ interface ProfileFormData {
 }
 export default function UpdateProfile() {
   const dispatch = useDispatch<AppDispatch>();
-  const { user, loading } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
@@ -43,14 +45,32 @@ export default function UpdateProfile() {
     if (user) {
       setValue("userName", user.userName || "");
       setValue("email", user.email || "");
+      setPreviewImage(user.profileImage);     
       setInitialLoading(false);
     }
   }, [user, setValue]);
 
   // Handle Image Selection
+  const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp"];
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+  
+      // Validate file type
+      if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        console.log('file', file)
+        toast.error("Only JPG, JPEG, PNG, GIF, and WEBP images are allowed.");
+        return;
+      }
+  
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error("Image must be less than 5MB.");
+        return;
+      }
+  
       setProfileImage(file);
       setPreviewImage(URL.createObjectURL(file));
     }
@@ -65,24 +85,25 @@ export default function UpdateProfile() {
 
   // Handle form submission
   const onSubmit = async (data: ProfileFormData) => {
-    // const formData = new FormData();
-    // formData.append("userName", data.userName);
-    // if (profileImage) {
-    //   formData.append("profileImage", profileImage);
-    // }
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("userName", data.userName);
+    if (profileImage) {
+      formData.append("profileImage", profileImage);
+    }
 
-    // dispatch(
-    //   updateUserProfile({
-    //     id: user.id,
-    //     userName: data.userName.trim(),
-    //     email: data.email,
-    //     profileImage: profileImage || undefined,
-    //   })
-    // )
-    dispatch(updateUserProfile({ id: user.id, ...data }))
+    dispatch(
+      updateUserProfile({
+        id: user.id,
+        userName: data.userName.trim(),
+        email: data.email,
+        profileImage: profileImage || undefined,
+      })
+    )
       .unwrap()
       .then(() => {
-        toast.success("Profile updated successfully!");
+        toast.success("Profile Updated Successfully!");
+        setLoading(false);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -91,13 +112,14 @@ export default function UpdateProfile() {
 
   return (
     <div className="pt-3 px-5">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="w-[100px] relative h-[100px] mx-auto">
         <label htmlFor="profileImageUpload" className="cursor-pointer">
           <img
             className="w-full h-full rounded-full block object-cover"
             src={
-              ProfileIcon ||
-              "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
+              previewImage ||
+              ProfileIcon
             }
             alt="Profile"
           />

@@ -30,9 +30,9 @@ export default function SigninForm() {
     resolver: yupResolver(loginSchema), // Connect Yup validation
   });
 
-  // Load saved email from localStorage
+  // Load saved email from sessionStorage
   useEffect(() => {
-    const savedEmail = localStorage.getItem("rememberedEmail");
+    const savedEmail = sessionStorage.getItem("rememberedEmail");
     if (savedEmail) {
       setValue("email", savedEmail); // Prefill email input
       setRememberMe(true);
@@ -41,15 +41,15 @@ export default function SigninForm() {
 
   const onSubmit = async (data: any) => {
     if (rememberMe) {
-      localStorage.setItem("rememberedEmail", data.email);
+      sessionStorage.setItem("rememberedEmail", data.email);
     } else {
-      localStorage.removeItem("rememberedEmail");
+      sessionStorage.removeItem("rememberedEmail");
     }
     try {
       const resultAction = await dispatch(loginUser(data));
       if (loginUser.fulfilled.match(resultAction)) {
-        localStorage.setItem("user", JSON.stringify(resultAction.payload.user));
-        localStorage.setItem("authToken", resultAction.payload.token);
+        sessionStorage.setItem("user", JSON.stringify(resultAction.payload.user));
+        sessionStorage.setItem("authToken", resultAction.payload.token);
 
         router.push("/home");
       } else {

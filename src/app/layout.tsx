@@ -28,8 +28,8 @@ export default function RootLayout({
   const pathname = usePathname(); // Get current route
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    const user = localStorage.getItem("user");
+    const token = sessionStorage.getItem("authToken");
+    const user = sessionStorage.getItem("user");
 
     if (!token && !user) {
       router.push("/"); // Redirect to signin if token and user do not exist

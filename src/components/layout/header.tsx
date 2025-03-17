@@ -3,12 +3,18 @@ import React from "react";
 import LeftIcon from "@/icons/leftIcon";
 import NotificationIcon from "@/icons/notificationIcon";
 import SearchIcon from "@/icons/SearchIcon";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+
+const ProfileImage = "/assets/images/Ty1.png";
 
 interface HeaderProps {
   header?: string;
   isNotificationIcon?: boolean;
   isOnlyBackButton?: boolean;
   isWhite?: boolean;
+  isShowProfile?: boolean;
 }
 
 export default function Header({
@@ -16,11 +22,17 @@ export default function Header({
   isNotificationIcon = false,
   isOnlyBackButton = false,
   isWhite = false,
+  isShowProfile = true,
 }: HeaderProps) {
   const handleLeftIconClick = () => {
     window.history.back();
   };
+  const router = useRouter();
 
+  const onClickSetting = () => {
+    router.push("/setting");
+  };
+  const { user } = useSelector((state: RootState) => state.auth);
   return (
     <div
       className={`flex relative top-0 md:max-w-[375px] md:mx-auto z-10 items-center justify-between py-3 px-5 ${
@@ -32,7 +44,9 @@ export default function Header({
       )}
 
       <div onClick={handleLeftIconClick} className="cursor-pointer z-10">
-        <LeftIcon className={isOnlyBackButton && !isWhite ? "text-white" : "text-black"} />
+        <LeftIcon
+          className={isOnlyBackButton && !isWhite ? "text-white" : "text-black"}
+        />
       </div>
 
       <div
@@ -42,9 +56,26 @@ export default function Header({
       >
         {header}
       </div>
-
-      {!isOnlyBackButton &&
-        (isNotificationIcon ? <NotificationIcon /> : <SearchIcon />)}
+      <div className="flex gap-[10px]">
+        {isShowProfile && (
+          <div
+            className="w-11 h-11 bg-white flex items-center rounded-full cursor-pointer border-2 border-gray-500"
+            onClick={onClickSetting}
+          >
+            <img
+              className="w-full h-full rounded-full block object-cover"
+              src={user?.profileImage || ProfileImage}
+              alt="Profile"
+            />
+          </div>
+        )}
+        {!isOnlyBackButton && (
+          <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer border-2 border-gray-500">
+            {!isOnlyBackButton &&
+              (isNotificationIcon ? <NotificationIcon /> : <SearchIcon />)}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

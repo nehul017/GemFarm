@@ -11,6 +11,7 @@ export default function page() {
           header="Setting"
           isNotificationIcon={false}
           isOnlyBackButton={true}
+          isShowProfile={false}
         />
       </div>
       <div className="px-5 mt-[-50px]">

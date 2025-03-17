@@ -21,11 +21,12 @@ export default function page() {
   const dispatch = useDispatch<AppDispatch>();
   const currentDate = moment().format("dddd, DD MMMM YYYY");
   const { user, loading } = useSelector((state: RootState) => state.auth);
-  const [activeView, setActiveView] = useState<"crops" | "containers">("crops");
 
   useEffect(() => {
-    dispatch(fetchUserProfile() as any);
-  }, [dispatch]);
+    if (!user) {
+      dispatch(fetchUserProfile());
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -64,7 +65,7 @@ export default function page() {
               >
                 <img
                   className="w-full h-full rounded-full block object-cover"
-                  src={ProfileImage}
+                  src={user?.profileImage || ProfileImage}
                   alt="Profile"
                 />
               </div>

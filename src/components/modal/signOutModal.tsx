@@ -11,8 +11,8 @@ export default function SignOutModal({ setShowSignOutModal }: SignOutModalProps)
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("authToken");
+    sessionStorage.removeItem("user");
     window.location.href = "/signin";
     setShowSignOutModal(false);
   };
