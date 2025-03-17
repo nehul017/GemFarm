@@ -3,6 +3,9 @@ interface ButtonProps {
   green?: boolean;
   disabled?: boolean;
   buttonClass?: string
+  rotateClass?:string,
+  onClick?: any;
+  path?: any;
   type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
 }
@@ -13,6 +16,9 @@ export default function Button({
   disabled,
   type,
   children,
+  onClick,
+  rotateClass,
+  path,
   buttonClass
 }: ButtonProps) {
   return (
@@ -30,6 +36,7 @@ export default function Button({
       disabled={disabled} // Disable button functionality
     >
       {children ? children : text}
+      {path && <img className={ `'cursor-pointer' ${rotateClass}`} src={path} alt="path" />}
     </button>
   );
 }

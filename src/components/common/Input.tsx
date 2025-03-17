@@ -23,7 +23,7 @@ export default function Input({
           className={`px-4 w-full border focus:border-primary border-solid
             ${error ? "border-red-500" : "border-borderColor" }
             ${inputClass}
-            rounded-md h-[50px] text-sm outline-none placeholder:text-sm font-normal text-black placeholder:text-gray-500 ${
+            rounded-md h-[50px] text-base outline-none placeholder:text-base font-normal text-black placeholder:text-gray-500 ${
             icon ? "pr-12" : "pr-4"
           }`}
         />

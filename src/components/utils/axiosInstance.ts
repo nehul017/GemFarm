@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
 // Request Interceptor to Attach Token
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("authToken");
+    const token = sessionStorage.getItem("authToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -32,14 +32,14 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       
       // Clear auth data
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("user");
+      sessionStorage.removeItem("authToken");
+      sessionStorage.removeItem("user");
 
       // Dispatch logout action
       store.dispatch(logout());
 
       // Redirect to login
-      window.location.href = "/login";
+      window.location.href = "/signin";
     }
     return Promise.reject(error);
   }

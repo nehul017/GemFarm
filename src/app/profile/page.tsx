@@ -12,6 +12,7 @@ export default function page() {
             isNotificationIcon={false}
             isOnlyBackButton={true}
             isWhite={true}
+            isShowProfile={false}
           />
         </div>
         <UpdateProfile />

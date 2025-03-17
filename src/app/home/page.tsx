@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
@@ -9,8 +9,11 @@ import { fetchUserProfile } from "@/components/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/components/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import SettingIcon from "@/icons/settingIcon";
+import CropsList from "@/components/common/CropsList";
+import NotificationIcon from "@/icons/notificationIcon";
 
 const FarmImage = "/assets/images/farm.png";
+const ProfileImage = "/assets/images/Ty1.png";
 const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
 const NFTFarmImage = "/assets/images/NFT.jpg";
 
@@ -20,10 +23,18 @@ export default function page() {
   const { user, loading } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    dispatch(fetchUserProfile() as any);
-  }, [dispatch]);
+    if (!user) {
+      dispatch(fetchUserProfile());
+    }
+  }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-dvh">
+        <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+      </div>
+    );
+  }
   const router = useRouter();
 
   const onClickFarm = () => {
@@ -47,20 +58,57 @@ export default function page() {
                 {currentDate}
               </p>
             </div>
-
-            <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer" onClick={onClickSetting}>
-              <SettingIcon />
+            <div className="flex gap-[10px]">
+              <div
+                className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer"
+                onClick={onClickSetting}
+              >
+                <img
+                  className="w-full h-full rounded-full block object-cover"
+                  src={user?.profileImage || ProfileImage}
+                  alt="Profile"
+                />
+              </div>
+              <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer">
+                <NotificationIcon />
+              </div>
             </div>
           </div>
-          <Searchbar />
+          {/* <Searchbar /> */}
+          {/* Toggle Buttons */}
+          {/* <div className="flex gap-4 mt-4 mb-1">
+            <button
+              onClick={() => setActiveView("crops")}
+              className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
+                activeView === "crops"
+                  ? "bg-emerald-400 text-white"
+                  : "bg-white/10 text-white"
+              }`}
+            >
+              Market Price
+            </button>
+            <button
+              onClick={() => setActiveView("containers")}
+              className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
+                activeView === "containers"
+                  ? "bg-emerald-400 text-white"
+                  : "bg-white/10 text-white"
+              }`}
+            >
+              Containers
+            </button>
+          </div> */}
+          {/* {activeView === "containers" && ( */}
           <div className="pt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-white">Your Farms</p>
             <p className="text-sm font-medium text-white">
               <span className="text-green">3</span> Container
             </p>
           </div>
+          {/* )} */}
         </div>
-        <div className="mt-[-100px] px-5">
+        {/* {activeView === "containers" && ( */}
+        <div className="mt-[-100px] px-5 pb-[100px]">
           <div
             className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
             onClick={onClickFarm}
@@ -144,6 +192,12 @@ export default function page() {
           {/* );
           })} */}
         </div>
+        {/* )} */}
+        {/* {activeView === "crops" && (
+          <div className="mt-[-100px] px-5">
+            <CropsList />
+          </div>
+        )} */}
       </div>
     </div>
   );

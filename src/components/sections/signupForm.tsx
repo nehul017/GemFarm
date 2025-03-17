@@ -39,8 +39,8 @@ export default function SignupForm() {
     try {
       const resultAction = await dispatch(signupUser(trimmedData));
       if (signupUser.fulfilled.match(resultAction)) {
-        localStorage.setItem("user", JSON.stringify(resultAction.payload.user));
-        localStorage.setItem("authToken", resultAction.payload.token);
+        sessionStorage.setItem("user", JSON.stringify(resultAction.payload.user));
+        sessionStorage.setItem("authToken", resultAction.payload.token);
         router.push("/home");
       } else {
         const errorMessage = resultAction.payload || "Something went wrong!";

@@ -11,14 +11,14 @@ export default function SignOutModal({ setShowSignOutModal }: SignOutModalProps)
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("authToken");
+    sessionStorage.removeItem("user");
     window.location.href = "/signin";
     setShowSignOutModal(false);
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full backdrop-blur-md bg-modalBackdrop z-30 flex items-center justify-center">
+    <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md bg-modalBackdrop z-30 flex items-center justify-center">
       <div className="w-[calc(100%-24px-24px)] rounded-xl bg-white shadow-lg p-[25px]">
         <div className="flex items-center justify-center pb-4">
           <img src={SignOutIcon} alt="SignOutIcon" />
