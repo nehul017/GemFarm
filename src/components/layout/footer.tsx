@@ -19,7 +19,7 @@ export default function Footer() {
         </div>
       </div>
       {toogle && (
-        <div className="fixed top-0 left-0 w-full h-full bg-modalBackdrop z-[99]"></div>
+        <div onClick={() => setToogle(false)} className="fixed top-0 left-0 w-full h-full bg-modalBackdrop z-[99]"></div>
       )}
       <div
         className={`bg-white w-full bottom-0  fixed left-0 z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${

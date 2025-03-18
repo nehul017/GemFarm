@@ -31,9 +31,7 @@ export default function RootLayout({
     const token = sessionStorage.getItem("authToken");
     const user = sessionStorage.getItem("user");
 
-    if (!token && !user) {
-      router.push("/"); // Redirect to signin if token and user do not exist
-    } else {
+    if (token && user) {
       router.push("/home");
     }
   }, [router]);

@@ -5,14 +5,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import CryptoJS from "crypto-js";
 import { AppDispatch, RootState } from "../../components/redux/store";
 import { loginUser } from "../../components/redux/slices/authSlice";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/button";
 import { loginSchema } from "../utils/validations/authValidation";
 import { toast, ToastContainer } from "react-toastify";
+
 const EyeIcon = "/assets/icons/eye-open.svg";
 const CloseEyeIcon = "/assets/icons/eye-crossed.svg";
+const SECRET_KEY = "gemFarmSecret";
 
 export default function SigninForm() {
   const dispatch = useDispatch<AppDispatch>();
@@ -37,13 +41,32 @@ export default function SigninForm() {
       setValue("email", savedEmail); // Prefill email input
       setRememberMe(true);
     }
+    const encryptedCredentials = Cookies.get("rememberedCredentials");
+    if (encryptedCredentials) {
+      try {
+        const bytes = CryptoJS.AES.decrypt(encryptedCredentials, SECRET_KEY);
+        const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+        setValue("email", decryptedData.email);
+        setValue("password", decryptedData.password);
+        setRememberMe(true);
+      } catch (error) {
+        console.error("Error decrypting credentials:", error);
+      }
+    }
   }, [setValue]);
 
   const onSubmit = async (data: any) => {
     if (rememberMe) {
       sessionStorage.setItem("rememberedEmail", data.email);
+      const encryptedData = CryptoJS.AES.encrypt(
+        JSON.stringify({ email: data.email, password: data.password }),
+        SECRET_KEY
+      ).toString();
+      Cookies.set("rememberedCredentials", encryptedData);
     } else {
       sessionStorage.removeItem("rememberedEmail");
+      Cookies.remove("rememberedCredentials");
     }
     try {
       const resultAction = await dispatch(loginUser(data));
@@ -93,7 +116,8 @@ export default function SigninForm() {
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <input type="checkbox" className="accent-primary" />
+            <input type="checkbox" className="accent-primary" checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)} />
             <span className="text-xs text-gray800 font-medium relative top-[1px]">
               Remember Me
             </span>
@@ -106,8 +130,31 @@ export default function SigninForm() {
           </Link>
         </div>
 
-        <div className="pt-[30px]">
-          <Button green text="Sign In" type="submit" disabled={loading} />
+        <div className="pt-[30px] cursor-pointer">
+          <Button green text="Sign In" type="submit" disabled={loading} >
+          {loading ? (
+              <div className="flex items-center justify-center">
+                Sign In... 
+                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  ></path>
+                </svg>
+              </div>
+            ) : (
+              "Sign In"
+            )}
+          </Button>
         </div>
       </form>
 
