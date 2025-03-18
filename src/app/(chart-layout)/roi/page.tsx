@@ -36,7 +36,7 @@ export default function page() {
             <p className="text-sm text-black font-medium mb-2">
               Forecast revenue
             </p>
-            <div className="flex items-center justify-between pb-7">
+            <div className="flex items-center justify-between pb-5">
               <h2 className="text-[26px] font-semibold text-black">
                 $380,108.00
               </h2>

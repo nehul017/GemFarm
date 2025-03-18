@@ -49,7 +49,7 @@ export default function page() {
     <div>
       <div className="bg-white relative min-h-[calc(100vh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="bg-primary pt-5 px-5 pb-[120px] rounded-b-[30px]">
-          <div className="flex items-center justify-between pb-7">
+          <div className="flex items-center justify-between pb-5">
             <div>
               <h2 className="text-white text-[22px] font-semibold mb-1">
                 Hello, <span className="text-green">{user?.userName}</span>
