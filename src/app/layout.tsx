@@ -30,11 +30,14 @@ export default function RootLayout({
   useEffect(() => {
     const token = sessionStorage.getItem("authToken");
     const user = sessionStorage.getItem("user");
-
-    if (token && user) {
+  
+    // Redirect only if user is on a restricted page and already authenticated
+    if (token && user && (pathname === "/signin" || pathname === "/signup")) {
       router.push("/home");
+      window.location.reload();
+    
     }
-  }, [router]);
+  }, [router, pathname]);
   // Hide footer on signin and signup pages
   const hideFooter =
     pathname === "/" ||
