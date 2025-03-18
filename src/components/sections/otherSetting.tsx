@@ -12,7 +12,7 @@ export default function OtherSetting() {
   return (
     <div className="pt-[25px]">
       <h2 className="text-base font-semibold text-black200 mb-[18px]">
-        Other Setting
+        Other Settings
       </h2>
       <div className="shadow-lg bg-white rounded-xl px-5">
         <div className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4">
