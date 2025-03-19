@@ -12,7 +12,9 @@
     "@hookform/resolvers": "^3.10.0",
     "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
+    "crypto-js": "^4.2.0",
     "input-otp": "^1.2.4",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.475.0",
     "moment": "^2.30.1",
     "next": "15.1.6",
@@ -27,6 +29,8 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/js-cookie": "^3.0.6",
     "@types/next-pwa": "^5.6.9",
     "@types/node": "^20",
     "@types/react": "^19",

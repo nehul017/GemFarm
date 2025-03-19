@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +42,9 @@ export default function SignupForm() {
       if (signupUser.fulfilled.match(resultAction)) {
         sessionStorage.setItem("user", JSON.stringify(resultAction.payload.user));
         sessionStorage.setItem("authToken", resultAction.payload.token);
+        Cookies.set("authToken", resultAction.payload.token); // Set for 7 days
+        Cookies.set("user", JSON.stringify(resultAction.payload.user));
+
         router.push("/home");
       } else {
         const errorMessage = resultAction.payload || "Something went wrong!";
@@ -62,7 +66,7 @@ export default function SignupForm() {
             placeholder="Enter your name"
             {...register("userName", {
               onChange: (e) =>
-                setValue("userName", e.target.value.trim().toLowerCase()),
+                setValue("userName", e.target.value),
             })}
             error={errors.userName?.message} // Pass the error for username
           />

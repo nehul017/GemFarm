@@ -1,6 +1,7 @@
 import axios from "axios";
 import { store } from "../redux/store";
 import { logout } from "../redux/slices/authSlice";
+import Cookies from "js-cookie";
 
 
 
@@ -14,7 +15,8 @@ const axiosInstance = axios.create({
 // Request Interceptor to Attach Token
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem("authToken");
+    const token = Cookies.get("authToken");
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -34,6 +36,9 @@ axiosInstance.interceptors.response.use(
       // Clear auth data
       sessionStorage.removeItem("authToken");
       sessionStorage.removeItem("user");
+      Cookies.remove("authToken");
+      Cookies.remove("user");
+
 
       // Dispatch logout action
       store.dispatch(logout());

@@ -6,6 +6,7 @@ import { Inter, Paytone_One } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/common/Providers";
 import Footer from "@/components/layout/footer";
+import Cookies from "js-cookie";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,15 +29,16 @@ export default function RootLayout({
   const pathname = usePathname(); // Get current route
 
   useEffect(() => {
-    const token = sessionStorage.getItem("authToken");
-    const user = sessionStorage.getItem("user");
-
-    if (!token && !user) {
-      router.push("/"); // Redirect to signin if token and user do not exist
-    } else {
+    const token = Cookies.get("authToken");
+    const user = Cookies.get("user");
+  
+    // Redirect only if user is on a restricted page and already authenticated
+    if (token && user && (pathname === "/signin" || pathname === "/signup")) {
       router.push("/home");
+      window.location.reload();
+    
     }
-  }, [router]);
+  }, [router, pathname]);
   // Hide footer on signin and signup pages
   const hideFooter =
     pathname === "/" ||
