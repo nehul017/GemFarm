@@ -81,7 +81,7 @@ export default function page() {
                 onChange={setSelectedTab2}
               />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 pb-16">
               {selectedTab === "performance" && (
                 <>
                   <div className="card-background p-2.5 border border-solid border-borderColor2 rounded-lg">
