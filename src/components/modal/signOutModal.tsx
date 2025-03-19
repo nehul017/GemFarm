@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "../common/button";
 const SignOutIcon = "/assets/icons/signout.svg";
+import Cookies from "js-cookie";
+
 interface SignOutModalProps {
   setShowSignOutModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -13,6 +15,9 @@ export default function SignOutModal({ setShowSignOutModal }: SignOutModalProps)
   const handleSignOut = () => {
     sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("user");
+    Cookies.remove("authToken");
+    Cookies.remove("user");
+    
     window.location.href = "/signin";
     setShowSignOutModal(false);
   };

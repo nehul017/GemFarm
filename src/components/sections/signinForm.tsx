@@ -73,6 +73,9 @@ export default function SigninForm() {
       if (loginUser.fulfilled.match(resultAction)) {
         sessionStorage.setItem("user", JSON.stringify(resultAction.payload.user));
         sessionStorage.setItem("authToken", resultAction.payload.token);
+        Cookies.set("authToken", resultAction.payload.token); // Set for 7 days
+        Cookies.set("user", JSON.stringify(resultAction.payload.user));
+      
 
         router.push("/home");
       } else {

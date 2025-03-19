@@ -6,6 +6,7 @@ import { Inter, Paytone_One } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/common/Providers";
 import Footer from "@/components/layout/footer";
+import Cookies from "js-cookie";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,8 +29,8 @@ export default function RootLayout({
   const pathname = usePathname(); // Get current route
 
   useEffect(() => {
-    const token = sessionStorage.getItem("authToken");
-    const user = sessionStorage.getItem("user");
+    const token = Cookies.get("authToken");
+    const user = Cookies.get("user");
   
     // Redirect only if user is on a restricted page and already authenticated
     if (token && user && (pathname === "/signin" || pathname === "/signup")) {
