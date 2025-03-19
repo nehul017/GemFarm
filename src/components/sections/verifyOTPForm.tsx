@@ -117,7 +117,7 @@ export default function VerifyOTPForm() {
   return (
     <div className="pt-[30px] px-5">
       <ToastContainer position="top-right" autoClose={3000} />
-      <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+      <h2 className="text-2xl font-semibold text-gray-900 mb-5">
         OTP Verification
       </h2>
       <p className="text-[13px] text-gray-600 mb-8">

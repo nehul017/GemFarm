@@ -48,7 +48,7 @@ export default function ForgotPasswordForm() {
     <div className="pt-[30px] px-5">
       {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={3000} />
-      <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+      <h2 className="text-2xl font-semibold text-gray-900 mb-5">
         Reset Your Password
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>

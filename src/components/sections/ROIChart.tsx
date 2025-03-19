@@ -48,7 +48,7 @@ export default function ROIChart() {
   return (
     <div className=" bg-white ">
       <div className="max-w-md mx-auto">
-        <div className="h-64 mb-6">
+        <div className="h-64 mb-5">
         <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={data}
@@ -103,7 +103,7 @@ export default function ROIChart() {
         </div>
 
         {/* Time Range Selector */}
-        <div className="flex gap-[1.5rem] mb-6 justify-center">
+        <div className="flex gap-[1.5rem] mb-5 justify-center">
           {timeRanges.map((range) => (
             <button
               key={range}

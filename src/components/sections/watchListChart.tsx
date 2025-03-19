@@ -45,7 +45,7 @@ export default function WatchListChart() {
     <div className=" bg-white ">
       <div className="max-w-md mx-auto">
         {/* Value Display */}
-        <div className="mb-6">
+        <div className="mb-5">
           <h2 className="text-3xl font-bold">
             ${currentValue.toLocaleString()}
           </h2>
@@ -62,7 +62,7 @@ export default function WatchListChart() {
         </div>
 
         {/* Chart */}
-        <div className="h-64 mb-6">
+        <div className="h-64 mb-5">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={data}

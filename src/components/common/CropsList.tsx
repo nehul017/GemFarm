@@ -577,7 +577,7 @@ export default function CropsList() {
   return (
     <>
       {/* <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
-      <div className="pt-5 pb-10">
+      <div className="pt-0">
         <div className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 flex items-center justify-between">
           <div
             className="flex items-center gap-5"
