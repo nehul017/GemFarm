@@ -8,7 +8,7 @@ export default function page() {
     <div className="bg-white relative h-dvh md:max-w-[375px] md:mx-auto">
       <div className="bg-primary pt-5 pb-[100px] rounded-b-[30px]">
         <Header
-          header="Setting"
+          header="Settings"
           isNotificationIcon={false}
           isOnlyBackButton={true}
           isShowProfile={false}
