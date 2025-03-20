@@ -34,7 +34,7 @@ export default function RootLayout({
 
     // Redirect only if user is on a restricted page and already authenticated
     if (token && user && (pathname === "/signin" || pathname === "/signup")) {
-      window.location.reload();
+      // window.location.reload();
       router.push("/home");
     }
   }, [router, pathname]);
