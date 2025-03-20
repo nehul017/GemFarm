@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Button from "../common/button";
 import CropsList from "../common/CropsList";

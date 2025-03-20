@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import UpdateProfile from "@/components/sections/updateProfile";
 import React from "react";
@@ -16,6 +17,7 @@ export default function page() {
           />
         </div>
         <UpdateProfile />
+        <Footer />
       </div>
       {/* <SignOutModal/> */}
     </>

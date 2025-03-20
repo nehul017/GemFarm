@@ -11,6 +11,7 @@ import LocationIcon from "@/icons/locationIcon";
 import SettingIcon from "@/icons/settingIcon";
 import CropsList from "@/components/common/CropsList";
 import NotificationIcon from "@/icons/notificationIcon";
+import Footer from "@/components/layout/footer";
 
 const FarmImage = "/assets/images/farm.png";
 const ProfileImage = "/assets/images/Ty1.png";
@@ -199,6 +200,7 @@ export default function page() {
           </div>
         )} */}
       </div>
+      <Footer />
     </div>
   );
 }

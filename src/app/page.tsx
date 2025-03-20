@@ -18,20 +18,17 @@ export default function Home() {
 
     if (token) {
       router.push("/home"); // Redirect to home/dashboard if logged in
+      setLoading(false);
     } else {
       setLoading(false);
     }
   }, [router]);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-dvh">
-        <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center h-dvh">
+      <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+    </div>
+  ) : (
     <div className="bg-primary h-dvh md:max-w-[375px] md:mx-auto">
       <div className="h-[360px]">
         <LoginBanner />
@@ -47,7 +44,8 @@ export default function Home() {
             Manage Your GemFarm
           </h1>
           <p className="text-white opacity-[.55] text-sm font-medium text-center mb-5">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry
           </p>
           <Link href="/signin">
             <Button text="Get Started" />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Inter, Paytone_One } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/common/Providers";
@@ -27,17 +27,20 @@ export default function RootLayout({
 }>) {
   const router = useRouter();
   const pathname = usePathname(); // Get current route
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = Cookies.get("authToken");
     const user = Cookies.get("user");
 
-    // Redirect only if user is on a restricted page and already authenticated
     if (token && user && (pathname === "/signin" || pathname === "/signup")) {
-      // window.location.reload();
-      router.push("/home");
+      router.replace("/home"); // Prevent flickering
+    } else if (!token) {
+    } else {
+      setLoading(false); // Show page only after auth check
     }
   }, [router, pathname]);
+
   // Hide footer on signin and signup pages
   const hideFooter =
     pathname === "/" ||
@@ -54,7 +57,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${paytoneOne.variable} antialiased`}>
         <Providers>
-          {!hideFooter && <Footer />}
+          {/* {!hideFooter && <Footer />} */}
           {children}
         </Providers>
       </body>

@@ -1,3 +1,5 @@
+
+import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import OtherSetting from "@/components/sections/otherSetting";
 import ProfileInformation from "@/components/sections/profileInformation";
@@ -18,6 +20,7 @@ export default function page() {
         <ProfileInformation />
         <OtherSetting />
       </div>
+      <Footer />
     </div>
   );
 }

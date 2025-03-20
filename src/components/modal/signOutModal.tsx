@@ -18,7 +18,9 @@ export default function SignOutModal({ setShowSignOutModal }: SignOutModalProps)
     Cookies.remove("authToken");
     Cookies.remove("user");
     
-    window.location.href = "/signin";
+    // Prevent going back to previous authenticated pages
+    window.history.pushState(null, "", "/signin");
+    window.location.replace("/signin"); // Ensures fresh redirect
     setShowSignOutModal(false);
   };
 
