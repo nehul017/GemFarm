@@ -29,17 +29,17 @@ export default function RootLayout({
   const pathname = usePathname(); // Get current route
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const token = Cookies.get("authToken");
-    const user = Cookies.get("user");
+  // useEffect(() => {
+  //   const token = Cookies.get("authToken");
+  //   const user = Cookies.get("user");
 
-    if (token && user && (pathname === "/signin" || pathname === "/signup")) {
-      router.replace("/home"); // Prevent flickering
-    } else if (!token) {
-    } else {
-      setLoading(false); // Show page only after auth check
-    }
-  }, [router, pathname]);
+  //   if (token && user && (pathname === "/signin" || pathname === "/signup")) {
+  //     router.replace("/home"); // Prevent flickering
+  //   } else if (!token) {
+  //   } else {
+  //     setLoading(false); // Show page only after auth check
+  //   }
+  // }, [router, pathname]);
 
   // Hide footer on signin and signup pages
   const hideFooter =

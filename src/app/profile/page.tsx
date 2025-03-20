@@ -1,9 +1,12 @@
+"use client"; // 👈 Add this at the top
+
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import UpdateProfile from "@/components/sections/updateProfile";
 import React from "react";
+import withAuth from "../withAuth";
 
-export default function page() {
+function page() {
   return (
     <>
       <div className="bg-white relative overflow-x-hidden min-h-[calc(100dvh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
@@ -23,3 +26,5 @@ export default function page() {
     </>
   );
 }
+
+export default withAuth(page);

@@ -1,8 +1,9 @@
-'use Client';
+"use client"; // 👈 Add this at the top
 
 import Footer from "@/components/layout/footer";
+import withAuth from "../withAuth";
 
-export default function layout({children}:any) {
+function layout({children}:any) {
   return (
     <div>
       {children}
@@ -10,3 +11,5 @@ export default function layout({children}:any) {
     </div>
   )
 }
+
+export default withAuth(layout);

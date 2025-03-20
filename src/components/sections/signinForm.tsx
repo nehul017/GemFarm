@@ -56,7 +56,9 @@ export default function SigninForm() {
     }
   }, [setValue]);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any, event?: React.BaseSyntheticEvent) => {
+    event?.preventDefault(); // Prevent any default behavior
+
     if (rememberMe) {
       sessionStorage.setItem("rememberedEmail", data.email);
       const encryptedData = CryptoJS.AES.encrypt(
@@ -71,11 +73,13 @@ export default function SigninForm() {
     try {
       const resultAction = await dispatch(loginUser(data));
       if (loginUser.fulfilled.match(resultAction)) {
-        sessionStorage.setItem("user", JSON.stringify(resultAction.payload.user));
+        sessionStorage.setItem(
+          "user",
+          JSON.stringify(resultAction.payload.user)
+        );
         sessionStorage.setItem("authToken", resultAction.payload.token);
         Cookies.set("authToken", resultAction.payload.token); // Set for 7 days
         Cookies.set("user", JSON.stringify(resultAction.payload.user));
-      
 
         router.push("/home");
       } else {
@@ -119,8 +123,12 @@ export default function SigninForm() {
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <input type="checkbox" className="accent-primary" checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)} />
+            <input
+              type="checkbox"
+              className="accent-primary"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+            />
             <span className="text-xs text-gray800 font-medium relative top-[1px]">
               Remember Me
             </span>
@@ -134,10 +142,10 @@ export default function SigninForm() {
         </div>
 
         <div className="pt-[30px] cursor-pointer">
-          <Button green text="Sign In" type="submit" disabled={loading} >
-          {loading ? (
+          <Button green text="Sign In" type="submit" disabled={loading}>
+            {loading ? (
               <div className="flex items-center justify-center">
-                Sign In... 
+                Sign In...
                 <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
                   <circle
                     className="opacity-25"

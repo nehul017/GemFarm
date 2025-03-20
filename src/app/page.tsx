@@ -11,18 +11,18 @@ const Vector = "/assets/icons/vec2.svg";
 
 export default function Home() {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const token = Cookies.get("authToken");
+  // useEffect(() => {
+  //   const token = Cookies.get("authToken");
 
-    if (token) {
-      router.push("/home"); // Redirect to home/dashboard if logged in
-      setLoading(false);
-    } else {
-      setLoading(false);
-    }
-  }, [router]);
+  //   if (token) {
+  //     router.push("/home"); // Redirect to home/dashboard if logged in
+  //     setLoading(false);
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [router]);
 
   return loading ? (
     <div className="flex justify-center items-center h-dvh">

@@ -1,4 +1,5 @@
-"use client";
+"use client"; // 👈 Add this at the top
+
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +13,14 @@ import SettingIcon from "@/icons/settingIcon";
 import CropsList from "@/components/common/CropsList";
 import NotificationIcon from "@/icons/notificationIcon";
 import Footer from "@/components/layout/footer";
+import withAuth from "../withAuth";
 
 const FarmImage = "/assets/images/farm.png";
 const ProfileImage = "/assets/images/Ty1.png";
 const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
 const NFTFarmImage = "/assets/images/NFT.jpg";
 
-export default function page() {
+function page() {
   const dispatch = useDispatch<AppDispatch>();
   const currentDate = moment().format("dddd, DD MMMM YYYY");
   const { user, loading } = useSelector((state: RootState) => state.auth);
@@ -204,3 +206,5 @@ export default function page() {
     </div>
   );
 }
+
+export default withAuth(page);

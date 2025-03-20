@@ -13,6 +13,7 @@ export default function SignOutModal({ setShowSignOutModal }: SignOutModalProps)
   };
 
   const handleSignOut = () => {
+    setShowSignOutModal(false);
     sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("user");
     Cookies.remove("authToken");
@@ -21,7 +22,6 @@ export default function SignOutModal({ setShowSignOutModal }: SignOutModalProps)
     // Prevent going back to previous authenticated pages
     window.history.pushState(null, "", "/signin");
     window.location.replace("/signin"); // Ensures fresh redirect
-    setShowSignOutModal(false);
   };
 
   return (
