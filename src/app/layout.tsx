@@ -54,7 +54,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#36BA7E" />
+        <meta name="theme-color" content="#0A3732" />
       </head>
       <body className={`${inter.variable} ${paytoneOne.variable} antialiased`}>
         <Providers>
