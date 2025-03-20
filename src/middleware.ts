@@ -12,5 +12,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/setting", "/home", "/farm-health", "/roi", "/watch-list", "/watch-list-items"], // Protect these routes
+  matcher: ["/profile","/setting", "/home", "/farm-health", "/roi", "/watch-list", "/watch-list-items"], // Protect these routes
 };
