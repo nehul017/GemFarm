@@ -111,10 +111,19 @@ export default function CropsList() {
       img: CucumberImage,
       isPositive: false,
     },
-  ].map((item) => ({
-    ...item,
-    marketData: generateMarketData(item.basePrice, 30),
-  }));
+  ].map((item) => {
+    const marketData = generateMarketData(item.basePrice, 30);
+  
+    // Find the high price of the previous day
+    const previousDayHigh =
+      marketData.length > 1 ? marketData[marketData.length - 2].high : null;
+  
+    return {
+      ...item,
+      marketData,
+      previousDayHigh,
+    };
+  });
 
   const yearlyYields = {
     Strawberry: 2000,
@@ -573,6 +582,7 @@ export default function CropsList() {
       </div>
     );
   };
+  console.log('items[0]', items[0].previousDayHigh)
 
   return (
     <>
@@ -594,7 +604,7 @@ export default function CropsList() {
                   Strawberry
                 </p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                  $4.78%
+                  ${items[0].previousDayHigh}%
                 </button>
               </div>
             </div>
@@ -621,7 +631,7 @@ export default function CropsList() {
               <div>
                 <p className="text-sm text-black font-semibold mb-2">Peas</p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                  $4.45%
+                ${items[1].previousDayHigh}%
                 </button>
               </div>
             </div>
@@ -650,7 +660,7 @@ export default function CropsList() {
                   Jalapenos
                 </p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                  $1.29%
+                ${items[2].previousDayHigh}%
                 </button>
               </div>
             </div>
@@ -677,7 +687,7 @@ export default function CropsList() {
               <div>
                 <p className="text-sm text-black font-semibold mb-2">Lettuce</p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                  $3.67%
+                ${items[3].previousDayHigh}%
                 </button>
               </div>
             </div>
@@ -704,7 +714,7 @@ export default function CropsList() {
               <div>
                 <p className="text-sm text-black font-semibold mb-2">Tomato</p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                  $2.50%
+                ${items[4].previousDayHigh}%
                 </button>
               </div>
             </div>
@@ -733,7 +743,7 @@ export default function CropsList() {
                   Cucumber
                 </p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                  $2.56%
+                ${items[5].previousDayHigh}%
                 </button>
               </div>
             </div>
