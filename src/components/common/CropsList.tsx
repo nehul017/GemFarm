@@ -604,7 +604,7 @@ export default function CropsList() {
                   Strawberry
                 </p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                  ${items[0].previousDayHigh}%
+                  ${items[0].previousDayHigh}
                 </button>
               </div>
             </div>
@@ -631,7 +631,7 @@ export default function CropsList() {
               <div>
                 <p className="text-sm text-black font-semibold mb-2">Peas</p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                ${items[1].previousDayHigh}%
+                ${items[1].previousDayHigh}
                 </button>
               </div>
             </div>
@@ -660,7 +660,7 @@ export default function CropsList() {
                   Jalapenos
                 </p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                ${items[2].previousDayHigh}%
+                ${items[2].previousDayHigh}
                 </button>
               </div>
             </div>
@@ -687,7 +687,7 @@ export default function CropsList() {
               <div>
                 <p className="text-sm text-black font-semibold mb-2">Lettuce</p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                ${items[3].previousDayHigh}%
+                ${items[3].previousDayHigh}
                 </button>
               </div>
             </div>
@@ -714,7 +714,7 @@ export default function CropsList() {
               <div>
                 <p className="text-sm text-black font-semibold mb-2">Tomato</p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                ${items[4].previousDayHigh}%
+                ${items[4].previousDayHigh}
                 </button>
               </div>
             </div>
@@ -743,7 +743,7 @@ export default function CropsList() {
                   Cucumber
                 </p>
                 <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                ${items[5].previousDayHigh}%
+                ${items[5].previousDayHigh}
                 </button>
               </div>
             </div>
