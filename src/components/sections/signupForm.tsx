@@ -33,15 +33,13 @@ export default function SignupForm() {
 
   const onSubmit = async (data: any) => {
     const trimmedData = {
-      userName: data.userName.trim(),
+      username: data.username.trim(),
       email: data.email.trim(),
       password: data.password.trim(),
     };
     try {
       const resultAction = await dispatch(signupUser(trimmedData));
       if (signupUser.fulfilled.match(resultAction)) {
-        sessionStorage.setItem("user", JSON.stringify(resultAction.payload.user));
-        sessionStorage.setItem("authToken", resultAction.payload.token);
         Cookies.set("authToken", resultAction.payload.token); // Set for 7 days
         Cookies.set("user", JSON.stringify(resultAction.payload.user));
 
@@ -64,11 +62,11 @@ export default function SignupForm() {
           <Input
             label="Name"
             placeholder="Enter your name"
-            {...register("userName", {
+            {...register("username", {
               onChange: (e) =>
-                setValue("userName", e.target.value),
+                setValue("username", e.target.value),
             })}
-            error={errors.userName?.message} // Pass the error for username
+            error={errors.username?.message} // Pass the error for username
           />
         </div>
         <div className="pb-[18px]">

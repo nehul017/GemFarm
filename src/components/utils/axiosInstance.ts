@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL, 
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      
+
       // Clear auth data
       sessionStorage.removeItem("authToken");
       sessionStorage.removeItem("user");
@@ -50,4 +50,14 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+
+
+const authAxiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_USER_SERVICE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+
+export { axiosInstance, authAxiosInstance };

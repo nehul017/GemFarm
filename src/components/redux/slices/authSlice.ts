@@ -21,7 +21,7 @@ export const loginUser = createAsyncThunk(
     credentials: { email: string; password: string },
     { rejectWithValue }
   ) => {
-    const axiosInstance = (await import("../../utils/axiosInstance")).default;
+    const axiosInstance = (await import("../../utils/axiosInstance")).authAxiosInstance;
     try {
       const response = await axiosInstance.post("/auth/login", credentials);
       return response.data;
@@ -35,11 +35,11 @@ export const loginUser = createAsyncThunk(
 export const signupUser = createAsyncThunk(
   "auth/signupUser",
   async (
-    userData: { userName: string; email: string; password: string },
+    userData: { username: string; email: string; password: string },
     { rejectWithValue }
   ) => {
     try {
-      const axiosInstance = (await import("../../utils/axiosInstance")).default;
+      const axiosInstance = (await import("../../utils/axiosInstance")).authAxiosInstance;
       const response = await axiosInstance.post("/auth/signup", userData);
       return response.data;
     } catch (error: any) {
@@ -52,7 +52,7 @@ export const signupUser = createAsyncThunk(
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async (_, { rejectWithValue }) => {
-    const axiosInstance = (await import("../../utils/axiosInstance")).default;
+    const axiosInstance = (await import("../../utils/axiosInstance")).authAxiosInstance;
     try {
       const response = await axiosInstance.get("/auth/get-profile");
       return response.data;
@@ -69,7 +69,7 @@ export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (credentials: { email: string | null }, { rejectWithValue }) => {
     try {
-      const axiosInstance = (await import("../../utils/axiosInstance")).default;
+      const axiosInstance = (await import("../../utils/axiosInstance")).authAxiosInstance;
       const response = await axiosInstance.post(
         "/auth/forgot-password",
         credentials
@@ -91,7 +91,7 @@ export const resetPassword = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const axiosInstance = (await import("../../utils/axiosInstance")).default;
+      const axiosInstance = (await import("../../utils/axiosInstance")).authAxiosInstance;
       const response = await axiosInstance.put(
         "/auth/reset-password",
         credentials
@@ -110,7 +110,7 @@ export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
   async (credentials: { otp: string }, { rejectWithValue }) => {
     try {
-      const axiosInstance = (await import("../../utils/axiosInstance")).default;
+      const axiosInstance = (await import("../../utils/axiosInstance")).authAxiosInstance;
       const response = await axiosInstance.post(
         "/auth/verify-otp",
         credentials
@@ -130,16 +130,16 @@ export const updateUserProfile = createAsyncThunk(
   async (
     {
       id,
-      userName,
+      username,
       email,
       profileImage,
-    }: { id: string; userName: string; email: string; profileImage?: File },
+    }: { id: string; username: string; email: string; profileImage?: File },
     { rejectWithValue }
   ) => {
     try {
-      const axiosInstance = (await import("../../utils/axiosInstance")).default;
+      const axiosInstance = (await import("../../utils/axiosInstance")).authAxiosInstance;
       const formData = new FormData();
-      formData.append("userName", userName);
+      formData.append("username", username);
       formData.append("email", email);
       if (profileImage) {
         formData.append("profileImage", profileImage);

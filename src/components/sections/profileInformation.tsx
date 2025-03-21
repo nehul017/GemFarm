@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from "../redux/store";
 import { fetchUserProfile } from "../redux/slices/authSlice";
 interface User {
   profileImage?: string;
-  userName?: string;
+  username?: string;
   email?: string;
 }
 
@@ -35,7 +35,7 @@ export default function ProfileInformation() {
         />
         <div>
           <p className="text-base font-semibold text-black200 m-0">
-            {user?.userName}
+            {user?.username}
           </p>
           <span className="text-[10px] text-gray600 block leading-4">
             {user?.email}

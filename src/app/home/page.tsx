@@ -55,7 +55,7 @@ function page() {
           <div className="flex items-center justify-between pb-5">
             <div>
               <h2 className="text-white text-[22px] font-semibold mb-1">
-                Hello, <span className="text-green">{user?.userName}</span>
+                Hello, <span className="text-green">{user?.username}</span>
               </h2>
               <p className="text-white opacity-[.55] text-xs font-medium">
                 {currentDate}
