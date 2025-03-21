@@ -19,7 +19,7 @@ export const loginSchema = Yup.object().shape({
 });
 
 export const signupSchema = Yup.object().shape({
-  userName: Yup.string().required("Name is required"),
+  username: Yup.string().required("Name is required"),
   email: Yup.string()
     .trim()
     .required("Email is required")
@@ -73,7 +73,7 @@ export const OTPVerificationFormSchema = Yup.object().shape({
 });
 
 export const updateProfileSchema = Yup.object().shape({
-  userName: Yup.string().required("Name is required"),
+  username: Yup.string().required("Name is required"),
   email: Yup.string()
     .trim()
     .required("Email is required")

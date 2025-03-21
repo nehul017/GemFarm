@@ -14,7 +14,7 @@ const EditIcon = "/assets/icons/edit.svg";
 const ProfileIcon = "/assets/images/Ty1.png";
 
 interface ProfileFormData {
-  userName: string;
+  username: string;
   email: string;
 }
 export default function UpdateProfile() {
@@ -43,7 +43,7 @@ export default function UpdateProfile() {
   // Set form default values when user data is available
   useEffect(() => {
     if (user) {
-      setValue("userName", user.userName || "");
+      setValue("username", user.username || "");
       setValue("email", user.email || "");
       setPreviewImage(user.profileImage);     
       setInitialLoading(false);
@@ -87,7 +87,7 @@ export default function UpdateProfile() {
   const onSubmit = async (data: ProfileFormData) => {
     setLoading(true);
     const formData = new FormData();
-    formData.append("userName", data.userName);
+    formData.append("username", data.username);
     if (profileImage) {
       formData.append("profileImage", profileImage);
     }
@@ -95,7 +95,7 @@ export default function UpdateProfile() {
     dispatch(
       updateUserProfile({
         id: user.id,
-        userName: data.userName.trim(),
+        username: data.username.trim(),
         email: data.email,
         profileImage: profileImage || undefined,
       })
@@ -142,7 +142,7 @@ export default function UpdateProfile() {
       </div>
       <div className="pt-2.5 pb-[30px]">
         <h2 className="text-base font-semibold text-black200 text-center">
-          {user?.userName || "User Name"}
+          {user?.username || "User Name"}
         </h2>
         <p className="text-[10px] leading-4 text-gray600 block text-center">
           {user?.email || "user@example.com"}
@@ -154,10 +154,10 @@ export default function UpdateProfile() {
             inputClass="bg-[#FAFAFA]"
             label="Name"
             placeholder="Enter your name"
-            {...register("userName", {
-              onChange: (e) => setValue("userName", e.target.value),
+            {...register("username", {
+              onChange: (e) => setValue("username", e.target.value),
             })}
-            error={errors.userName?.message}
+            error={errors.username?.message}
           />
           <div className="py-5">
             <Input

@@ -35,7 +35,7 @@ export const loginUser = createAsyncThunk(
 export const signupUser = createAsyncThunk(
   "auth/signupUser",
   async (
-    userData: { userName: string; email: string; password: string },
+    userData: { username: string; email: string; password: string },
     { rejectWithValue }
   ) => {
     try {
@@ -130,16 +130,16 @@ export const updateUserProfile = createAsyncThunk(
   async (
     {
       id,
-      userName,
+      username,
       email,
       profileImage,
-    }: { id: string; userName: string; email: string; profileImage?: File },
+    }: { id: string; username: string; email: string; profileImage?: File },
     { rejectWithValue }
   ) => {
     try {
       const axiosInstance = (await import("../../utils/axiosInstance")).default;
       const formData = new FormData();
-      formData.append("userName", userName);
+      formData.append("username", username);
       formData.append("email", email);
       if (profileImage) {
         formData.append("profileImage", profileImage);
