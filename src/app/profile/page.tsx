@@ -27,4 +27,4 @@ function page() {
   );
 }
 
-export default withAuth(page);
+export default page;

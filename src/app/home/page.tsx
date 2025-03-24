@@ -1,16 +1,13 @@
 "use client"; // 👈 Add this at the top
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
-import Searchbar from "@/components/common/searchbar";
 import { fetchUserProfile } from "@/components/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/components/redux/store";
 import LocationIcon from "@/icons/locationIcon";
-import SettingIcon from "@/icons/settingIcon";
-import CropsList from "@/components/common/CropsList";
 import NotificationIcon from "@/icons/notificationIcon";
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
@@ -77,7 +74,6 @@ function page() {
               </div>
             </div>
           </div>
-          {/* <Searchbar /> */}
           {/* Toggle Buttons */}
           {/* <div className="flex gap-4 mt-4 mb-1">
             <button
@@ -101,16 +97,13 @@ function page() {
               Containers
             </button>
           </div> */}
-          {/* {activeView === "containers" && ( */}
           <div className="pt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-white">Your Farms</p>
             <p className="text-sm font-medium text-white">
               <span className="text-green">3</span> Container
             </p>
           </div>
-          {/* )} */}
         </div>
-        {/* {activeView === "containers" && ( */}
         <div className="mt-[-100px] px-5 pb-[100px]">
           <div
             className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
@@ -192,19 +185,11 @@ function page() {
               </button>
             </div>
           </div>
-          {/* );
-          })} */}
         </div>
-        {/* )} */}
-        {/* {activeView === "crops" && (
-          <div className="mt-[-100px] px-5">
-            <CropsList />
-          </div>
-        )} */}
       </div>
       <Footer />
     </div>
   );
 }
 
-export default withAuth(page);
+export default page;

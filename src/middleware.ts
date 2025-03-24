@@ -6,9 +6,9 @@ export function middleware(req: NextRequest) {
   const cookieHeader = req.headers.get("cookie");
   const token = cookieHeader
     ? cookieHeader
-        .split("; ")
-        .find((c) => c.startsWith("authToken="))
-        ?.split("=")[1]
+      .split("; ")
+      .find((c) => c.startsWith("authToken="))
+      ?.split("=")[1]
     : null;
 
   if (!token || token === "undefined") {
@@ -20,5 +20,5 @@ export function middleware(req: NextRequest) {
 
 
 export const config = {
-  matcher: ["/profile", "/setting", "/home", "/farm-health", "/roi", "/watch-list", "/watch-list-items"], // Protect these routes
+  matcher: ["/home", "/profile", "/setting", "/farm-health", "/roi", "/watch-list", "/watch-list-items"], // Protect these routes
 };

@@ -3,13 +3,13 @@
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
 
-function layout({children}:any) {
+function layout({ children }: any) {
   return (
     <div>
       {children}
       <Footer />
     </div>
-  )
+  );
 }
 
-export default withAuth(layout);
+export default layout;
