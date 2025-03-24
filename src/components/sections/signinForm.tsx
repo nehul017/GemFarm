@@ -73,11 +73,8 @@ export default function SigninForm() {
     try {
       const resultAction = await dispatch(loginUser(data));
       if (loginUser.fulfilled.match(resultAction)) {
-        sessionStorage.setItem(
-          "user",
-          JSON.stringify(resultAction.payload.user)
-        );
-        sessionStorage.setItem("authToken", resultAction.payload.token);
+        sessionStorage.removeItem("authToken");
+        sessionStorage.removeItem("user");
         Cookies.set("authToken", resultAction.payload.token); // Set for 7 days
         Cookies.set("user", JSON.stringify(resultAction.payload.user));
 

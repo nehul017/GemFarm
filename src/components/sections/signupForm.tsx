@@ -40,8 +40,6 @@ export default function SignupForm() {
     try {
       const resultAction = await dispatch(signupUser(trimmedData));
       if (signupUser.fulfilled.match(resultAction)) {
-        sessionStorage.setItem("user", JSON.stringify(resultAction.payload.user));
-        sessionStorage.setItem("authToken", resultAction.payload.token);
         Cookies.set("authToken", resultAction.payload.token); // Set for 7 days
         Cookies.set("user", JSON.stringify(resultAction.payload.user));
 
