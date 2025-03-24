@@ -56,8 +56,7 @@ export default function SigninForm() {
     }
   }, [setValue]);
 
-  const onSubmit = async (data: any, event?: React.BaseSyntheticEvent) => {
-    event?.preventDefault(); // Prevent any default behavior
+  const onSubmit = async (data: any) => {
 
     if (rememberMe) {
       sessionStorage.setItem("rememberedEmail", data.email);
