@@ -65,7 +65,7 @@ export default function SigninForm() {
         JSON.stringify({ email: data.email, password: data.password }),
         SECRET_KEY
       ).toString();
-      Cookies.set("rememberedCredentials", encryptedData);
+      Cookies.set("rememberedCredentials", encryptedData, { expires: 7 });
     } else {
       sessionStorage.removeItem("rememberedEmail");
       Cookies.remove("rememberedCredentials");
@@ -75,8 +75,10 @@ export default function SigninForm() {
       if (loginUser.fulfilled.match(resultAction)) {
         sessionStorage.removeItem("authToken");
         sessionStorage.removeItem("user");
-        Cookies.set("authToken", resultAction.payload.token); // Set for 7 days
-        Cookies.set("user", JSON.stringify(resultAction.payload.user));
+        Cookies.set("authToken", resultAction.payload.token, { expires: 1 }); // Set for 7 days
+        Cookies.set("user", JSON.stringify(resultAction.payload.user), {
+          expires: 1,
+        });
 
         router.push("/home");
       } else {

@@ -40,8 +40,10 @@ export default function SignupForm() {
     try {
       const resultAction = await dispatch(signupUser(trimmedData));
       if (signupUser.fulfilled.match(resultAction)) {
-        Cookies.set("authToken", resultAction.payload.token); // Set for 7 days
-        Cookies.set("user", JSON.stringify(resultAction.payload.user));
+        Cookies.set("authToken", resultAction.payload.token, { expires: 1 }); // Set for 7 days
+        Cookies.set("user", JSON.stringify(resultAction.payload.user), {
+          expires: 1,
+        });
 
         router.push("/home");
       } else {
@@ -63,8 +65,7 @@ export default function SignupForm() {
             label="Name"
             placeholder="Enter your name"
             {...register("username", {
-              onChange: (e) =>
-                setValue("username", e.target.value),
+              onChange: (e) => setValue("username", e.target.value),
             })}
             error={errors.username?.message} // Pass the error for username
           />
