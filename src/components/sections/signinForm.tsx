@@ -13,7 +13,7 @@ import Input from "../../components/common/Input";
 import Button from "../../components/common/button";
 import { loginSchema } from "../utils/validations/authValidation";
 import { toast, ToastContainer } from "react-toastify";
-
+import { useRouter as nextRouter } from "next/router";
 const EyeIcon = "/assets/icons/eye-open.svg";
 const CloseEyeIcon = "/assets/icons/eye-crossed.svg";
 const SECRET_KEY = "gemFarmSecret";
@@ -23,6 +23,7 @@ export default function SigninForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
+  const routerNext = nextRouter();
   const { loading } = useSelector((state: RootState) => state.auth);
 
   const {
@@ -78,8 +79,10 @@ export default function SigninForm() {
         Cookies.set("user", JSON.stringify(resultAction.payload.user), {
           expires: 1,
         });
-
+        console.log("Redirecting to /home...");
         router.push("/home");
+        routerNext.replace("/home")
+        window.location.href = "/home";
       } else {
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);
