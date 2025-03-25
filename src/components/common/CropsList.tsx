@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Filter } from "lucide-react";
 import Header from "@/components/layout/header";
 import LineChartIcon from "@/icons/lineChart";
 import LineChartRed from "@/icons/lineChartRed";
@@ -27,7 +28,305 @@ import {
   AreaChart,
 } from "recharts";
 import moment from "moment";
+const generateMarketData = (basePrice: number, days: number) => {
+  const data = [];
+  let currentPrice = basePrice;
+  const now = new Date();
 
+  for (let i = days; i >= 0; i--) {
+    const date = new Date(now);
+    date.setDate(date.getDate() - i);
+
+    // Generate more realistic price movements
+    const change = (Math.random() - 0.5) * (basePrice * 0.03); // 3% max daily change
+    currentPrice += change;
+
+    // Generate high, low, open, close prices
+    const high = currentPrice + Math.random() * basePrice * 0.01;
+    const low = currentPrice - Math.random() * basePrice * 0.01;
+    const open = currentPrice - Math.random() * (high - low);
+    const close = currentPrice;
+    const volume = Math.floor(Math.random() * 1000) + 500;
+
+    data.push({
+      date: moment(date).format("MM/DD/YYYY"),
+      price: Number(currentPrice.toFixed(2)),
+      high: Number(high.toFixed(2)),
+      low: Number(low.toFixed(2)),
+      open: Number(open.toFixed(2)),
+      close: Number(close.toFixed(2)),
+      volume,
+    });
+  }
+  return data;
+};
+
+const items = [
+  {
+    name: "Strawberry",
+    basePrice: 34,
+    img: StrawberryImage,
+    isPositive: true,
+    systemType: "NFT",
+    category: "Berries",
+    variety: "Seascape",
+  },
+  {
+    name: "Peas",
+    basePrice: 16.75,
+    img: PeasImage,
+    isPositive: true,
+    systemType: "Dutch Bucket",
+    category: "Legumes",
+    variety: "Sugar Snap",
+  },
+  {
+    name: "Jalapenos",
+    basePrice: 24,
+    img: JalapenosImage,
+    isPositive: true,
+    systemType: "Dutch Bucket",
+    category: "Peppers",
+    variety: "Early",
+  },
+  {
+    name: "Lettuce",
+    basePrice: 27.5,
+    img: LettuceImage,
+    isPositive: false,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Butterhead",
+  },
+  {
+    name: "Tomato",
+    basePrice: 44,
+    img: TomatoImage,
+    isPositive: false,
+    systemType: "Dutch Bucket",
+    category: "Fruits",
+    variety: "Beefsteak",
+  },
+  {
+    name: "Cucumber",
+    basePrice: 38,
+    img: CucumberImage,
+    isPositive: false,
+    systemType: "NFT",
+    category: "Cucurbits",
+    variety: "English",
+  },
+  {
+    name: "Romaine Lettuce",
+    basePrice: 22.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Romain.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Romaine",
+  },
+  {
+    name: "Iceberg Lettuce",
+    basePrice: 30.25,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Iceberg+Lettuce.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Iceberg",
+  },
+  {
+    name: "Butterhead Lettuce",
+    basePrice: 33.75,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/butterhead.jpg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Butterhead",
+  },
+  {
+    name: "Loose Leaf Lettuce",
+    basePrice: 31.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Loose+Leaf+Lettuce.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Loose Leaf",
+  },
+  {
+    name: "Arugula",
+    basePrice: 32.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Arugula+(Rocket).webp",
+    isPositive: false,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Rocket",
+  },
+  {
+    name: "Swiss Chard",
+    basePrice: 22.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Swiss+Chard.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Beta vulgaris",
+  },
+  {
+    name: "Bok Choy",
+    basePrice: 23.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Bok+Choy.webp",
+    isPositive: false,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Pak Choi",
+  },
+  {
+    name: "Endive",
+    basePrice: 24.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/EndiveCichorium+endivia.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Cichorium endivia",
+  },
+  {
+    name: "Watercress",
+    basePrice: 23.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Watercress-spouts-640.webp",
+    isPositive: false,
+    systemType: "NFT",
+    category: "Leafy Greens",
+    variety: "Nasturtium officinale",
+  },
+  {
+    name: "Basil",
+    basePrice: 15.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Basil.jpg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Basil",
+  },
+  {
+    name: "Cilantro",
+    basePrice: 14.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Cilantro.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Coriander",
+  },
+  {
+    name: "Parsley",
+    basePrice: 13.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/parsley.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Parsley",
+  },
+  {
+    name: "Mint",
+    basePrice: 15.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/pepperminit.jpg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Peppermint",
+  },
+  {
+    name: "Mint",
+    basePrice: 15.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Spearmint.jpg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Spearmint",
+  },
+  {
+    name: "Thyme",
+    basePrice: 16.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Thyme-Bundle.jpg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Thyme",
+  },
+  {
+    name: "Dill",
+    basePrice: 14.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dill.jpg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Dill",
+  },
+  {
+    name: "Chives",
+    basePrice: 13.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Chives.png",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Chives",
+  },
+  {
+    name: "Oregano",
+    basePrice: 14.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Oregano.jpeg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Oregano",
+  },
+  {
+    name: "Sage",
+    basePrice: 15.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Sage.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Sage",
+  },
+  {
+    name: "Rosemary",
+    basePrice: 16.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Rosemary.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Rosemary",
+  },
+  {
+    name: "Tarragon",
+    basePrice: 14.0,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Tarragon.webp",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Tarragon",
+  },
+  {
+    name: "Lemon Balm",
+    basePrice: 13.5,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/lemonbalm.jpeg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Herbs",
+    variety: "Lemon Balm",
+  },
+].map((item) => {
+  const marketData = generateMarketData(item.basePrice, 30);
+
+  // Find the high price of the previous day
+  const previousDayHigh =
+    marketData.length > 1 ? marketData[marketData.length - 2].high : null;
+
+  return {
+    ...item,
+    marketData,
+    previousDayHigh,
+  };
+});
 export default function CropsList() {
   const [viewMode, setViewMode] = useState("graph"); // 'graph' or 'table'
   const [showFinancials, setShowFinancials] = useState(false);
@@ -41,90 +340,6 @@ export default function CropsList() {
     maintenance: 500,
   };
 
-  const generateMarketData = (basePrice: number, days: number) => {
-    const data = [];
-    let currentPrice = basePrice;
-    const now = new Date();
-
-    for (let i = days; i >= 0; i--) {
-      const date = new Date(now);
-      date.setDate(date.getDate() - i);
-
-      // Generate more realistic price movements
-      const change = (Math.random() - 0.5) * (basePrice * 0.03); // 3% max daily change
-      currentPrice += change;
-
-      // Generate high, low, open, close prices
-      const high = currentPrice + Math.random() * basePrice * 0.01;
-      const low = currentPrice - Math.random() * basePrice * 0.01;
-      const open = currentPrice - Math.random() * (high - low);
-      const close = currentPrice;
-      const volume = Math.floor(Math.random() * 1000) + 500;
-
-      data.push({
-        date: moment(date).format("MM/DD/YYYY"),
-        price: Number(currentPrice.toFixed(2)),
-        high: Number(high.toFixed(2)),
-        low: Number(low.toFixed(2)),
-        open: Number(open.toFixed(2)),
-        close: Number(close.toFixed(2)),
-        volume,
-      });
-    }
-    return data;
-  };
-
-  const items = [
-    {
-      name: "Strawberry",
-      basePrice: 34,
-      img: StrawberryImage,
-      isPositive: true,
-    },
-    {
-      name: "Peas",
-      basePrice: 16.75,
-      img: PeasImage,
-      isPositive: true,
-    },
-    {
-      name: "Jalapenos",
-      basePrice: 24,
-      img: JalapenosImage,
-      isPositive: true,
-    },
-    {
-      name: "Lettuce",
-      basePrice: 27.5,
-      img: LettuceImage,
-      isPositive: false,
-    },
-    {
-      name: "Tomato",
-      basePrice: 44,
-      img: TomatoImage,
-      isPositive: false,
-    },
-    {
-      name: "Cucumber",
-      basePrice: 38,
-      img: CucumberImage,
-      isPositive: false,
-    },
-  ].map((item) => {
-    const marketData = generateMarketData(item.basePrice, 30);
-  
-    // Find the high price of the previous day
-    const previousDayHigh =
-      marketData.length > 1 ? marketData[marketData.length - 2].high : null;
-  
-    return {
-      ...item,
-      marketData,
-      previousDayHigh,
-    };
-  });
-
   const yearlyYields = {
     Strawberry: 2000,
     Peas: 3000,
@@ -132,8 +347,29 @@ export default function CropsList() {
     Lettuce: 4000,
     Tomato: 3500,
     Cucumber: 3000,
+    "Romaine Lettuce": 4000,
+    "Iceberg Lettuce": 3500,
+    "Butterhead Lettuce": 3200,
+    "Loose Leaf Lettuce": 3400,
+    Arugula: 2900,
+    "Swiss Chard": 2700,
+    "Bok Choy": 3100,
+    Endive: 2600,
+    Watercress: 2500,
+    Basil: 3000,
+    Cilantro: 2800,
+    Parsley: 2700,
+    Mint: 2500, // Same name appears twice; consider unique identifiers (e.g., Peppermint, Spearmint)
+    Thyme: 2600,
+    Dill: 2500,
+    Chives: 2400,
+    Oregano: 2300,
+    Sage: 2500,
+    Rosemary: 2600,
+    Tarragon: 2400,
+    "Lemon Balm": 2200,
   };
-
+  
   const calculateROI = (item: {
     name: keyof typeof yearlyYields;
     basePrice: number;
@@ -582,180 +818,183 @@ export default function CropsList() {
       </div>
     );
   };
-  console.log('items[0]', items[0].previousDayHigh)
+
+  const [sortBy, setSortBy] = useState<
+    "systemType" | "category" | "name" | "variety"
+  >("systemType");
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const [activeView, setActiveView] = useState("All");
+
+  const processedCrops = items
+    .filter((item) => {
+      if (activeView === "All") return true;
+      if (activeView === "NFT") return item.systemType === "NFT";
+      if (activeView === "Dutch Bucket")
+        return item.systemType === "Dutch Bucket";
+      return false;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "systemType":
+          return a.systemType.localeCompare(b.systemType);
+        case "category":
+          return a.category.localeCompare(b.category);
+        case "name":
+          return a.name.localeCompare(b.name);
+        case "variety":
+          return a.variety.localeCompare(b.variety);
+        default:
+          return 0;
+      }
+    });
 
   return (
     <>
       {/* <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
       <div className="pt-0">
-        <div className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 flex items-center justify-between">
+        <div className="flex items-center mb-2">
+          <div className="w-full">
+            <div className="flex gap-4 mt-4 mb-1 text-sm">
+              <button
+                onClick={() => setActiveView("All")}
+                className={`flex-1 rounded-lg font-medium border transition-colors ${
+                  activeView === "All"
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-black"
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setActiveView("NFT")}
+                className={`flex-1 rounded-lg font-medium border transition-colors ${
+                  activeView === "NFT"
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-black"
+                }`}
+              >
+                NFT
+              </button>
+              <button
+                onClick={() => setActiveView("Dutch Bucket")}
+                className={`flex-1 rounded-lg font-medium border transition-colors ${
+                  activeView === "Dutch Bucket"
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-black"
+                }`}
+              >
+                Dutch Bucket
+              </button>
+              <button
+                onClick={() => setShowSortMenu(!showSortMenu)}
+                className="flex items-center gap-1 p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
+              >
+                <Filter className="w-4 h-4" />
+                <span>Sort by</span>
+              </button>
+            </div>
+
+            {showSortMenu && (
+              <div className="absolute right-0 w-48 bg-white rounded-lg shadow-lg border z-50">
+                <div className="py-1">
+                  <button
+                    className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                      sortBy === "systemType" ? "bg-blue-50 text-blue-600" : ""
+                    }`}
+                    onClick={() => {
+                      setSortBy("systemType");
+                      setShowSortMenu(false);
+                    }}
+                  >
+                    System Type
+                  </button>
+                  <button
+                    className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                      sortBy === "category" ? "bg-blue-50 text-blue-600" : ""
+                    }`}
+                    onClick={() => {
+                      setSortBy("category");
+                      setShowSortMenu(false);
+                    }}
+                  >
+                    Crop Category
+                  </button>
+                  <button
+                    className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                      sortBy === "name" ? "bg-blue-50 text-blue-600" : ""
+                    }`}
+                    onClick={() => {
+                      setSortBy("name");
+                      setShowSortMenu(false);
+                    }}
+                  >
+                    Crop Name
+                  </button>
+                  <button
+                    className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                      sortBy === "variety" ? "bg-blue-50 text-blue-600" : ""
+                    }`}
+                    onClick={() => {
+                      setSortBy("variety");
+                      setShowSortMenu(false);
+                    }}
+                  >
+                    Crop Variety
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        {processedCrops.map((item, i) => (
           <div
-            className="flex items-center gap-5"
-            onClick={() => setSelectedItem(items[0])}
+            key={i}
+            className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5"
           >
-            <div className="flex items-center gap-3">
-              <img
-                src={StrawberryImage}
-                alt="StrawberryImage"
-                className="block w-[70px] min-w-[70px] rounded-xl h-[70px]"
-              />
+            <div
+              className="grid-cols-[1fr_48px_60px] grid gap-2 items-center"
+              onClick={() => setSelectedItem(item)}
+            >
+              <div className="flex gap-3">
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="block w-[50px] min-w-[50px] rounded-sm h-[50px]"
+                />
+                <div>
+                  <p className="text-sm text-black font-semibold mb-1 truncate max-w-[130px]">
+                    {item.name}
+                    <span className="text-sm text-gray-500">
+                      ({item.variety})
+                    </span>
+                  </p>
+                  <div className="text-xs text-gray-600">
+                    <span className="block">{item.systemType}</span>
+                    <span className="block">• {item.category}</span>
+                  </div>
+                  <button
+                    className={`text-xs font-semibold border-none cursor-pointer py-[5px] px-2.5 rounded-sm ${
+                      item.isPositive
+                        ? "text-green bg-[#E6F4EE]"
+                        : "text-[#FF4747] bg-[#FAE8E8]"
+                    }`}
+                  >
+                    ${item.previousDayHigh}
+                  </button>
+                </div>
+              </div>
+              {item.isPositive ? <LineChartIcon /> : <LineChartRed />}
               <div>
-                <p className="text-sm text-black font-semibold mb-2">
-                  Strawberry
-                </p>
-                <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                  ${items[0].previousDayHigh}
+                <button
+                  className="py-2.5 px-4 bg-primary text-white text-sm font-medium border-none rounded-full"
+                  onClick={(e) => handleBuyClick(item, e)}
+                >
+                  Buy
                 </button>
               </div>
             </div>
-            <LineChartIcon />
           </div>
-          <button
-            className="py-2.5 px-4 bg-primary text-white text-sm font-medium border-none rounded-full"
-            onClick={(e) => handleBuyClick(items[0], e)}
-          >
-            Buy
-          </button>
-        </div>
-        <div className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 flex items-center justify-between">
-          <div
-            className="flex items-center gap-5"
-            onClick={() => setSelectedItem(items[1])}
-          >
-            <div className="flex items-center gap-3">
-              <img
-                src={PeasImage}
-                alt="PeasImage"
-                className="block w-[70px] min-w-[70px] rounded-xl h-[70px]"
-              />
-              <div>
-                <p className="text-sm text-black font-semibold mb-2">Peas</p>
-                <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                ${items[1].previousDayHigh}
-                </button>
-              </div>
-            </div>
-            <LineChartIcon />
-          </div>
-          <button
-            className="py-2.5 px-4 bg-primary text-white text-sm font-medium border-none rounded-full"
-            onClick={(e) => handleBuyClick(items[1], e)}
-          >
-            Buy
-          </button>
-        </div>
-        <div className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 flex items-center justify-between">
-          <div
-            className="flex items-center gap-5"
-            onClick={() => setSelectedItem(items[2])}
-          >
-            <div className="flex items-center gap-3">
-              <img
-                src={JalapenosImage}
-                alt="JalapenosImage"
-                className="block w-[70px] min-w-[70px] rounded-xl h-[70px]"
-              />
-              <div>
-                <p className="text-sm text-black font-semibold mb-2">
-                  Jalapenos
-                </p>
-                <button className="text-xs font-semibold border-none cursor-pointer text-green py-[5px] px-2.5 rounded-sm bg-[#E6F4EE]">
-                ${items[2].previousDayHigh}
-                </button>
-              </div>
-            </div>
-            <LineChartIcon />
-          </div>
-          <button
-            className="py-2.5 px-4 bg-primary text-white text-sm font-medium border-none rounded-full"
-            onClick={(e) => handleBuyClick(items[2], e)}
-          >
-            Buy
-          </button>
-        </div>
-        <div className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 flex items-center justify-between">
-          <div
-            className="flex items-center gap-5"
-            onClick={() => setSelectedItem(items[3])}
-          >
-            <div className="flex items-center gap-3">
-              <img
-                src={LettuceImage}
-                alt="LettuceImage"
-                className="block w-[70px] min-w-[70px] rounded-xl h-[70px]"
-              />
-              <div>
-                <p className="text-sm text-black font-semibold mb-2">Lettuce</p>
-                <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                ${items[3].previousDayHigh}
-                </button>
-              </div>
-            </div>
-            <LineChartRed />
-          </div>
-          <button
-            className="py-2.5 px-4 bg-primary text-white text-sm font-medium border-none rounded-full"
-            onClick={(e) => handleBuyClick(items[3], e)}
-          >
-            Buy
-          </button>
-        </div>
-        <div className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 flex items-center justify-between">
-          <div
-            className="flex items-center gap-5"
-            onClick={() => setSelectedItem(items[4])}
-          >
-            <div className="flex items-center gap-3">
-              <img
-                src={TomatoImage}
-                alt="TomatoImage"
-                className="block w-[70px] min-w-[70px] rounded-xl h-[70px]"
-              />
-              <div>
-                <p className="text-sm text-black font-semibold mb-2">Tomato</p>
-                <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                ${items[4].previousDayHigh}
-                </button>
-              </div>
-            </div>
-            <LineChartRed />
-          </div>
-          <button
-            className="py-2.5 px-4 bg-primary text-white text-sm font-medium border-none rounded-full"
-            onClick={(e) => handleBuyClick(items[4], e)}
-          >
-            Buy
-          </button>
-        </div>
-        <div className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 flex items-center justify-between">
-          <div
-            className="flex items-center gap-5"
-            onClick={() => setSelectedItem(items[5])}
-          >
-            <div className="flex items-center gap-3">
-              <img
-                src={CucumberImage}
-                alt="CucumberImage"
-                className="block w-[70px] min-w-[70px] rounded-xl h-[70px]"
-              />
-              <div>
-                <p className="text-sm text-black font-semibold mb-2">
-                  Cucumber
-                </p>
-                <button className="text-xs font-semibold border-none cursor-pointer text-[#FF4747] py-[5px] px-2.5 rounded-sm bg-[#FAE8E8]">
-                ${items[5].previousDayHigh}
-                </button>
-              </div>
-            </div>
-            <LineChartRed />
-          </div>
-          <button
-            className="py-2.5 px-4 bg-primary text-white text-sm font-medium border-none rounded-full"
-            onClick={(e) => handleBuyClick(items[5], e)}
-          >
-            Buy
-          </button>
-        </div>
+        ))}
         {selectedItem && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
             <div
@@ -875,23 +1114,29 @@ export default function CropsList() {
                         </tr>
                       </thead>
                       <tbody>
-                        {selectedItem.marketData.map((data, index) => (
-                          <tr key={index} className="border-b">
-                            <td className="px-4 py-2">{data.date}</td>
-                            {/* <td className="px-4 py-2">
+                        {selectedItem.marketData
+                          .sort(
+                            (a, b) =>
+                              new Date(b.date).getTime() -
+                              new Date(a.date).getTime()
+                          )
+                          .map((data, index) => (
+                            <tr key={index} className="border-b">
+                              <td className="px-4 py-2">{data.date}</td>
+                              {/* <td className="px-4 py-2">
                                 ${data.open.toFixed(2)}
                               </td> */}
-                            <td className="px-4 py-2">
-                              ${data.high.toFixed(2)}
-                            </td>
-                            <td className="px-4 py-2">
-                              ${data.low.toFixed(2)}
-                            </td>
-                            {/* <td className="px-4 py-2">
+                              <td className="px-4 py-2">
+                                ${data.high.toFixed(2)}
+                              </td>
+                              <td className="px-4 py-2">
+                                ${data.low.toFixed(2)}
+                              </td>
+                              {/* <td className="px-4 py-2">
                                 ${data.close.toFixed(2)}
                               </td> */}
-                          </tr>
-                        ))}
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
@@ -910,7 +1155,6 @@ export default function CropsList() {
           />
         )}
       </div>
-      {/* </div> */}
     </>
   );
 }
