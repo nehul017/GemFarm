@@ -146,7 +146,7 @@ export default function UpdateProfile() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Input
-            inputClass="bg-[#FAFAFA]"
+            inputClass="bg-[#FFFFFF]"
             label="Name"
             placeholder="Enter your name"
             {...register("username")}
@@ -154,7 +154,7 @@ export default function UpdateProfile() {
           />
           <div className="py-5">
             <Input
-              inputClass="bg-[#FAFAFA]"
+              inputClass="bg-[#EBE9E9]"
               label="Email"
               readOnly
               placeholder="Enter your email"
