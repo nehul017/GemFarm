@@ -50,6 +50,26 @@ export default function RootLayout({
     pathname === "/reset-password" ||
     pathname === "/verify-otp";
 
+    useEffect(() => {
+      const handlePopState = (event: PopStateEvent) => {
+        // Prevent navigation on signin and signup pages
+        if (pathname === "/signin" || pathname === "/signup") {
+          event.preventDefault();
+          window.history.pushState(null, "", window.location.href); // Force stay on the same page
+        }
+      };
+  
+      // Push the current state to prevent back navigation
+      window.history.pushState(null, "", window.location.href);
+  
+      // Add popstate listener for back/forward navigation
+      window.addEventListener("popstate", handlePopState);
+  
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }, [pathname]);
+
   return (
     <html lang="en">
       <head>
