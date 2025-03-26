@@ -1,14 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import Button from "@/components/common/button";
-import Input from "@/components/common/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { fetchUserProfile, updateUserProfile } from "../redux/slices/authSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { updateProfileSchema } from "../utils/validations/authValidation";
+import Button from "@/components/common/button";
+import Input from "@/components/common/Input";
 
 const EditIcon = "/assets/icons/edit.svg";
 const ProfileIcon = "/assets/images/Ty1.png";
@@ -17,60 +17,59 @@ interface ProfileFormData {
   username: string;
   email: string;
 }
+
 export default function UpdateProfile() {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
   const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
-
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  // Use react-hook-form
+  const fileInputRef = useRef<HTMLInputElement | null>(null); // Ref for file input
+
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<ProfileFormData>({
-    resolver: yupResolver(updateProfileSchema), // Connect Yup validation
+    resolver: yupResolver(updateProfileSchema),
   });
 
   useEffect(() => {
     dispatch(fetchUserProfile());
   }, [dispatch]);
 
-  // Set form default values when user data is available
   useEffect(() => {
     if (user) {
       setValue("username", user.username || "");
       setValue("email", user.email || "");
-      setPreviewImage(user.profileImage);     
+      setPreviewImage(user.profileImage);
       setInitialLoading(false);
     }
   }, [user, setValue]);
 
-  // Handle Image Selection
-  const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp"];
-  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-  
+  const ALLOWED_IMAGE_TYPES = [
+    "image/jpeg",
+    "image/png",
+    "image/jpg",
+    "image/gif",
+    "image/webp",
+  ];
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-  
-      // Validate file type
       if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-        console.log('file', file)
         toast.error("Only JPG, JPEG, PNG, GIF, and WEBP images are allowed.");
         return;
       }
-  
-      // Validate file size
       if (file.size > MAX_FILE_SIZE) {
         toast.error("Image must be less than 5MB.");
         return;
       }
-  
       setProfileImage(file);
       setPreviewImage(URL.createObjectURL(file));
     }
@@ -83,7 +82,6 @@ export default function UpdateProfile() {
       </div>
     );
 
-  // Handle form submission
   const onSubmit = async (data: ProfileFormData) => {
     setLoading(true);
     const formData = new FormData();
@@ -118,13 +116,11 @@ export default function UpdateProfile() {
         <label htmlFor="profileImageUpload" className="cursor-pointer">
           <img
             className="w-full h-full rounded-full block object-cover"
-            src={
-              previewImage ||
-              ProfileIcon
-            }
+            src={previewImage || ProfileIcon}
             alt="Profile"
           />
           <input
+            ref={fileInputRef} // Attach ref to input
             type="file"
             id="profileImageUpload"
             accept="image/*"
@@ -132,12 +128,11 @@ export default function UpdateProfile() {
             onChange={handleImageChange}
           />
         </label>
-        <div className="absolute bottom-0 right-0">
-          <img
-            src={EditIcon}
-            alt="EditIcon"
-            className="block cursor-pointer max-w-7"
-          />
+        <div
+          className="absolute bottom-0 right-0 cursor-pointer"
+          onClick={() => fileInputRef.current?.click()} // Trigger file input click
+        >
+          <img src={EditIcon} alt="EditIcon" className="block max-w-7" />
         </div>
       </div>
       <div className="pt-2.5 pb-[30px]">
@@ -154,9 +149,7 @@ export default function UpdateProfile() {
             inputClass="bg-[#FAFAFA]"
             label="Name"
             placeholder="Enter your name"
-            {...register("username", {
-              onChange: (e) => setValue("username", e.target.value),
-            })}
+            {...register("username")}
             error={errors.username?.message}
           />
           <div className="py-5">
@@ -165,11 +158,8 @@ export default function UpdateProfile() {
               label="Email"
               readOnly
               placeholder="Enter your email"
-              {...register("email", {
-                onChange: (e) =>
-                  setValue("email", e.target.value.trim().toLowerCase()),
-              })}
-              error={errors.email?.message} // Pass the error for email
+              {...register("email")}
+              error={errors.email?.message}
             />
           </div>
         </div>
