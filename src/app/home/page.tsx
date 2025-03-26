@@ -49,10 +49,11 @@ function page() {
     <div>
       <div className="bg-white relative min-h-[calc(100vh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="bg-primary pt-5 px-5 pb-[120px] rounded-b-[30px]">
-          <div className="flex items-center justify-between pb-5">
+          <div className="grid grid-cols-[1fr_100px] pb-5 gap-1">
             <div>
-              <h2 className="text-white text-[22px] font-semibold mb-1">
-                Hello, <span className="text-green">{user?.username}</span>
+              <h2 className="text-white text-[22px] break-words font-semibold mb-1">
+                Hello,{" "}
+                <span className="text-green break-all">{user?.username}</span>
               </h2>
               <p className="text-white opacity-[.55] text-xs font-medium">
                 {currentDate}
