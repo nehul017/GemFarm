@@ -25,6 +25,7 @@ export default function SignupForm() {
   const {
     register,
     setValue,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -64,6 +65,7 @@ export default function SignupForm() {
           <Input
             label="Name"
             placeholder="Enter your name"
+            value={watch("username")}
             {...register("username", {
               onChange: (e) => setValue("username", e.target.value),
             })}
@@ -74,6 +76,7 @@ export default function SignupForm() {
           <Input
             label="Email ID"
             placeholder="Enter your email"
+            value={watch("email")}
             {...register("email", {
               onChange: (e) =>
                 setValue("email", e.target.value.trim().toLowerCase()),
@@ -86,6 +89,7 @@ export default function SignupForm() {
             label="Password"
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
+            value={watch("password")}
             icon={showPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowPassword(!showPassword)} // Toggle password visibility
             {...register("password", {

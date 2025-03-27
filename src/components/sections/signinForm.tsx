@@ -28,6 +28,7 @@ export default function SigninForm() {
     register,
     setValue,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(loginSchema), // Connect Yup validation
@@ -100,6 +101,7 @@ export default function SigninForm() {
               onChange: (e) =>
                 setValue("email", e.target.value.trim().toLowerCase()),
             })}
+            value={watch("email")}
             error={errors.email?.message} // Pass the error for email
           />
         </div>
@@ -109,6 +111,7 @@ export default function SigninForm() {
             label="Password"
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
+            value={watch("password")}
             icon={showPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowPassword(!showPassword)} // Toggle password visibility
             {...register("password", {

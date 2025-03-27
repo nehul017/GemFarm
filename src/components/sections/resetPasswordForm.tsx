@@ -26,6 +26,7 @@ export default function ResetPasswordForm() {
   const {
     register,
     setValue,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -69,6 +70,7 @@ export default function ResetPasswordForm() {
             label="Password"
             type={showPassword ? "text" : "password"}
             placeholder="Enter password"
+            value={watch("password")}
             icon={showPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowPassword(!showPassword)} // Toggle password visibility
             {...register("password", {
@@ -83,6 +85,7 @@ export default function ResetPasswordForm() {
             label="Confirm Password"
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Enter confirm password"
+            value={watch("confirmPassword")}
             icon={showConfirmPassword ? EyeIcon : CloseEyeIcon}
             onIconClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle password visibility
             {...register("confirmPassword", {

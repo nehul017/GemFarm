@@ -34,7 +34,7 @@ export default function ProfileInformation() {
           src={user?.profileImage || ProfileIcon}
         />
         <div>
-          <p className="text-base font-semibold text-black200 m-0">
+          <p className="text-base font-semibold text-black200 m-0 break-all w-[225px]">
             {user?.username}
           </p>
           <span className="text-[10px] text-gray600 block leading-4">

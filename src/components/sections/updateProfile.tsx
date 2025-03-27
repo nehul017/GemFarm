@@ -31,6 +31,7 @@ export default function UpdateProfile() {
   const {
     register,
     handleSubmit,
+    watch,
     setValue,
     formState: { errors },
   } = useForm<ProfileFormData>({
@@ -136,7 +137,7 @@ export default function UpdateProfile() {
         </div>
       </div>
       <div className="pt-2.5 pb-[30px]">
-        <h2 className="text-base font-semibold text-black200 text-center">
+        <h2 className="text-base font-semibold text-black200 text-center break-all">
           {user?.username || "User Name"}
         </h2>
         <p className="text-[10px] leading-4 text-gray600 block text-center">
@@ -150,6 +151,7 @@ export default function UpdateProfile() {
             label="Name"
             placeholder="Enter your name"
             {...register("username")}
+            value={watch("username")}
             error={errors.username?.message}
           />
           <div className="py-5">
