@@ -80,7 +80,7 @@ export default function SigninForm() {
         });
         console.log("Redirecting to /home...");
         router.push("/home");
-        window.location.href = "/home";
+        // window.location.href = "/home";
       } else {
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);

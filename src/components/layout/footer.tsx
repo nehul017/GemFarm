@@ -8,11 +8,11 @@ export default function Footer() {
   const [toogle, setToogle] = useState(false);
   useEffect(() => {
     if (toogle) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = ''
+      document.body.style.overflow = "";
     }
-  }, [toogle])
+  }, [toogle]);
   return (
     <div>
       <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-[9] max-w-[380px] w-full mx-auto">
@@ -33,8 +33,9 @@ export default function Footer() {
         ></div>
       )}
       <div
-        className={`bg-white max-w-[380px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${toogle ? "translate-y-[0%]" : "translate-y-[100%]"
-          }`}
+        className={`bg-white max-w-[380px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${
+          toogle ? "translate-y-[0%]" : "translate-y-[100%]"
+        }`}
       >
         <div onClick={() => setToogle(false)} className="p-5">
           <Button
@@ -45,7 +46,7 @@ export default function Footer() {
           />
         </div>
         <div className="p-5 pt-0 h-[calc(100dvh-194px)] overflow-auto">
-          <CropsList />
+          <CropsList toogle={toogle} />
         </div>
       </div>
     </div>

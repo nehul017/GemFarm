@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Filter } from "lucide-react";
 import Header from "@/components/layout/header";
 import LineChartIcon from "@/icons/lineChart";
@@ -327,11 +327,24 @@ const items = [
     previousDayHigh,
   };
 });
-export default function CropsList() {
+export default function CropsList({ toogle }: { toogle: boolean }) {
   const [viewMode, setViewMode] = useState("graph"); // 'graph' or 'table'
   const [showFinancials, setShowFinancials] = useState(false);
   const [selectedItemForBuy, setSelectedItemForBuy] = useState<any>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<
+    "systemType" | "category" | "name" | "variety"
+  >("systemType");
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const [activeView, setActiveView] = useState("All");
+
+  useEffect(() => {
+    if (!toogle) {
+      setSortBy("systemType");
+      setShowSortMenu(false);
+      setActiveView("All");
+    }
+  }, [toogle]);
 
   // System configuration and costs
   const SYSTEM_COSTS = {
@@ -369,7 +382,7 @@ export default function CropsList() {
     Tarragon: 2400,
     "Lemon Balm": 2200,
   };
-  
+
   const calculateROI = (item: {
     name: keyof typeof yearlyYields;
     basePrice: number;
@@ -818,12 +831,6 @@ export default function CropsList() {
       </div>
     );
   };
-
-  const [sortBy, setSortBy] = useState<
-    "systemType" | "category" | "name" | "variety"
-  >("systemType");
-  const [showSortMenu, setShowSortMenu] = useState(false);
-  const [activeView, setActiveView] = useState("All");
 
   const processedCrops = items
     .filter((item) => {
