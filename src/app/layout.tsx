@@ -52,18 +52,19 @@ export default function RootLayout({
 
     useEffect(() => {
       const handlePopState = (event: PopStateEvent) => {
-        // Prevent navigation on signin and signup pages
         if (pathname === "/signin" || pathname === "/signup") {
           event.preventDefault();
-          window.history.pushState(null, "", window.location.href); // Force stay on the same page
+          window.history.pushState(null, "", window.location.href);
         }
       };
   
-      // Push the current state to prevent back navigation
-      window.history.pushState(null, "", window.location.href);
+      if (pathname === "/signin" || pathname === "/signup") {
+        // Push the current state to prevent back navigation
+        window.history.pushState(null, "", window.location.href);
   
-      // Add popstate listener for back/forward navigation
-      window.addEventListener("popstate", handlePopState);
+        // Add popstate listener for back/forward navigation
+        window.addEventListener("popstate", handlePopState);
+      }
   
       return () => {
         window.removeEventListener("popstate", handlePopState);
