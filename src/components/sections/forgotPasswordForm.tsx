@@ -32,7 +32,7 @@ export default function ForgotPasswordForm() {
       const resultAction = await dispatch(forgotPassword(data));
 
       if (forgotPassword.fulfilled.match(resultAction)) {
-        sessionStorage.setItem("email", data.email);
+        // sessionStorage.setItem("email", data.email);
         toast.success("OTP sent successfully! Check your email.");
         router.push("/verify-otp");
       } else {

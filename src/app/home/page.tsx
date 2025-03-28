@@ -1,10 +1,10 @@
 "use client"; // 👈 Add this at the top
 
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-
+import axios from "axios";
 import { fetchUserProfile } from "@/components/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/components/redux/store";
 import LocationIcon from "@/icons/locationIcon";
@@ -21,14 +21,46 @@ function page() {
   const dispatch = useDispatch<AppDispatch>();
   const currentDate = moment().format("dddd, DD MMMM YYYY");
   const { user, loading } = useSelector((state: RootState) => state.auth);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
+    setInitialLoad(true);
     if (!user) {
       dispatch(fetchUserProfile());
     }
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "https://nibx1obi9h.execute-api.us-east-1.amazonaws.com/dev/containerlambda",
+          { action: "GET" }, // Stringify the body here
+          {
+            headers: {
+              "Content-Type": "application/json", // Ensure the content type is JSON
+            },
+          }
+        );
 
-  if (loading) {
+        if (response.status === 200) {
+          const { body } = response.data;
+          console.log("API Response:", body);
+          setData(body);
+          // Process the data if needed, e.g., update a state with it
+        } else {
+          console.error("API request failed with status:", response.status);
+        }
+      } catch (error) {
+        console.error("API request error:", error);
+      } finally {
+        setInitialLoad(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+  if (loading || initialLoad) {
     return (
       <div className="flex justify-center items-center h-dvh">
         <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
@@ -106,6 +138,33 @@ function page() {
           </div>
         </div>
         <div className="mt-[-100px] px-5 pb-[100px]">
+          {/* {data.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
+              onClick={onClickFarm}
+            >
+              <img
+                src={item.container_image}
+                alt="FarmImage"
+                className="block w-full h-[120px] rounded-lg object-cover"
+              />
+              <div className="flex items-center justify-between pt-4">
+                <div>
+                  <p className="text-sm font-medium text-black ">{item.name}</p>
+                  <div className="flex items-center gap-1">
+                    <LocationIcon />
+                    <span className="block text-sm text-black opacity-[.4]">
+                      {item.location}
+                    </span>
+                  </div>
+                </div>
+                <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
+                  {item.price}%
+                </button>
+              </div>
+            </div>
+          ))} */}
           <div
             className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
             onClick={onClickFarm}

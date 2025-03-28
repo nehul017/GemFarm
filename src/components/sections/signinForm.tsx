@@ -36,11 +36,7 @@ export default function SigninForm() {
 
   // Load saved email from sessionStorage
   useEffect(() => {
-    const savedEmail = sessionStorage.getItem("rememberedEmail");
-    if (savedEmail) {
-      setValue("email", savedEmail); // Prefill email input
-      setRememberMe(true);
-    }
+
     const encryptedCredentials = Cookies.get("rememberedCredentials");
     if (encryptedCredentials) {
       try {
@@ -80,7 +76,7 @@ export default function SigninForm() {
         });
         console.log("Redirecting to /home...");
         router.push("/home");
-        // window.location.href = "/home";
+        window.location.href = "/home";
       } else {
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);
