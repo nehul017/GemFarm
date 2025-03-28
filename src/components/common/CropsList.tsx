@@ -572,7 +572,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     Tarragon: 2400,
     "Lemon Balm": 2200,
     Albion: 1800,
-    "Dwarf Cherry Tomato": 2100,
+    "Dwarf Cherry Tomatoes": 2100,
     Paprika: 2000,
     "Sweet Potato": 1900,
     "Red Onion": 1800,
@@ -600,6 +600,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     Saffron: 1500,
     Tomatoes: 3500,
     Peppers: 2500,
+    Cantaloupe: 1000,
   };
 
   const calculateROI = (item: {
