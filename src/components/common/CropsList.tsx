@@ -549,7 +549,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     Jalapenos: 2500,
     Lettuce: 4000,
     Tomato: 3500,
-    Cucumber: 3000,
+    Cucumbers: 3000,
     "Romaine Lettuce": 4000,
     "Iceberg Lettuce": 3500,
     "Butterhead Lettuce": 3200,
@@ -585,7 +585,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     Corn: 1100,
     Kale: 1000,
     "Sweet Corn": 800,
-    Eggplant: 700,
+    Eggplants: 700,
     Cauliflower: 600,
     "Dwarf Peppers": 1000,
     Squash: 1500,
@@ -598,6 +598,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     Ginger: 1000,
     Turmeric: 1200,
     Saffron: 1500,
+    Tomatoes: 3500,
+    Peppers: 2500,
   };
 
   const calculateROI = (item: {
