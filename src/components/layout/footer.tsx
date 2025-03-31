@@ -17,6 +17,11 @@ export default function Footer() {
       cropsListRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     }, 100);
   }, [toogle]);
+
+  // Close the sort menu when scrolling
+  const handleScroll = () => {
+    window.dispatchEvent(new CustomEvent("closeSortMenu"));
+  };
   return (
     <div>
       <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-[9] max-w-[380px] w-full mx-auto">
@@ -52,6 +57,7 @@ export default function Footer() {
         <div
           className="p-5 pt-0 h-[calc(100dvh-194px)] overflow-auto"
           ref={cropsListRef}
+          onScroll={handleScroll} // Close sort menu on scroll
         >
           <CropsList toogle={toogle} />
         </div>

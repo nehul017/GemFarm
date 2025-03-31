@@ -536,6 +536,20 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     }
   }, [toogle]);
 
+  // Close sort menu on scroll
+  useEffect(() => {
+    const handleCloseSortMenu = () => {
+      setShowSortMenu(false);
+    };
+
+    // Attach listener to window
+    window.addEventListener("closeSortMenu", handleCloseSortMenu);
+
+    return () => {
+      window.removeEventListener("closeSortMenu", handleCloseSortMenu);
+    };
+  }, []);
+
   // System configuration and costs
   const SYSTEM_COSTS = {
     base: 15000,
