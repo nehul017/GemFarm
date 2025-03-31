@@ -1,17 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../common/button";
 import CropsList from "../common/CropsList";
 const DownIcon = "/assets/icons/down.svg";
 
 export default function Footer() {
   const [toogle, setToogle] = useState(false);
+  const cropsListRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (toogle) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
+    setTimeout(() => {
+      cropsListRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    }, 100);
   }, [toogle]);
   return (
     <div>
@@ -29,7 +33,7 @@ export default function Footer() {
       {toogle && (
         <div
           onClick={() => setToogle(false)}
-          className="fixed top-0 left-[50%] translate-x-[-50%] w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px]"
+          className="fixed top-0 left-[50%] translate-x-[-50%] w-full h-full bg-modalBackdrop-[0, 0, 0, 0] z-[99] mx-auto max-w-[380px]"
         ></div>
       )}
       <div
@@ -45,7 +49,10 @@ export default function Footer() {
             path={DownIcon}
           />
         </div>
-        <div className="p-5 pt-0 h-[calc(100dvh-194px)] overflow-auto">
+        <div
+          className="p-5 pt-0 h-[calc(100dvh-194px)] overflow-auto"
+          ref={cropsListRef}
+        >
           <CropsList toogle={toogle} />
         </div>
       </div>
