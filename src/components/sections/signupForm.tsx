@@ -130,8 +130,10 @@ export default function SignupForm() {
             <p className="text-sm font-normal text-gray800 text-center">
               Already have an account?{" "}
               <Link
-                href="/signin"
-                className="text-green font-semibold cursor-pointer"
+                href={loading ? "#" : "/signin"}
+                className={`text-green font-semibold cursor-pointer ${
+                  loading ? "pointer-events-none text-gray-400" : ""
+                }`}
               >
                 Sign in
               </Link>

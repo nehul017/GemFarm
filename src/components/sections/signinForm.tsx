@@ -36,7 +36,6 @@ export default function SigninForm() {
 
   // Load saved email from sessionStorage
   useEffect(() => {
-
     const encryptedCredentials = Cookies.get("rememberedCredentials");
     if (encryptedCredentials) {
       try {
@@ -53,7 +52,6 @@ export default function SigninForm() {
   }, [setValue]);
 
   const onSubmit = async (data: any) => {
-
     if (rememberMe) {
       sessionStorage.setItem("rememberedEmail", data.email);
       const encryptedData = CryptoJS.AES.encrypt(
@@ -131,8 +129,10 @@ export default function SigninForm() {
             </span>
           </div>
           <Link
-            href="/forgot-password"
-            className="text-sm text-primary font-medium cursor-pointer"
+            href={loading ? "#" : "/forgot-password"}
+            className={`text-sm font-medium cursor-pointer ${
+              loading ? "pointer-events-none text-gray-400" : "text-primary"
+            }`}
           >
             Forgot Password?
           </Link>
@@ -171,8 +171,10 @@ export default function SigninForm() {
           <p className="text-sm font-normal text-gray800 text-center">
             Don’t have an account?{" "}
             <Link
-              href="/signup"
-              className="text-green font-semibold cursor-pointer"
+              href={loading ? "#" : "/signup"}
+              className={`text-green font-semibold cursor-pointer ${
+                loading ? "pointer-events-none text-gray-400" : ""
+              }`}
             >
               Sign up
             </Link>
