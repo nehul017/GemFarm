@@ -753,7 +753,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       <p className="text-sm text-blue-700">
                         Total Initial Investment
                       </p>
-                      <p className="text-xl font-bold">
+                      <p className="text-xl font-bold">1.00rem
                         ${roi.initialCost.toLocaleString()}
                       </p>
                     </div>
@@ -1145,7 +1145,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             </div>
 
             {showSortMenu && (
-              <div className="absolute right-0 w-48 bg-white rounded-lg shadow-lg border z-50 mr-[0.35rem]">
+              <div className="absolute right-0 w-48 bg-white rounded-lg shadow-lg border z-50 mr-[1.00rem]">
                 <div className="py-1">
                   <button
                     className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
