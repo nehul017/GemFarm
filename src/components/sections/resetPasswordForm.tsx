@@ -41,8 +41,8 @@ export default function ResetPasswordForm() {
     try {
       data.email = sessionStorage.getItem("email");
       const resultAction = await dispatch(resetPassword(data));
-
       if (resetPassword.fulfilled.match(resultAction)) {
+        sessionStorage.removeItem("email");
         toast.success("Password reset successful!");
         setTimeout(() => {
           router.push("/signin");
