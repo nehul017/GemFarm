@@ -1083,7 +1083,10 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
           <div className="w-full">
             <div className="flex gap-4 mt-4 mb-1 text-sm">
               <button
-                onClick={() => setActiveView("All")}
+                onClick={() => {
+                  setActiveView("All");
+                  setShowSortMenu(false);
+                }}
                 className={`flex-1 rounded-lg font-medium border transition-colors ${
                   activeView === "All"
                     ? "bg-primary text-white"
@@ -1093,7 +1096,10 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 All
               </button>
               <button
-                onClick={() => setActiveView("NFT")}
+                onClick={() => {
+                  setActiveView("NFT");
+                  setShowSortMenu(false);
+                }}
                 className={`flex-1 rounded-lg font-medium border transition-colors ${
                   activeView === "NFT"
                     ? "bg-primary text-white"
@@ -1103,7 +1109,10 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 NFT
               </button>
               <button
-                onClick={() => setActiveView("Dutch Bucket")}
+                onClick={() => {
+                  setActiveView("Dutch Bucket");
+                  setShowSortMenu(false);
+                }}
                 className={`flex-1 rounded-lg font-medium border transition-colors ${
                   activeView === "Dutch Bucket"
                     ? "bg-primary text-white"
@@ -1122,7 +1131,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             </div>
 
             {showSortMenu && (
-              <div className="absolute right-0 w-48 bg-white rounded-lg shadow-lg border z-50">
+              <div className="absolute right-0 w-48 bg-white rounded-lg shadow-lg border z-50 mr-[0.35rem]">
                 <div className="py-1">
                   <button
                     className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
