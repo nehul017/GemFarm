@@ -24,17 +24,19 @@ export default function Footer() {
   };
   return (
     <div>
-      <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-[9] max-w-[380px] w-full mx-auto">
-        <div className="px-5" onClick={() => setToogle(!toogle)}>
-          <Button
-            rotateClass="rotate-180"
-            buttonClass="flex items-center justify-center gap-3"
-            text="My Watch List"
-            green
-            path={DownIcon}
-          />
+      {!toogle && (
+        <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-[9] max-w-[380px] w-full mx-auto">
+          <div className="px-5" onClick={() => setToogle(!toogle)}>
+            <Button
+              rotateClass="rotate-180"
+              buttonClass="flex items-center justify-center gap-3"
+              text="My Watch List"
+              green
+              path={DownIcon}
+            />
+          </div>
         </div>
-      </div>
+      )}
       {toogle && (
         <div
           onClick={() => setToogle(false)}

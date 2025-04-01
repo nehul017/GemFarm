@@ -12,10 +12,10 @@ import NotificationIcon from "@/icons/notificationIcon";
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
 
-const FarmImage = "/assets/images/farm.png";
+// const FarmImage = "/assets/images/farm.png";
 const ProfileImage = "/assets/images/Ty1.png";
-const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
-const NFTFarmImage = "/assets/images/NFT.jpg";
+// const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
+// const NFTFarmImage = "/assets/images/NFT.jpg";
 
 function page() {
   const dispatch = useDispatch<AppDispatch>();
@@ -77,6 +77,8 @@ function page() {
     router.push("/setting");
   };
 
+  const prices = ["18.20", "12.10", "12.20", "15.55", "22.53", "16.20"];
+
   return (
     <div>
       <div className="bg-white relative min-h-[calc(100vh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
@@ -133,12 +135,12 @@ function page() {
           <div className="pt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-white">Your Farms</p>
             <p className="text-sm font-medium text-white">
-              <span className="text-green">3</span> Container
+              <span className="text-green">{data.length}</span> Container
             </p>
           </div>
         </div>
         <div className="mt-[-100px] px-5 pb-[100px]">
-          {/* {data.map((item, index) => (
+          {data.map((item, index) => (
             <div
               key={index}
               className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
@@ -151,7 +153,9 @@ function page() {
               />
               <div className="flex items-center justify-between pt-4">
                 <div>
-                  <p className="text-sm font-medium text-black ">{item.name}</p>
+                  <p className="text-sm font-medium text-black ">
+                    {item.name} | {item.container_crop}
+                  </p>
                   <div className="flex items-center gap-1">
                     <LocationIcon />
                     <span className="block text-sm text-black opacity-[.4]">
@@ -160,12 +164,12 @@ function page() {
                   </div>
                 </div>
                 <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                  {item.price}%
+                  ${prices[index] || 12}
                 </button>
               </div>
             </div>
-          ))} */}
-          <div
+          ))}
+          {/* <div
             className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
             onClick={onClickFarm}
           >
@@ -244,7 +248,7 @@ function page() {
                 $1.35%
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />
@@ -252,4 +256,4 @@ function page() {
   );
 }
 
-export default page;
+export default withAuth(page);
