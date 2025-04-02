@@ -533,6 +533,9 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
       setSortBy("systemType");
       setShowSortMenu(false);
       setActiveView("All");
+      setShowFinancials(false);
+      setSelectedItem(null);
+      setViewMode("graph");
     }
   }, [toogle]);
 
@@ -753,8 +756,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       <p className="text-sm text-blue-700">
                         Total Initial Investment
                       </p>
-                      <p className="text-xl font-bold">1.00rem
-                        ${roi.initialCost.toLocaleString()}
+                      <p className="text-xl font-bold">
+                        1.00rem ${roi.initialCost.toLocaleString()}
                       </p>
                     </div>
                   </div>
@@ -1203,7 +1206,10 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
           >
             <div
               className="grid-cols-[1fr_48px_60px] grid gap-2 items-center"
-              onClick={() => setSelectedItem(item)}
+              onClick={() => {
+                setSelectedItem(item);
+                setShowSortMenu(false);
+              }}
             >
               <div className="flex gap-3">
                 <img
@@ -1274,7 +1280,10 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     </p>
                   </div>
                   <button
-                    onClick={() => setSelectedItem(null)}
+                    onClick={() => {
+                      setSelectedItem(null);
+                      setViewMode("graph");
+                    }}
                     className="p-2 text-gray-500 hover:text-gray-700"
                   >
                     ✕
