@@ -14,14 +14,19 @@ import Header from "@/components/layout/header";
 export default function Page() {
   const [initialLoad, setInitialLoad] = useState(true);
   const [data, setData] = useState<Record<string, any>>({});
+  const [container, setContainer] = useState<any | null>({});
 
   useEffect(() => {
     const fetchData = async () => {
-      const containerId = localStorage.getItem("containerId"); // Replace with your actual container ID
+      const containerItem = localStorage.getItem("container");
+      const data = containerItem ? JSON.parse(containerItem) : null; // Replace with your actual container ID
+      setContainer(data);
       try {
         const response = await axios.post(
-          `https://gv5xt68i22.execute-api.us-east-1.amazonaws.com/dev/sensor-data?containerId=${containerId}`,
-          { action: "GET", containerId },
+          `https://gv5xt68i22.execute-api.us-east-1.amazonaws.com/dev/sensor-data?containerId=${
+            data.id || container.id
+          }`,
+          { action: "GET", containerId: data.id || container.id },
           {
             headers: { "Content-Type": "application/json" },
           }
@@ -44,7 +49,7 @@ export default function Page() {
     fetchData();
   }, []);
 
-  const currentDate = moment().format("MMM DD, YYYY");
+  const currentDate = moment(container.harvest_date).format("MMM DD, YYYY");
 
   if (initialLoad) {
     return (
@@ -64,7 +69,7 @@ export default function Page() {
               HEALTHY
             </h2>
             <p className="text-base font-bold text-black mb-1">
-              GemFarms Madison, GA
+              GemFarms {container.location}
             </p>
             <p className="text-sm text-balance font-medium">
               Harvest Date : <span className="text-xs">{currentDate}</span>

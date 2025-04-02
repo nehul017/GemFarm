@@ -69,8 +69,8 @@ function page() {
   }
   const router = useRouter();
 
-  const onClickFarm = (id: any) => {
-    localStorage.setItem("containerId", id);
+  const onClickFarm = (container: any) => {
+    localStorage.setItem("container", JSON.stringify(container));
     router.push("/watch-list");
   };
 
@@ -145,7 +145,7 @@ function page() {
             <div
               key={index}
               className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
-              onClick={() => onClickFarm(item.id)}
+              onClick={() => onClickFarm(item)}
             >
               <img
                 src={item.container_image}
