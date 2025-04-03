@@ -28,6 +28,8 @@ import {
   AreaChart,
 } from "recharts";
 import moment from "moment";
+import CloseIcon from "@/icons/closeIcon";
+import Button from "./button";
 const generateMarketData = (basePrice: number, days: number) => {
   const data = [];
   let currentPrice = basePrice;
@@ -666,12 +668,16 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-4 shadow-lg rounded-lg border">
-          <p className="font-bold">{label}</p>
-          <p className="text-sm">Price: ${payload[0].value.toFixed(2)}</p>
-          <p className="text-sm">High: ${payload[0].payload.high.toFixed(2)}</p>
-          <p className="text-sm">Low: ${payload[0].payload.low.toFixed(2)}</p>
-          <p className="text-sm">Volume: {payload[0].payload.volume}</p>
+        <div className="bg-white p-2 shadow-lg rounded-lg border">
+          <p className="font-bold text-[13px]">{label}</p>
+          <p className="text-[13px]">Price: ${payload[0].value.toFixed(2)}</p>
+          <p className="text-[13px]">
+            High: ${payload[0].payload.high.toFixed(2)}
+          </p>
+          <p className="text-[13px]">
+            Low: ${payload[0].payload.low.toFixed(2)}
+          </p>
+          <p className="text-[13px]">Volume: {payload[0].payload.volume}</p>
         </div>
       );
     }
@@ -692,26 +698,23 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-0 md:p-4">
-        <div className="bg-white w-full h-full md:h-auto md:rounded-2xl md:w-full md:max-w-5xl md:max-h-[90vh] overflow-auto">
+        <div className="bg-white rounded-t-lg  w-full h-full md:h-auto md:rounded-2xl md:w-full md:max-w-5xl md:max-h-[90vh] overflow-auto">
           <div className="sticky top-0 bg-white z-10 px-4 py-4 border-b md:border-none">
             <div className="flex justify-between items-center">
               <h2 className="text-xl md:text-2xl font-bold text-gray-900">
                 Financial Analysis - {item.name}
               </h2>
-              <button
-                onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-full"
-              >
-                X
-              </button>
+              <div onClick={onClose}>
+                <CloseIcon />
+              </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-2">
               <div className="flex space-x-4 border-b overflow-x-auto">
                 <button
                   className={`py-2 px-4 whitespace-nowrap ${
                     activeTab === "overview"
-                      ? "border-b-2 border-blue-600 text-blue-600"
+                      ? "border-b-2 border-green text-green"
                       : "text-gray-500"
                   }`}
                   onClick={() => setActiveTab("overview")}
@@ -734,82 +737,82 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
 
           <div className="p-4">
             {activeTab === "overview" ? (
-              <div className="space-y-4">
-                <div className="bg-blue-50 p-4 rounded-xl">
-                  <h3 className="text-lg font-semibold text-blue-900 mb-2">
+              <div className="">
+                <div className="bg-blue-50 mb-2 p-3 border border-solid border-borderColor rounded-md">
+                  <h3 className="text-lg font-semibold text-black200 mb-2">
                     System Investment
                   </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-blue-700">Base System Cost</p>
-                      <p className="text-lg font-medium">
-                        ${SYSTEM_COSTS.base.toLocaleString()}
+                  <div className="grid grid-cols-2 gap-x-1.5">
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Base System Cost</p>
+                      <p className="text-sm text-black font-medium">
+                        ${SYSTEM_COSTS.base.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
-                    <div>
-                      <p className="text-sm text-blue-700">Installation</p>
-                      <p className="text-lg font-medium">
-                        ${SYSTEM_COSTS.installation.toLocaleString()}
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Installation</p>
+                      <p className="text-sm text-black font-medium">
+                        ${SYSTEM_COSTS.installation.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
-                    <div className="md:col-span-2">
-                      <p className="text-sm text-blue-700">
+                    <div className="py-2 border-b border-solid border-borderColor col-span-2">
+                      <p className="text-xs text-gray600">
                         Total Initial Investment
                       </p>
-                      <p className="text-lg font-medium">
-                        ${roi.initialCost.toLocaleString()}
+                      <p className="text-sm text-black font-medium">
+                        ${roi.initialCost.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-green-50 p-4 rounded-xl">
-                  <h3 className="text-lg font-semibold text-green-900 mb-2">
+                <div className="bg-white p-3 mb-2 border border-solid border-borderColor rounded-md">
+                  <h3 className="text-lg font-semibold text-black200 mb-2">
                     Annual Projections
                   </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-green-700">Yearly Yield</p>
-                      <p className="text-lg font-medium">
-                        {roi.yearlyYield.toLocaleString()} units
+                  <div className="grid grid-cols-2 gap-x-1.5">
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Yearly Yield</p>
+                      <p className="text-sm text-black font-medium">
+                        {roi.yearlyYield.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} units
                       </p>
                     </div>
-                    <div>
-                      <p className="text-sm text-green-700">Yearly Revenue</p>
-                      <p className="text-lg font-medium">
-                        ${roi.yearlyRevenue.toLocaleString()}
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Yearly Revenue</p>
+                      <p className="text-sm text-black font-medium">
+                        ${roi.yearlyRevenue.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
-                    <div>
-                      <p className="text-sm text-green-700">Yearly Costs</p>
-                      <p className="text-lg font-medium">
-                        ${roi.yearlyCosts.toLocaleString()}
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Yearly Costs</p>
+                      <p className="text-sm text-black font-medium">
+                        ${roi.yearlyCosts.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
-                    <div>
-                      <p className="text-sm text-green-700">Yearly Profit</p>
-                      <p className="text-lg font-medium">
-                        ${roi.yearlyProfit.toLocaleString()}
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Yearly Profit</p>
+                      <p className="text-sm text-black font-medium">
+                        ${roi.yearlyProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-purple-50 p-4 rounded-xl">
-                  <h3 className="text-lg font-semibold text-purple-900 mb-2">
+                <div className="bg-purple-50 mb-2 p-3 border border-solid border-borderColor rounded-md">
+                  <h3 className="text-lg font-semibold text-black200 mb-2">
                     ROI Analysis
                   </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-purple-700">Payback Period</p>
-                      <p className="text-lg font-medium">
+                  <div className="grid grid-cols-2 gap-x-1.5">
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Payback Period</p>
+                      <p className="text-sm text-black font-medium">
                         {roi.paybackPeriod.toFixed(1)} years
                       </p>
                     </div>
-                    <div>
-                      <p className="text-sm text-purple-700">5-Year P&L</p>
-                      <p className="text-lg font-medium">
-                        ${roi.fiveYearPL.toLocaleString()}
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">5-Year P&L</p>
+                      <p className="text-sm text-black font-medium">
+                        ${roi.fiveYearPL.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
                   </div>
@@ -907,25 +910,25 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 </div>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-4 px-2">
                 <div className="overflow-x-auto -mx-4 md:mx-0">
-                  <div className="inline-block min-w-full align-middle">
+                  <div className="w-full overflow-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-2 py-2 text-left text-xs font-medium text-gray-500">
                             Year
                           </th>
-                          <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-2 py-2 text-left text-xs font-medium text-gray-500">
                             Revenue
                           </th>
-                          <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-2 py-2 text-left text-xs font-medium text-gray-500">
                             Costs
                           </th>
-                          <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-2 py-2 text-left text-xs font-medium text-gray-500">
                             Profit
                           </th>
-                          <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-2 py-2 text-left text-xs font-medium text-gray-500">
                             Cumulative
                           </th>
                         </tr>
@@ -933,26 +936,26 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       <tbody className="bg-white divide-y divide-gray-200">
                         {roi.projectionData.map((year, index) => (
                           <tr key={index}>
-                            <td className="px-2 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
+                            <td className="px-2 py-2 whitespace-nowrap text-xs font-medium text-gray-900">
                               {year.year}
                             </td>
-                            <td className="px-2 py-3 whitespace-nowrap text-sm text-gray-500">
-                              ${year.revenue.toLocaleString()}
+                            <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-500">
+                              ${year.revenue.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </td>
-                            <td className="px-2 py-3 whitespace-nowrap text-sm text-gray-500">
-                              ${year.costs.toLocaleString()}
+                            <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-500">
+                              ${year.costs.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </td>
-                            <td className="px-2 py-3 whitespace-nowrap text-sm text-gray-500">
-                              ${year.profit.toLocaleString()}
+                            <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-500">
+                              ${year.profit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </td>
                             <td
-                              className={`px-2 py-3 whitespace-nowrap text-sm font-medium ${
+                              className={`px-2 py-2 whitespace-nowrap text-xs font-medium ${
                                 year.cumulativeProfit >= 0
                                   ? "text-green-600"
                                   : "text-red-600"
                               }`}
                             >
-                              ${year.cumulativeProfit.toLocaleString()}
+                              ${year.cumulativeProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </td>
                           </tr>
                         ))}
@@ -1056,13 +1059,12 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             )}
           </div>
 
-          <div className="sticky bottom-0 bg-white p-4 border-t">
-            <button
+          <div className="sticky bottom-0 bg-white p-2 ">
+            <div
               onClick={() => window.alert("Purchase flow would continue here")}
-              className="w-full bg-blue-600 text-white py-3 px-6 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
             >
-              Proceed with Purchase
-            </button>
+              <Button text="Proceed with Purchase" green />
+            </div>
           </div>
         </div>
       </div>
@@ -1252,14 +1254,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
           </div>
         ))}
         {selectedItem && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div
-              className="bg-white rounded-[2rem] w-full max-w-md max-h-[90vh] overflow-auto"
+              className="bg-white rounded-[2rem] w-full max-w-md max-h-[90vh] overflow-hidden shadow-[rgba(0,0,0,0.25)_0px_54px_55px,rgba(0,0,0,0.12)_0px_-12px_30px,rgba(0,0,0,0.12)_0px_4px_6px,rgba(0,0,0,0.17)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px]"
               style={{
-                boxShadow:
-                  "0 0 0 1px rgba(0, 0, 0, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
                 transform: "translateY(-5%)",
-                marginTop: "65px",
               }}
             >
               {" "}
@@ -1290,7 +1289,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   </button>
                 </div>
 
-                <div className="flex space-x-2 mb-4">
+                <div className="flex space-x-2 mb-2">
                   <button
                     className={`flex-1 py-2 rounded-lg text-sm font-medium ${
                       viewMode === "graph"
@@ -1314,7 +1313,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 </div>
 
                 {viewMode === "graph" && (
-                  <div className="h-[650px]">
+                  <div className="h-[620px]">
                     <ResponsiveContainer width="100%" height="100%">
                       <ComposedChart
                         data={selectedItem.marketData}
@@ -1361,7 +1360,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 )}
 
                 {viewMode === "table" && (
-                  <div className="overflow-x-auto -mx-4">
+                  <div className="h-[620px] overflow-x-auto -mx-4">
                     <table className="w-full text-sm text-left text-gray-500">
                       <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
