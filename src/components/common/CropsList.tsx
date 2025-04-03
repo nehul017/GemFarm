@@ -746,13 +746,21 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     <div className="py-2 border-b border-solid border-borderColor">
                       <p className="text-xs text-gray600">Base System Cost</p>
                       <p className="text-sm text-black font-medium">
-                        ${SYSTEM_COSTS.base.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        $
+                        {SYSTEM_COSTS.base.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </p>
                     </div>
                     <div className="py-2 border-b border-solid border-borderColor">
                       <p className="text-xs text-gray600">Installation</p>
                       <p className="text-sm text-black font-medium">
-                        ${SYSTEM_COSTS.installation.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        $
+                        {SYSTEM_COSTS.installation.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </p>
                     </div>
                     <div className="py-2 border-b border-solid border-borderColor col-span-2">
@@ -760,7 +768,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                         Total Initial Investment
                       </p>
                       <p className="text-sm text-black font-medium">
-                        ${roi.initialCost.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        $
+                        {roi.initialCost.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </p>
                     </div>
                   </div>
@@ -774,25 +786,41 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     <div className="py-2 border-b border-solid border-borderColor">
                       <p className="text-xs text-gray600">Yearly Yield</p>
                       <p className="text-sm text-black font-medium">
-                        {roi.yearlyYield.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} units
+                        {roi.yearlyYield.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}{" "}
+                        units
                       </p>
                     </div>
                     <div className="py-2 border-b border-solid border-borderColor">
                       <p className="text-xs text-gray600">Yearly Revenue</p>
                       <p className="text-sm text-black font-medium">
-                        ${roi.yearlyRevenue.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        $
+                        {roi.yearlyRevenue.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </p>
                     </div>
                     <div className="py-2 border-b border-solid border-borderColor">
                       <p className="text-xs text-gray600">Yearly Costs</p>
                       <p className="text-sm text-black font-medium">
-                        ${roi.yearlyCosts.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        $
+                        {roi.yearlyCosts.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </p>
                     </div>
                     <div className="py-2 border-b border-solid border-borderColor">
                       <p className="text-xs text-gray600">Yearly Profit</p>
                       <p className="text-sm text-black font-medium">
-                        ${roi.yearlyProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        $
+                        {roi.yearlyProfit.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </p>
                     </div>
                   </div>
@@ -812,7 +840,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     <div className="py-2 border-b border-solid border-borderColor">
                       <p className="text-xs text-gray600">5-Year P&L</p>
                       <p className="text-sm text-black font-medium">
-                        ${roi.fiveYearPL.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        $
+                        {roi.fiveYearPL.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </p>
                     </div>
                   </div>
@@ -940,13 +972,25 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                               {year.year}
                             </td>
                             <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-500">
-                              ${year.revenue.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              $
+                              {year.revenue.toLocaleString("en-US", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
                             </td>
                             <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-500">
-                              ${year.costs.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              $
+                              {year.costs.toLocaleString("en-US", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
                             </td>
                             <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-500">
-                              ${year.profit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              $
+                              {year.profit.toLocaleString("en-US", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
                             </td>
                             <td
                               className={`px-2 py-2 whitespace-nowrap text-xs font-medium ${
@@ -955,7 +999,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                                   : "text-red-600"
                               }`}
                             >
-                              ${year.cumulativeProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              $
+                              {year.cumulativeProfit.toLocaleString("en-US", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
                             </td>
                           </tr>
                         ))}
@@ -1237,7 +1285,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                         : "text-[#FF4747] bg-[#FAE8E8]"
                     }`}
                   >
-                    ${item.previousDayHigh}
+                    $
+                    {item?.previousDayHigh?.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </button>
                 </div>
               </div>
@@ -1285,7 +1337,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     }}
                     className="p-2 text-gray-500 hover:text-gray-700"
                   >
-                    <CloseIcon/>
+                    <CloseIcon />
                   </div>
                 </div>
 
