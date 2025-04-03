@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
@@ -33,7 +33,24 @@ export default function SigninForm() {
   } = useForm({
     resolver: yupResolver(loginSchema), // Connect Yup validation
   });
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
 
+  useEffect(() => {
+    if (error === "session_expired") {
+      Cookies.remove("authToken");
+      Cookies.remove("user");
+      toast.error("⚠️ Session expired. Please log in again.");
+    } else if (error === "session_invalid") {
+      Cookies.remove("authToken");
+      Cookies.remove("user");
+      toast.error("Unauthorized session. Please login again to continue.");
+    } else if (error === "logged_out") {
+      Cookies.remove("authToken");
+      Cookies.remove("user");
+      toast.success("✅ Logged out successfully.");
+    }
+  }, [error]);
   // Load saved email from sessionStorage
   useEffect(() => {
     const encryptedCredentials = Cookies.get("rememberedCredentials");

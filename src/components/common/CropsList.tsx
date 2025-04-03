@@ -756,8 +756,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       <p className="text-sm text-blue-700">
                         Total Initial Investment
                       </p>
-                      <p className="text-xl font-bold">
-                        1.00rem ${roi.initialCost.toLocaleString()}
+                      <p className="text-lg font-medium">
+                        ${roi.initialCost.toLocaleString()}
                       </p>
                     </div>
                   </div>

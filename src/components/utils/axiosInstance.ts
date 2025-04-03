@@ -44,7 +44,8 @@ axiosInstance.interceptors.response.use(
       store.dispatch(logout());
 
       // Redirect to login
-      window.location.href = "/signin";
+      window.location.href = "/signin?error=logged_out";
+      
     }
     return Promise.reject(error);
   }
