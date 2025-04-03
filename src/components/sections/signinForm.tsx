@@ -34,23 +34,32 @@ export default function SigninForm() {
     resolver: yupResolver(loginSchema), // Connect Yup validation
   });
   const searchParams = useSearchParams();
-  const error = searchParams.get("error");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (error === "session_expired") {
-      Cookies.remove("authToken");
-      Cookies.remove("user");
-      toast.error("⚠️ Session expired. Please log in again.");
-    } else if (error === "session_invalid") {
-      Cookies.remove("authToken");
-      Cookies.remove("user");
-      toast.error("Unauthorized session. Please login again to continue.");
-    } else if (error === "logged_out") {
-      Cookies.remove("authToken");
-      Cookies.remove("user");
-      toast.success("✅ Logged out successfully.");
+    if (typeof window !== "undefined") {
+      const error = searchParams.get("error");
+      if (error === "session_expired") {
+        Cookies.remove("authToken");
+        Cookies.remove("user");
+        setErrorMessage("⚠️ Session expired. Please log in again.");
+      } else if (error === "session_invalid") {
+        Cookies.remove("authToken");
+        Cookies.remove("user");
+        setErrorMessage("Unauthorized session. Please login again to continue.");
+      } else if (error === "logged_out") {
+        Cookies.remove("authToken");
+        Cookies.remove("user");
+        setErrorMessage("✅ Logged out successfully.");
+      }
     }
-  }, [error]);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+    }
+  }, [errorMessage]);
   // Load saved email from sessionStorage
   useEffect(() => {
     const encryptedCredentials = Cookies.get("rememberedCredentials");
