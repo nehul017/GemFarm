@@ -1278,15 +1278,15 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       ${selectedItem.basePrice.toFixed(2)}
                     </p>
                   </div>
-                  <button
+                  <div
                     onClick={() => {
                       setSelectedItem(null);
                       setViewMode("graph");
                     }}
                     className="p-2 text-gray-500 hover:text-gray-700"
                   >
-                    ✕
-                  </button>
+                    <CloseIcon/>
+                  </div>
                 </div>
 
                 <div className="flex space-x-2 mb-2">
