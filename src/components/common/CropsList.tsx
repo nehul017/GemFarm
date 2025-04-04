@@ -694,7 +694,9 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             <div className="flex justify-between items-center">
               <h2 className="text-xl md:text-2xl font-bold text-gray-900">
                 Financial Analysis - {item.name}
-                <p className="text-[16px] text-gray-500 ml-1">({item.variety})</p>
+                <p className="text-[16px] text-gray-500 ml-1">
+                  ({item.variety})
+                </p>
               </h2>
               <div onClick={onClose}>
                 <CloseIcon />
@@ -1316,13 +1318,13 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       </span>
                     </h2>
                     <p
-                      className={`text-base ${
+                      className={`text-sm text-base ${
                         selectedItem.isPositive
                           ? "text-green-600"
                           : "text-red-600"
                       }`}
                     >
-                      ${" "}
+                      $
                       {selectedItem?.previousDayHigh?.toLocaleString("en-US", {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
