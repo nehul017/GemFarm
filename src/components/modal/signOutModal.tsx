@@ -20,8 +20,8 @@ export default function SignOutModal({ setShowSignOutModal }: SignOutModalProps)
     Cookies.remove("user");
     
     // Prevent going back to previous authenticated pages
-    window.history.pushState(null, "", "/signin");
-    window.location.replace("/signin"); // Ensures fresh redirect
+    window.history.pushState(null, "", "/signin?error=logged_out");
+    window.location.replace("/signin?error=logged_out"); // Ensures fresh redirect
   };
 
   return (

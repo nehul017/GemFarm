@@ -46,12 +46,19 @@ export default function SigninForm() {
       } else if (error === "session_invalid") {
         Cookies.remove("authToken");
         Cookies.remove("user");
-        setErrorMessage("Unauthorized session. Please login again to continue.");
+        setErrorMessage(
+          "Unauthorized session. Please login again to continue."
+        );
       } else if (error === "logged_out") {
         Cookies.remove("authToken");
         Cookies.remove("user");
         setErrorMessage("✅ Logged out successfully.");
       }
+      // Remove the error query param from the URL
+      const params = new URLSearchParams(window.location.search);
+      params.delete("error");
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      router.replace(newUrl, { scroll: false });
     }
   }, [searchParams]);
 
