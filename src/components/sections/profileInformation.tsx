@@ -37,7 +37,7 @@ export default function ProfileInformation() {
           <p className="text-base font-semibold text-black200 m-0 break-all w-[140px]">
             {user?.username}
           </p>
-          <span className="text-[10px] text-gray600 block leading-4">
+          <span className="text-[14px] text-gray600 block leading-4">
             {user?.email}
           </span>
         </div>
