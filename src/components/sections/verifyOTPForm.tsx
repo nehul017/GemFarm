@@ -29,7 +29,11 @@ export default function VerifyOTPForm() {
   // Load email from sessionStorage on client
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setEmail(sessionStorage.getItem("email") || null);
+      if (sessionStorage.getItem("email")) {
+        setEmail(sessionStorage.getItem("email") || null);
+      } else {  
+        router.push("/signin");
+      }
     }
   }, []);
 
@@ -160,18 +164,19 @@ export default function VerifyOTPForm() {
               disabled={!canResend || isResending}
               style={{ fontFamily: "Inter" }}
             >
-            <p className={`text-sm font-normal mb-2 ${
+              <p
+                className={`text-sm font-normal mb-2 ${
                   !canResend
                     ? "opacity-50 cursor-not-allowed"
                     : "hover:text-[#00352C]"
-                }`}>
-
-              {isResending
-                ? "Sending OTP..."
-                : canResend
-                ? "Resend Code"
-                : `Resend code in ${timer}s`}
-                </p>
+                }`}
+              >
+                {isResending
+                  ? "Sending OTP..."
+                  : canResend
+                  ? "Resend Code"
+                  : `Resend code in ${timer}s`}
+              </p>
             </button>
           </div>
           <Button green text=" Verify OTP" type="submit" disabled={loading}>
