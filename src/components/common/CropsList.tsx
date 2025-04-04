@@ -1,18 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Filter } from "lucide-react";
-import Header from "@/components/layout/header";
 import LineChartIcon from "@/icons/lineChart";
 import LineChartRed from "@/icons/lineChartRed";
-import SearchIcon from "@/icons/SearchIcon";
-const StrawberryImage = "/assets/images/Strawberry.png";
-const PeasImage = "/assets/images/Peas.png";
 const JalapenosImage = "/assets/images/Jalapenos.png";
-const LettuceImage = "/assets/images/Lettuce.png";
 const TomatoImage = "/assets/images/Tomato.png";
 const CucumberImage = "/assets/images/Cucumber.png";
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -23,8 +17,6 @@ import {
   Area,
   ComposedChart,
   Legend,
-  Bar,
-  BarChart,
   AreaChart,
 } from "recharts";
 import moment from "moment";
@@ -511,7 +503,7 @@ const items = [
 
   // Find the high price of the previous day
   const previousDayHigh =
-    marketData.length > 1 ? marketData[marketData.length - 2].high : null;
+    marketData.length > 1 ? marketData[marketData.length - 1].high : null;
 
   return {
     ...item,
@@ -523,7 +515,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   const [viewMode, setViewMode] = useState("graph"); // 'graph' or 'table'
   const [showFinancials, setShowFinancials] = useState(false);
   const [selectedItemForBuy, setSelectedItemForBuy] = useState<any>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [sortBy, setSortBy] = useState<
     "systemType" | "category" | "name" | "variety"
   >("systemType");
@@ -703,6 +694,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             <div className="flex justify-between items-center">
               <h2 className="text-xl md:text-2xl font-bold text-gray-900">
                 Financial Analysis - {item.name}
+                <p className="text-[16px] text-gray-500 ml-1">({item.variety})</p>
               </h2>
               <div onClick={onClose}>
                 <CloseIcon />
@@ -724,7 +716,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 <button
                   className={`py-2 px-4 whitespace-nowrap ${
                     activeTab === "projections"
-                      ? "border-b-2 border-blue-600 text-blue-600"
+                      ? "border-b-2 border-green text-green"
                       : "text-gray-500"
                   }`}
                   onClick={() => setActiveTab("projections")}
@@ -1201,7 +1193,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
               <div className="absolute right-0 w-48 bg-white rounded-lg shadow-lg border z-50 mr-[1.00rem]">
                 <div className="py-1">
                   <button
-                    className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                    className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
                       sortBy === "systemType" ? "bg-blue-50 text-blue-600" : ""
                     }`}
                     onClick={() => {
@@ -1212,7 +1204,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     System Type
                   </button>
                   <button
-                    className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                    className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
                       sortBy === "category" ? "bg-blue-50 text-blue-600" : ""
                     }`}
                     onClick={() => {
@@ -1223,7 +1215,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     Crop Category
                   </button>
                   <button
-                    className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                    className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
                       sortBy === "name" ? "bg-blue-50 text-blue-600" : ""
                     }`}
                     onClick={() => {
@@ -1234,7 +1226,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     Crop Name
                   </button>
                   <button
-                    className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                    className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
                       sortBy === "variety" ? "bg-blue-50 text-blue-600" : ""
                     }`}
                     onClick={() => {
@@ -1317,8 +1309,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
               <div className="p-4">
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <h2 className="text-xl font-bold text-gray-900">
+                    <h2 className="text-sm font-bold text-gray-900">
                       {selectedItem.name}
+                      <span className="text-sm text-gray-500 ml-1">
+                        ({selectedItem.variety})
+                      </span>
                     </h2>
                     <p
                       className={`text-base ${
@@ -1327,7 +1322,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                           : "text-red-600"
                       }`}
                     >
-                      ${selectedItem.basePrice.toFixed(2)}
+                      ${" "}
+                      {selectedItem?.previousDayHigh?.toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                     </p>
                   </div>
                   <div
