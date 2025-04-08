@@ -58,7 +58,7 @@ const generateMarketData = (basePrice: number, days: number) => {
 const items = [
   {
     name: "Jalapenos",
-    basePrice: 24,
+    basePrice: 3.80,
     img: JalapenosImage,
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -67,7 +67,7 @@ const items = [
   },
   {
     name: "Romaine Lettuce",
-    basePrice: 22.5,
+    basePrice: 1.37,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Romain.webp",
     isPositive: true,
     systemType: "NFT",
@@ -76,7 +76,7 @@ const items = [
   },
   {
     name: "Iceberg Lettuce",
-    basePrice: 30.25,
+    basePrice: 1.19,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Iceberg+Lettuce.webp",
     isPositive: true,
     systemType: "NFT",
@@ -85,7 +85,7 @@ const items = [
   },
   {
     name: "Butterhead Lettuce",
-    basePrice: 33.75,
+    basePrice: 1.29,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/butterhead.jpg",
     isPositive: true,
     systemType: "NFT",
@@ -94,7 +94,7 @@ const items = [
   },
   {
     name: "Loose Leaf Lettuce",
-    basePrice: 31.0,
+    basePrice: 1.57,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Loose+Leaf+Lettuce.webp",
     isPositive: true,
     systemType: "NFT",
@@ -103,7 +103,7 @@ const items = [
   },
   {
     name: "Arugula",
-    basePrice: 32.0,
+    basePrice: 16.18,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Arugula+(Rocket).webp",
     isPositive: false,
     systemType: "NFT",
@@ -121,7 +121,7 @@ const items = [
   },
   {
     name: "Bok Choy",
-    basePrice: 23.5,
+    basePrice: 1.84,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Bok+Choy.webp",
     isPositive: false,
     systemType: "NFT",
@@ -130,7 +130,7 @@ const items = [
   },
   {
     name: "Endive",
-    basePrice: 24.0,
+    basePrice: 2.89,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/EndiveCichorium+endivia.webp",
     isPositive: true,
     systemType: "NFT",
@@ -139,7 +139,7 @@ const items = [
   },
   {
     name: "Watercress",
-    basePrice: 23.0,
+    basePrice: 4.78,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Watercress-spouts-640.webp",
     isPositive: false,
     systemType: "NFT",
@@ -148,7 +148,7 @@ const items = [
   },
   {
     name: "Basil",
-    basePrice: 15.0,
+    basePrice: 13.23,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Basil.jpg",
     isPositive: true,
     systemType: "NFT",
@@ -157,7 +157,7 @@ const items = [
   },
   {
     name: "Cilantro",
-    basePrice: 14.5,
+    basePrice: 1.98,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Cilantro.webp",
     isPositive: true,
     systemType: "NFT",
@@ -166,7 +166,7 @@ const items = [
   },
   {
     name: "Parsley",
-    basePrice: 13.0,
+    basePrice: 2.95,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/parsley.webp",
     isPositive: true,
     systemType: "NFT",
@@ -175,7 +175,7 @@ const items = [
   },
   {
     name: "Mint",
-    basePrice: 15.5,
+    basePrice: 5.15,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/pepperminit.jpg",
     isPositive: true,
     systemType: "NFT",
@@ -184,7 +184,7 @@ const items = [
   },
   {
     name: "Mint",
-    basePrice: 15.5,
+    basePrice: 13.5,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Spearmint.jpg",
     isPositive: true,
     systemType: "NFT",
@@ -193,7 +193,7 @@ const items = [
   },
   {
     name: "Thyme",
-    basePrice: 16.0,
+    basePrice: 20.56,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Thyme-Bundle.jpg",
     isPositive: true,
     systemType: "NFT",
@@ -202,7 +202,7 @@ const items = [
   },
   {
     name: "Dill",
-    basePrice: 14.0,
+    basePrice: 21.67,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dill.jpg",
     isPositive: true,
     systemType: "NFT",
@@ -211,7 +211,7 @@ const items = [
   },
   {
     name: "Chives",
-    basePrice: 13.5,
+    basePrice: 25.56,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Chives.png",
     isPositive: true,
     systemType: "NFT",
@@ -220,7 +220,7 @@ const items = [
   },
   {
     name: "Oregano",
-    basePrice: 14.5,
+    basePrice: 20.56,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Oregano.jpeg",
     isPositive: true,
     systemType: "NFT",
@@ -229,7 +229,7 @@ const items = [
   },
   {
     name: "Sage",
-    basePrice: 15.0,
+    basePrice: 22.22,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Sage.webp",
     isPositive: true,
     systemType: "NFT",
@@ -238,7 +238,7 @@ const items = [
   },
   {
     name: "Rosemary",
-    basePrice: 16.5,
+    basePrice: 18.33,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Rosemary.webp",
     isPositive: true,
     systemType: "NFT",
@@ -247,7 +247,7 @@ const items = [
   },
   {
     name: "Tarragon",
-    basePrice: 14.0,
+    basePrice: 26.67,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Tarragon.webp",
     isPositive: true,
     systemType: "NFT",
@@ -256,7 +256,7 @@ const items = [
   },
   {
     name: "Lemon Balm",
-    basePrice: 13.5,
+    basePrice: 3.5,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/lemonbalm.jpeg",
     isPositive: true,
     systemType: "NFT",
@@ -265,7 +265,7 @@ const items = [
   },
   {
     name: "Albion",
-    basePrice: 18.0,
+    basePrice: 7.30,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Albion+strawberries.webp",
     isPositive: true,
     systemType: "NFT",
@@ -274,7 +274,7 @@ const items = [
   },
   {
     name: "Dwarf Cherry Tomatoes",
-    basePrice: 16.0,
+    basePrice: 6.62,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dwarf-Cherry-Tomato-Rosie-F1-Hybrid.jpeg",
     isPositive: true,
     systemType: "NFT",
@@ -283,7 +283,7 @@ const items = [
   },
   {
     name: "Dwarf Peppers",
-    basePrice: 15.5,
+    basePrice: 2.07,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Mck_Vegetable_128571_Pepper_MiniBellMix.webp",
     isPositive: true,
     systemType: "NFT",
@@ -292,7 +292,7 @@ const items = [
   },
   {
     name: "Dwarf Peppers",
-    basePrice: 15.5,
+    basePrice: 2.04,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/jalapeno1-700x700.webp",
     isPositive: true,
     systemType: "NFT",
@@ -301,7 +301,7 @@ const items = [
   },
   {
     name: "Tomatoes",
-    basePrice: 14.5,
+    basePrice: 2.12,
     img: TomatoImage,
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -310,7 +310,7 @@ const items = [
   },
   {
     name: "Peppers",
-    basePrice: 15.0,
+    basePrice: 4.0,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Cayenne.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -319,7 +319,7 @@ const items = [
   },
   {
     name: "Eggplants",
-    basePrice: 13.5,
+    basePrice: 1.70,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/eggplants.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -328,7 +328,7 @@ const items = [
   },
   {
     name: "Cucumbers",
-    basePrice: 12.5,
+    basePrice: 5.57,
     img: CucumberImage,
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -337,7 +337,7 @@ const items = [
   },
   {
     name: "Zucchini",
-    basePrice: 13.0,
+    basePrice: 1.76,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/courgette-large.jpg",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -346,7 +346,7 @@ const items = [
   },
   {
     name: "Squash",
-    basePrice: 14.0,
+    basePrice: 1.77,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Butternut+Squash.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -355,7 +355,7 @@ const items = [
   },
   {
     name: "Squash",
-    basePrice: 14.0,
+    basePrice: 2.53,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Squash+(Pumpkin).webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -364,7 +364,7 @@ const items = [
   },
   {
     name: "Squash",
-    basePrice: 14.0,
+    basePrice: 1.43,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Acorn+Squash.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -373,7 +373,7 @@ const items = [
   },
   {
     name: "Green Beans",
-    basePrice: 11.5,
+    basePrice: 2.17,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/farmscart-beans-polesuper.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -382,7 +382,7 @@ const items = [
   },
   {
     name: "Green Beans",
-    basePrice: 11.5,
+    basePrice: 1.76,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/aeroponic-bush-beans-seedlings_900x.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -391,7 +391,7 @@ const items = [
   },
   {
     name: "Peas",
-    basePrice: 12.0,
+    basePrice: 3.97,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Snow+Peas.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -400,7 +400,7 @@ const items = [
   },
   {
     name: "Peas",
-    basePrice: 12.0,
+    basePrice: 5.37,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Sugar+Snap+Peas.jpg",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -409,7 +409,7 @@ const items = [
   },
   {
     name: "Cantaloupe",
-    basePrice: 14.0,
+    basePrice: 2.43,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Cantaloupe.jpg",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -418,7 +418,7 @@ const items = [
   },
   {
     name: "Watermelon",
-    basePrice: 16.0,
+    basePrice: 1.51,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dwarf.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -428,7 +428,7 @@ const items = [
 
   {
     name: "Honeydew Melon",
-    basePrice: 15.5,
+    basePrice: 1.57,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Honeydew+Melon.jpg",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -437,7 +437,7 @@ const items = [
   },
   {
     name: "Carrots",
-    basePrice: 9.0,
+    basePrice: 0.93,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/CarrotsParisian18085.png",
     isPositive: false,
     systemType: "Dutch Bucket",
@@ -446,7 +446,7 @@ const items = [
   },
   {
     name: "Beets",
-    basePrice: 8.5,
+    basePrice: 2.43,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/beet.webp",
     isPositive: false,
     systemType: "Dutch Bucket",
@@ -455,7 +455,7 @@ const items = [
   },
   {
     name: "Radishes",
-    basePrice: 7.5,
+    basePrice: 3.53,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/radish_GyJvfNq_.jpg",
     isPositive: false,
     systemType: "Dutch Bucket",
@@ -464,7 +464,7 @@ const items = [
   },
   {
     name: "Turnips",
-    basePrice: 8.0,
+    basePrice: 1.59,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/turnip.webp",
     isPositive: false,
     systemType: "Dutch Bucket",
@@ -473,7 +473,7 @@ const items = [
   },
   {
     name: "Ginger",
-    basePrice: 18.0,
+    basePrice: 3.82,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/ginger-root.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -520,6 +520,34 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   >("systemType");
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [activeView, setActiveView] = useState("All");
+  // const { commodity } = useSelector((state: RootState) => state.auth);
+  // console.log("commodity", commodity);
+  // useEffect(() => {
+  //   if (commodity) {
+  //     const cropList = items.map((crop) => {
+  //       const match = commodity.find(
+  //         (report: { [x: string]: string; commodity: string }) =>
+  //           report.commodity &&
+  //           report.item_size !=="N/A"&&
+  //           report.commodity.toLowerCase().includes(crop.name.toLowerCase())
+  //       );
+
+  //       console.log("match", match);
+  //       if (match) {
+  //         return {
+  //           ...crop,
+  //           package: match.package,
+  //           item_size: match.item_size,
+  //           low_price: match.low_price,
+  //           high_price: match.high_price,
+  //         };
+  //       }
+
+  //       return crop; // no match, return original
+  //     });
+  //     console.log("cropList", cropList);
+  //   }
+  // }, [commodity]);
 
   useEffect(() => {
     if (!toogle) {
@@ -1140,15 +1168,15 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     <>
       {/* <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
       <div className="pt-0">
-        <div className="flex items-center mb-2">
+        <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
-            <div className="flex gap-4 mt-4 mb-1 text-sm">
+            <div className="flex items-center justify-between mt-4 mb-1 text-sm">
               <button
                 onClick={() => {
                   setActiveView("All");
                   setShowSortMenu(false);
                 }}
-                className={`flex-1 rounded-lg font-medium border transition-colors ${
+                className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "All"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1161,7 +1189,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setActiveView("NFT");
                   setShowSortMenu(false);
                 }}
-                className={`flex-1 rounded-lg font-medium border transition-colors ${
+                className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "NFT"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1174,7 +1202,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setActiveView("Dutch Bucket");
                   setShowSortMenu(false);
                 }}
-                className={`flex-1 rounded-lg font-medium border transition-colors ${
+                className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "Dutch Bucket"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1184,15 +1212,14 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
               </button>
               <button
                 onClick={() => setShowSortMenu(!showSortMenu)}
-                className="flex items-center gap-1 p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
+                className="flex items-center gap-1 h-[42px] w-[42px] flex items-center justify-center  p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
               >
                 <Filter className="w-4 h-4" />
-                <span>Sort by</span>
               </button>
             </div>
 
             {showSortMenu && (
-              <div className="absolute right-0 w-48 bg-white rounded-lg shadow-lg border z-50 mr-[1.00rem]">
+              <div className="absolute right-[-15px] w-40 bg-white rounded-lg shadow-lg border z-50 mr-[1.00rem]">
                 <div className="py-1">
                   <button
                     className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
@@ -1283,7 +1310,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     {item?.previousDayHigh?.toLocaleString("en-US", {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    })}
+                    })} / kg
                   </button>
                 </div>
               </div>
@@ -1328,7 +1355,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       {selectedItem?.previousDayHigh?.toLocaleString("en-US", {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
-                      })}
+                      })} / kg
                     </p>
                   </div>
                   <div
@@ -1344,7 +1371,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
 
                 <div className="flex space-x-2 mb-2">
                   <button
-                    className={`flex-1 py-2 rounded-lg text-sm font-medium ${
+                    className={`px-4 py-2.5 py-2 rounded-lg text-sm font-medium ${
                       viewMode === "graph"
                         ? "bg-primary text-white"
                         : "bg-gray-100 text-gray-700"
@@ -1354,7 +1381,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     Graph
                   </button>
                   <button
-                    className={`flex-1 py-2 rounded-lg text-sm font-medium ${
+                    className={`px-4 py-2.5 py-2 rounded-lg text-sm font-medium ${
                       viewMode === "table"
                         ? "bg-primary text-white"
                         : "bg-gray-100 text-gray-700"
