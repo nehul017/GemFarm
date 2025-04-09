@@ -13,16 +13,16 @@ export default function Home() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const token = Cookies.get("authToken");
+  useEffect(() => {
+    const token = Cookies.get("authToken");
 
-  //   if (token) {
-  //     router.push("/home"); // Redirect to home/dashboard if logged in
-  //     setLoading(false);
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [router]);
+    if (token) {
+      router.push("/home"); // Redirect to home/dashboard if logged in
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
 
   return loading ? (
     <div className="flex justify-center items-center h-dvh">
@@ -47,7 +47,7 @@ export default function Home() {
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry
           </p>
-          <Link href="/home">
+          <Link href="/signin">
             <Button text="Get Started" />
           </Link>
         </div>
