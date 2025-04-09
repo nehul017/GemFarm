@@ -81,6 +81,21 @@ export const fetchCommodityData = createAsyncThunk(
   }
 );
 
+export const fetchKGPriceData = createAsyncThunk(
+  "auth/fetchKGPriceData",
+  async (body: any, { rejectWithValue }) => {
+    const axiosInstance = (await import("../../utils/axiosInstance")).default;
+    try {
+      const response = await axiosInstance.post("/auth/get-kg-price", body);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch KG Data"
+      );
+    }
+  }
+);
+
 // Async Thunk for Forgot Password
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
@@ -283,6 +298,19 @@ const authSlice = createSlice({
       })
       .addCase(fetchCommodityData.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload as string;
+      })
+      // Fetch KG Price Data
+      .addCase(fetchKGPriceData.pending, (state) => {
+        // state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchKGPriceData.fulfilled, (state, action) => {
+        // state.loading = false;
+        state.commodity = action.payload; // Update state with new user data
+      })
+      .addCase(fetchKGPriceData.rejected, (state, action) => {
+        // state.loading = false;
         state.error = action.payload as string;
       });
   },

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { AppDispatch } from "../redux/store"; // Ensure this path is correct
 import { Filter } from "lucide-react";
 import LineChartIcon from "@/icons/lineChart";
 import LineChartRed from "@/icons/lineChartRed";
@@ -22,8 +23,9 @@ import {
 import moment from "moment";
 import CloseIcon from "@/icons/closeIcon";
 import Button from "./button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { fetchKGPriceData } from "../redux/slices/authSlice";
 const generateMarketData = (basePrice: number, days: number) => {
   const data = [];
   let currentPrice = basePrice;
@@ -65,7 +67,7 @@ const items = [
     isPositive: true,
     systemType: "Dutch Bucket",
     category: "Fruiting Vegetables",
-    variety: "Jalapeños",
+    variety: "Jalapeno",
   },
   {
     name: "Romaine Lettuce",
@@ -74,7 +76,7 @@ const items = [
     isPositive: true,
     systemType: "NFT",
     category: "Leafy Greens",
-    variety: "Romaine",
+    variety: "Lettuce",
   },
   {
     name: "Iceberg Lettuce",
@@ -83,7 +85,7 @@ const items = [
     isPositive: true,
     systemType: "NFT",
     category: "Leafy Greens",
-    variety: "Iceberg",
+    variety: "Lettuce",
   },
   {
     name: "Butterhead Lettuce",
@@ -92,7 +94,7 @@ const items = [
     isPositive: true,
     systemType: "NFT",
     category: "Leafy Greens",
-    variety: "Butterhead",
+    variety: "Lettuce",
   },
   {
     name: "Loose Leaf Lettuce",
@@ -101,7 +103,7 @@ const items = [
     isPositive: true,
     systemType: "NFT",
     category: "Leafy Greens",
-    variety: "Loose Leaf",
+    variety: "Lettuce",
   },
   {
     name: "Arugula",
@@ -515,6 +517,7 @@ const items = [
 });
 export default function CropsList({ toogle }: { toogle: boolean }) {
   const [viewMode, setViewMode] = useState("graph"); // 'graph' or 'table'
+  const dispatch: AppDispatch = useDispatch();
   const [showFinancials, setShowFinancials] = useState(false);
   const [selectedItemForBuy, setSelectedItemForBuy] = useState<any>(null);
   const [sortBy, setSortBy] = useState<
@@ -523,33 +526,52 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [activeView, setActiveView] = useState("All");
   const { commodity } = useSelector((state: RootState) => state.auth);
-  console.log("commodity", commodity);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [crops, setCrops] = useState<any[]>([]);
+
   useEffect(() => {
-    if (commodity) {
+    setHasMounted(true);
+  }, []);
+  useEffect(() => {
+    if (commodity && commodity.length) {
       const cropList = items.map((crop) => {
         const match = commodity.find(
-          (report: { [x: string]: string; commodity: string }) =>
-            report.commodity &&
-            report.item_size !== "N/A" &&
-            crop.name.toLowerCase().includes(report.commodity.toLowerCase())
+          (report: { [x: string]: string; name: string }) =>
+            crop.variety.toLowerCase().includes(report.name.toLowerCase()) ||
+            report.name.toLowerCase().includes(crop.variety.toLowerCase()) ||
+            report.name.toLowerCase().includes(crop.name.toLowerCase()) ||
+            crop.name.toLowerCase().includes(report.name.toLowerCase())
         );
 
-        console.log("match", match);
+        console.log("crop.name", crop.name, "match", match);
         if (match) {
           return {
-            ...crop,
+            name: crop.name,
+            variety: crop.variety,
             package: match.package,
             item_size: match.item_size,
-            low_price: match.low_price,
-            high_price: match.high_price,
+            low_price: match.overall_max_low_price,
+            high_price: match.overall_max_high_price,
           };
         }
 
         return crop; // no match, return original
       });
       console.log("cropList", cropList);
+      setCrops(cropList);
     }
   }, [commodity]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (hasMounted && crops.length > 0) {
+        const fetchData = async () => {
+          await dispatch(fetchKGPriceData({ crops: crops }));
+        };
+        fetchData();
+      }
+    }
+  }, [crops, hasMounted]);
 
   useEffect(() => {
     if (!toogle) {
@@ -1179,7 +1201,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setActiveView("All");
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-
                 }}
                 className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "All"
@@ -1194,7 +1215,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setActiveView("NFT");
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-
                 }}
                 className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "NFT"
@@ -1209,7 +1229,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setActiveView("Dutch Bucket");
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-
                 }}
                 className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "Dutch Bucket"
