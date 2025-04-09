@@ -48,7 +48,7 @@ export default function Footer() {
           toogle ? "translate-y-[0%]" : "translate-y-[100%]"
         }`}
       >
-        <div onClick={() => setToogle(false)} className="p-5">
+        <div onClick={() => setToogle(false)} className="p-5 pb-0">
           <Button
             buttonClass="flex items-center justify-center gap-3"
             text="My Watch List"
@@ -57,7 +57,7 @@ export default function Footer() {
           />
         </div>
         <div
-          className="p-5 pt-0 h-[calc(100dvh-194px)] overflow-auto"
+          className="p-5 pt-0"
           ref={cropsListRef}
           onScroll={handleScroll} // Close sort menu on scroll
         >

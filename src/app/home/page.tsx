@@ -5,7 +5,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
-import { fetchUserProfile } from "@/components/redux/slices/authSlice";
+import {
+  fetchCommodityData,
+  fetchUserProfile,
+} from "@/components/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/components/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import NotificationIcon from "@/icons/notificationIcon";
@@ -29,6 +32,16 @@ function page() {
     if (!user) {
       dispatch(fetchUserProfile());
     }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("------");
+      const resultAction = await dispatch(fetchCommodityData());
+      console.log("resultAction", resultAction);
+    };
+
+    fetchData();
   }, []);
   useEffect(() => {
     const fetchData = async () => {

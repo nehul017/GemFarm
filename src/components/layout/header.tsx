@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import LeftIcon from "@/icons/leftIcon";
 import NotificationIcon from "@/icons/notificationIcon";
 import SearchIcon from "@/icons/SearchIcon";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { fetchCommodityData } from "../redux/slices/authSlice";
 
 const ProfileImage = "/assets/images/Ty1.png";
 
@@ -28,10 +29,14 @@ export default function Header({
     window.history.back();
   };
   const router = useRouter();
+  const { commodity } = useSelector((state: RootState) => state.auth);
 
   const onClickSetting = () => {
     router.push("/setting");
   };
+
+
+
   const { user } = useSelector((state: RootState) => state.auth);
   return (
     <div

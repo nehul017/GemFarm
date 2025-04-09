@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Filter } from "lucide-react";
 import LineChartIcon from "@/icons/lineChart";
 import LineChartRed from "@/icons/lineChartRed";
@@ -22,6 +22,8 @@ import {
 import moment from "moment";
 import CloseIcon from "@/icons/closeIcon";
 import Button from "./button";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 const generateMarketData = (basePrice: number, days: number) => {
   const data = [];
   let currentPrice = basePrice;
@@ -58,7 +60,7 @@ const generateMarketData = (basePrice: number, days: number) => {
 const items = [
   {
     name: "Jalapenos",
-    basePrice: 3.80,
+    basePrice: 3.8,
     img: JalapenosImage,
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -265,7 +267,7 @@ const items = [
   },
   {
     name: "Albion",
-    basePrice: 7.30,
+    basePrice: 7.3,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Albion+strawberries.webp",
     isPositive: true,
     systemType: "NFT",
@@ -319,7 +321,7 @@ const items = [
   },
   {
     name: "Eggplants",
-    basePrice: 1.70,
+    basePrice: 1.7,
     img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/eggplants.webp",
     isPositive: true,
     systemType: "Dutch Bucket",
@@ -520,34 +522,34 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   >("systemType");
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [activeView, setActiveView] = useState("All");
-  // const { commodity } = useSelector((state: RootState) => state.auth);
-  // console.log("commodity", commodity);
-  // useEffect(() => {
-  //   if (commodity) {
-  //     const cropList = items.map((crop) => {
-  //       const match = commodity.find(
-  //         (report: { [x: string]: string; commodity: string }) =>
-  //           report.commodity &&
-  //           report.item_size !=="N/A"&&
-  //           report.commodity.toLowerCase().includes(crop.name.toLowerCase())
-  //       );
+  const { commodity } = useSelector((state: RootState) => state.auth);
+  console.log("commodity", commodity);
+  useEffect(() => {
+    if (commodity) {
+      const cropList = items.map((crop) => {
+        const match = commodity.find(
+          (report: { [x: string]: string; commodity: string }) =>
+            report.commodity &&
+            report.item_size !== "N/A" &&
+            crop.name.toLowerCase().includes(report.commodity.toLowerCase())
+        );
 
-  //       console.log("match", match);
-  //       if (match) {
-  //         return {
-  //           ...crop,
-  //           package: match.package,
-  //           item_size: match.item_size,
-  //           low_price: match.low_price,
-  //           high_price: match.high_price,
-  //         };
-  //       }
+        console.log("match", match);
+        if (match) {
+          return {
+            ...crop,
+            package: match.package,
+            item_size: match.item_size,
+            low_price: match.low_price,
+            high_price: match.high_price,
+          };
+        }
 
-  //       return crop; // no match, return original
-  //     });
-  //     console.log("cropList", cropList);
-  //   }
-  // }, [commodity]);
+        return crop; // no match, return original
+      });
+      console.log("cropList", cropList);
+    }
+  }, [commodity]);
 
   useEffect(() => {
     if (!toogle) {
@@ -678,6 +680,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     e.stopPropagation();
     setSelectedItemForBuy(item);
     setShowFinancials(true);
+    setShowSortMenu(false);
   };
 
   const [selectedItem, setSelectedItem] = useState<null | (typeof items)[0]>(
@@ -1163,11 +1166,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
           return 0;
       }
     });
-
+  const listRef = useRef<HTMLDivElement>(null);
   return (
     <>
       {/* <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
-      <div className="pt-0">
+      <div className="pt-0 h-[calc(100dvh-194px)]  overflow-auto" ref={listRef}>
         <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
             <div className="flex items-center justify-between mt-4 mb-1 text-sm">
@@ -1175,6 +1178,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 onClick={() => {
                   setActiveView("All");
                   setShowSortMenu(false);
+                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+
                 }}
                 className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "All"
@@ -1188,6 +1193,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 onClick={() => {
                   setActiveView("NFT");
                   setShowSortMenu(false);
+                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+
                 }}
                 className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "NFT"
@@ -1201,6 +1208,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 onClick={() => {
                   setActiveView("Dutch Bucket");
                   setShowSortMenu(false);
+                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+
                 }}
                 className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "Dutch Bucket"
@@ -1228,6 +1237,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     onClick={() => {
                       setSortBy("systemType");
                       setShowSortMenu(false);
+                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                   >
                     System Type
@@ -1239,6 +1249,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     onClick={() => {
                       setSortBy("category");
                       setShowSortMenu(false);
+                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                   >
                     Crop Category
@@ -1250,6 +1261,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     onClick={() => {
                       setSortBy("name");
                       setShowSortMenu(false);
+                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                   >
                     Crop Name
@@ -1261,6 +1273,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     onClick={() => {
                       setSortBy("variety");
                       setShowSortMenu(false);
+                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                   >
                     Crop Variety
@@ -1310,7 +1323,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     {item?.previousDayHigh?.toLocaleString("en-US", {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    })} / kg
+                    })}{" "}
+                    / kg
                   </button>
                 </div>
               </div>
@@ -1355,7 +1369,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       {selectedItem?.previousDayHigh?.toLocaleString("en-US", {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
-                      })} / kg
+                      })}{" "}
+                      / kg
                     </p>
                   </div>
                   <div

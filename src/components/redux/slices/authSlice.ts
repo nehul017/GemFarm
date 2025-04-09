@@ -1,17 +1,18 @@
 // Import necessary functions
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
 interface AuthState {
   user: any;
   loading: boolean;
   error: string | null;
+  commodity: any;
 }
 
 const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
+  commodity: null,
 };
 
 // Async Thunk for Login
@@ -59,6 +60,22 @@ export const fetchUserProfile = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch profile"
+      );
+    }
+  }
+);
+
+// Async Thunk for Fetching User Profile
+export const fetchCommodityData = createAsyncThunk(
+  "auth/fetchCommodityData",
+  async (_, { rejectWithValue }) => {
+    const axiosInstance = (await import("../../utils/axiosInstance")).default;
+    try {
+      const response = await axiosInstance.get("/auth/get-commodity");
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch commodity"
       );
     }
   }
@@ -166,6 +183,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
+      state.commodity = null;
     },
   },
   extraReducers: (builder) => {
@@ -251,6 +269,19 @@ const authSlice = createSlice({
         state.user = action.payload.user; // Update state with new user data
       })
       .addCase(updateUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // Fetch Commodity Data
+      .addCase(fetchCommodityData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCommodityData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.commodity = action.payload.payload; // Update state with new user data
+      })
+      .addCase(fetchCommodityData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
