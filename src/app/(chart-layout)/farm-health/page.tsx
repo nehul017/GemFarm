@@ -34,7 +34,6 @@ export default function Page() {
 
         if (response.status === 200) {
           const { body } = response.data;
-          console.log("API Response:", body);
           setData(body[0]); // Store sensor data
         } else {
           console.error("API request failed with status:", response.status);

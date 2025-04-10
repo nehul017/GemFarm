@@ -141,7 +141,6 @@ export const InputOTPSlot = forwardRef<
 >(({ index, className, ...props }, ref) => {
   const { slots, handleSlotClick } = useContext(OTPInputContext);
   const slot = slots[index];
-  console.log('slot', slot)
 
   return (
     <div

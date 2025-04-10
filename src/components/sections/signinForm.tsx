@@ -105,7 +105,6 @@ export default function SigninForm() {
         Cookies.set("user", JSON.stringify(resultAction.payload.user), {
           expires: 1,
         });
-        console.log("Redirecting to /home...");
         router.push("/home");
         window.location.href = "/home";
       } else {

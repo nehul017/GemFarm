@@ -542,8 +542,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             report.name.toLowerCase().includes(crop.name.toLowerCase()) ||
             crop.name.toLowerCase().includes(report.name.toLowerCase())
         );
-
-        console.log("crop.name", crop.name, "match", match);
         if (match) {
           return {
             name: crop.name,
@@ -557,7 +555,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
 
         return crop; // no match, return original
       });
-      console.log("cropList", cropList);
       setCrops(cropList);
     }
   }, [commodity]);

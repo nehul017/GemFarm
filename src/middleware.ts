@@ -19,7 +19,6 @@ export async function middleware(req: NextRequest) {
 
     return NextResponse.next();
   } catch (error) {
-    console.error('JWT Verification Error:', error);
     return NextResponse.redirect(new URL('/signin?error=session_invalid', req.url));
   }
 }

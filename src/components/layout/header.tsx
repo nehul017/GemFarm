@@ -35,8 +35,6 @@ export default function Header({
     router.push("/setting");
   };
 
-
-
   const { user } = useSelector((state: RootState) => state.auth);
   return (
     <div
@@ -78,6 +76,11 @@ export default function Header({
           <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer border-2 border-gray-500">
             {!isOnlyBackButton &&
               (isNotificationIcon ? <NotificationIcon /> : <SearchIcon />)}
+          </div>
+        )}
+        {isOnlyBackButton && isNotificationIcon && (
+          <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer border-2 border-gray-500">
+            <NotificationIcon />
           </div>
         )}
       </div>

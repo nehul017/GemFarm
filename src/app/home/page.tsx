@@ -14,6 +14,7 @@ import LocationIcon from "@/icons/locationIcon";
 import NotificationIcon from "@/icons/notificationIcon";
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
+import { fetchFarms } from "@/components/redux/slices/farmSlice";
 
 // const FarmImage = "/assets/images/farm.png";
 const ProfileImage = "/assets/images/Ty1.png";
@@ -34,38 +35,25 @@ function page() {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("------");
-      const resultAction = await dispatch(fetchCommodityData());
-      console.log("resultAction", resultAction);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+      
+  //     const resultAction = await dispatch(fetchCommodityData());
+      
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          "https://nibx1obi9h.execute-api.us-east-1.amazonaws.com/dev/containerlambda",
-          { action: "GET" }, // Stringify the body here
-          {
-            headers: {
-              "Content-Type": "application/json", // Ensure the content type is JSON
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          const { body } = response.data;
-          console.log("API Response:", body);
-          setData(body);
-          // Process the data if needed, e.g., update a state with it
-        } else {
-          console.error("API request failed with status:", response.status);
-        }
+        const response = await dispatch(fetchFarms());
+        const { data: farmData } = response.payload as { data: any[] };
+        setData(farmData);
+        setInitialLoad(false);
       } catch (error) {
         console.error("API request error:", error);
+        setInitialLoad(false);
       } finally {
         setInitialLoad(false);
       }
@@ -73,18 +61,13 @@ function page() {
 
     fetchData();
   }, []);
-  if (loading || initialLoad) {
-    return (
-      <div className="flex justify-center items-center h-dvh">
-        <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-      </div>
-    );
-  }
+
   const router = useRouter();
 
-  const onClickFarm = (container: any) => {
-    localStorage.setItem("container", JSON.stringify(container));
-    router.push("/watch-list");
+  const onClickFarm = (farm: any) => {
+    localStorage.setItem("farm", JSON.stringify(farm));
+    localStorage.setItem("farmId", farm.id);
+    router.push("/container");
   };
 
   const onClickSetting = () => {
@@ -123,147 +106,50 @@ function page() {
               </div>
             </div>
           </div>
-          {/* Toggle Buttons */}
-          {/* <div className="flex gap-4 mt-4 mb-1">
-            <button
-              onClick={() => setActiveView("crops")}
-              className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
-                activeView === "crops"
-                  ? "bg-emerald-400 text-white"
-                  : "bg-white/10 text-white"
-              }`}
-            >
-              Market Price
-            </button>
-            <button
-              onClick={() => setActiveView("containers")}
-              className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
-                activeView === "containers"
-                  ? "bg-emerald-400 text-white"
-                  : "bg-white/10 text-white"
-              }`}
-            >
-              Containers
-            </button>
-          </div> */}
           <div className="pt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-white">Your Farms</p>
             <p className="text-sm font-medium text-white">
-              <span className="text-green">{data.length}</span> Container
+              <span className="text-green">{data.length}</span> Farm
             </p>
           </div>
         </div>
-        <div className="mt-[-100px] px-5 pb-[100px]">
-          {data.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
-              onClick={() => onClickFarm(item)}
-            >
-              <img
-                src={item.container_image}
-                alt="FarmImage"
-                className="block w-full h-[120px] rounded-lg object-cover"
-              />
-              <div className="flex items-center justify-between pt-4">
-                <div>
-                  <p className="text-sm font-medium text-black ">
-                    {item.name} | {item.container_crop}
-                  </p>
-                  <div className="flex items-center gap-1">
-                    <LocationIcon />
-                    <span className="block text-sm text-black opacity-[.4]">
-                      {item.location}
-                    </span>
+        {loading || initialLoad ? (
+          <div className="flex justify-center items-center h-dvh">
+            <div className="relative bottom-[150px] w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="mt-[-100px] px-5 pb-[100px]">
+            {data.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white sha p-4 rounded-xl mb-[18px] cursor-pointer shadow-[rgba(0,0,0,0.25)_0px_54px_55px,rgba(0,0,0,0.12)_0px_-12px_30px,rgba(0,0,0,0.12)_0px_4px_6px,rgba(0,0,0,0.17)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px]"
+                onClick={() => onClickFarm(item)}
+              >
+                <img
+                  src={item.farmImage}
+                  alt="FarmImage"
+                  className="block w-full h-[120px] rounded-lg object-cover"
+                />
+                <div className="flex items-center justify-between pt-4">
+                  <div>
+                    <p className="text-sm font-medium text-black ">
+                      {item.name}
+                    </p>
+                    <div className="flex items-center gap-1">
+                      <LocationIcon />
+                      <span className="block text-sm text-black opacity-[.4]">
+                        {item.location}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
+                  {/* <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
                   ${prices[index] || 12}
-                </button>
-              </div>
-            </div>
-          ))}
-          {/* <div
-            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
-            onClick={onClickFarm}
-          >
-            <img
-              src={FarmImage}
-              alt="FarmImage"
-              className="block w-full h-[120px] rounded-lg object-cover"
-            />
-            <div className="flex items-center justify-between pt-4">
-              <div>
-                <p className="text-sm font-medium text-black ">
-                  GemFarms | Strawberry
-                </p>
-                <div className="flex items-center gap-1">
-                  <LocationIcon />
-                  <span className="block text-sm text-black opacity-[.4]">
-                    Thorn Bridge Cir. Shiloh
-                  </span>
+                </button> */}
                 </div>
               </div>
-              <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                $1.29%
-              </button>
-            </div>
+            ))}
           </div>
-
-          <div
-            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
-            onClick={onClickFarm}
-          >
-            <img
-              src={TomatoesFarmImage}
-              alt="FarmImage"
-              className="block w-full h-[120px] rounded-lg object-cover"
-            />
-            <div className="flex items-center justify-between pt-4 ">
-              <div>
-                <p className="text-sm font-medium text-black ">
-                  GemFarms | Tomatoes
-                </p>
-                <div className="flex items-center gap-1">
-                  <LocationIcon />
-                  <span className="block text-sm text-black opacity-[.4]">
-                    Thorn Bridge Cir. Shiloh
-                  </span>
-                </div>
-              </div>
-              <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                $1.40%
-              </button>
-            </div>
-          </div>
-
-          <div
-            className="bg-white shadow-lg p-4 rounded-xl mb-[18px] cursor-pointer"
-            onClick={onClickFarm}
-          >
-            <img
-              src={NFTFarmImage}
-              alt="FarmImage"
-              className="block w-full h-[120px] rounded-lg object-cover"
-            />
-            <div className="flex items-center justify-between pt-4">
-              <div>
-                <p className="text-sm font-medium text-black ">
-                  GemFarms | Lettuce Leafy
-                </p>
-                <div className="flex items-center gap-1">
-                  <LocationIcon />
-                  <span className="block text-sm text-black opacity-[.4]">
-                    Thorn Bridge Cir. Shiloh
-                  </span>
-                </div>
-              </div>
-              <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                $1.35%
-              </button>
-            </div>
-          </div> */}
-        </div>
+        )}
       </div>
       <Footer />
     </div>

@@ -54,7 +54,6 @@ export default function ResetPasswordForm() {
           router.push("/signin");
         }, 1000);
       } else {
-        console.log("resultAction.error?.message", resultAction.payload);
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);
       }
