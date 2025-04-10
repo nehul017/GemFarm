@@ -174,7 +174,7 @@ export const updateUserProfile = createAsyncThunk(
       formData.append("username", username);
       formData.append("email", email);
       if (profileImage) {
-        formData.append("profileImage", profileImage);
+        formData.append("image", profileImage);
       }
 
       const response = await axiosInstance.put(
