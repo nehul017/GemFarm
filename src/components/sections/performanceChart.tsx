@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import { useState } from "react";
 export default function PerformanceChart() {
-  const [selectedRange, setSelectedRange] = useState("1W");
+  const [selectedRange, setSelectedRange] = useState("2W");
 
   const data = [
     { name: "Mon", value: 32000 },
@@ -22,7 +22,7 @@ export default function PerformanceChart() {
     { name: "Sun", value: 38108 },
   ];
 
-  const timeRanges = ["1D", "1W", "1M", "1Y", "All"];
+  const timeRanges = ["2W", "1M", "3M", "6M","1Y", "All"];
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -105,7 +105,7 @@ export default function PerformanceChart() {
             <button
               key={range}
               onClick={() => setSelectedRange(range)}
-              className={`px-4 py-2 rounded-full text-sm ${
+              className={`px-2 py-2 rounded-full text-sm ${
                 selectedRange === range
                   ? "bg-gray-200 font-medium"
                   : "text-gray-500"

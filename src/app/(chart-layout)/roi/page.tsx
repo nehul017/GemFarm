@@ -24,7 +24,7 @@ export default function page() {
 
   return (
     <div>
-      <Header isNotificationIcon={true}/>
+      <Header isNotificationIcon={true} />
       <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <Tab
@@ -32,6 +32,13 @@ export default function page() {
             selectedTab={selectedTab}
             onChange={setSelectedTab}
           />
+          <div className="pt-4">
+            <Tab
+              tabs={tabs2}
+              selectedTab={selectedTab2}
+              onChange={setSelectedTab2}
+            />
+          </div>
           <div className="pt-6">
             <p className="text-sm text-black font-medium mb-2">
               Forecast revenue
@@ -74,13 +81,7 @@ export default function page() {
             ) : (
               <ROIChart />
             )}
-            <div className="pt-4 pb-6">
-              <Tab
-                tabs={tabs2}
-                selectedTab={selectedTab2}
-                onChange={setSelectedTab2}
-              />
-            </div>
+
             <div className="grid grid-cols-2 gap-3 pb-16">
               {selectedTab === "performance" && (
                 <>

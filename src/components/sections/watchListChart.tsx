@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import { useState } from "react";
 export default function WatchListChart() {
-  const [selectedRange, setSelectedRange] = useState("1W");
+  const [selectedRange, setSelectedRange] = useState("2W");
   const currentValue = 380108.12;
   const percentageChange = -1.5;
   const changeValue = 0.35;
@@ -25,7 +25,8 @@ export default function WatchListChart() {
     { name: "Sun", value: 3800 },
   ];
 
-  const timeRanges = ["1D", "1W", "1M", "1Y", "All"];
+  const timeRanges = ["2W", "1M", "3M", "6M","1Y", "All"];
+
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -127,7 +128,7 @@ export default function WatchListChart() {
             <button
               key={range}
               onClick={() => setSelectedRange(range)}
-              className={`px-4 py-2 rounded-full text-sm transition-all duration-200 hover:bg-gray-100 ${
+              className={`px-2 py-2 rounded-full text-sm transition-all duration-200 hover:bg-gray-100 ${
                 selectedRange === range
                   ? "bg-gray-200 font-medium text-gray-900"
                   : "text-gray-500 hover:text-gray-700"

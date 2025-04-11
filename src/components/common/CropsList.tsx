@@ -1186,10 +1186,13 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
       }
     });
   const listRef = useRef<HTMLDivElement>(null);
+  const handleScroll = () => {
+    window.dispatchEvent(new CustomEvent("closeSortMenu"));
+  };
   return (
     <>
       {/* <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
-      <div className="pt-0 h-[calc(100dvh-194px)]  overflow-auto" ref={listRef}>
+      <div className="pt-0 h-[calc(100dvh-194px)]  overflow-auto" ref={listRef} onScroll={handleScroll}>
         <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
             <div className="flex items-center justify-between mt-4 mb-1 text-sm">
