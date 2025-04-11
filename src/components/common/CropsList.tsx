@@ -1212,76 +1212,74 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
       >
         <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
-            {!selectedItem && (
-              <div className="pt-2 flex items-center justify-center mb-1 text-sm">
-                <Searchbar onSearch={handleSearch} />
-              </div>
-            )}
-            <div className="flex items-center justify-between mt-4 mb-1 text-sm">
-              <button
-                onClick={() => {
-                  setActiveView("All");
-                  setShowSortMenu(false);
-                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
-                  activeView === "All"
-                    ? "bg-primary text-white"
-                    : "bg-white/10 text-black"
-                }`}
-              >
-                All
-              </button>
-              <button
-                onClick={() => {
-                  setActiveView("My");
-                  setShowSortMenu(false);
-                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
-                  activeView === "My"
-                    ? "bg-primary text-white"
-                    : "bg-white/10 text-black"
-                }`}
-              >
-                My
-              </button>
-              <button
-                onClick={() => {
-                  setActiveView("NFT");
-                  setShowSortMenu(false);
-                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
-                  activeView === "NFT"
-                    ? "bg-primary text-white"
-                    : "bg-white/10 text-black"
-                }`}
-              >
-                NFT
-              </button>
-              <button
-                onClick={() => {
-                  setActiveView("Dutch Bucket");
-                  setShowSortMenu(false);
-                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
-                  activeView === "Dutch Bucket"
-                    ? "bg-primary text-white"
-                    : "bg-white/10 text-black"
-                }`}
-              >
-                Dutch Bucket
-              </button>
-              <button
-                onClick={() => setShowSortMenu(!showSortMenu)}
-                className="flex items-center gap-1 h-[42px] w-[42px] flex items-center justify-center  p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
-              >
-                <Filter className="w-4 h-4" />
-              </button>
-            </div>
 
+                <div className="pt-2 flex items-center justify-center mb-1 text-sm">
+                  <Searchbar onSearch={handleSearch} />
+                </div>
+                <div className="flex items-center justify-between mt-4 mb-1 text-sm">
+                  <button
+                    onClick={() => {
+                      setActiveView("All");
+                      setShowSortMenu(false);
+                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                      activeView === "All"
+                        ? "bg-primary text-white"
+                        : "bg-white/10 text-black"
+                    }`}
+                  >
+                    All
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveView("My");
+                      setShowSortMenu(false);
+                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                      activeView === "My"
+                        ? "bg-primary text-white"
+                        : "bg-white/10 text-black"
+                    }`}
+                  >
+                    My
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveView("NFT");
+                      setShowSortMenu(false);
+                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                      activeView === "NFT"
+                        ? "bg-primary text-white"
+                        : "bg-white/10 text-black"
+                    }`}
+                  >
+                    NFT
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveView("Dutch Bucket");
+                      setShowSortMenu(false);
+                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                      activeView === "Dutch Bucket"
+                        ? "bg-primary text-white"
+                        : "bg-white/10 text-black"
+                    }`}
+                  >
+                    Dutch Bucket
+                  </button>
+                  <button
+                    onClick={() => setShowSortMenu(!showSortMenu)}
+                    className="flex items-center gap-1 h-[42px] w-[42px] flex items-center justify-center  p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
+                  >
+                    <Filter className="w-4 h-4" />
+                  </button>
+                </div>
             {showSortMenu && (
               <div className="absolute right-[-15px] w-40 bg-white rounded-lg shadow-lg border z-50 mr-[1.00rem]">
                 <div className="py-1">
@@ -1395,8 +1393,19 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             </div>
           </div>
         ))}
-        {selectedItem && (
-          <div className="fixed inset-0 z-500 flex items-center justify-center p-4">
+
+        {showFinancials && selectedItemForBuy && (
+          <FinancialsModal
+            item={selectedItemForBuy}
+            onClose={() => {
+              setShowFinancials(false);
+              setSelectedItemForBuy(null);
+            }}
+          />
+        )}
+      </div>
+      {selectedItem && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div
               className="bg-white rounded-[2rem] w-full max-w-md max-h-[90vh] overflow-hidden shadow-[rgba(0,0,0,0.25)_0px_54px_55px,rgba(0,0,0,0.12)_0px_-12px_30px,rgba(0,0,0,0.12)_0px_4px_6px,rgba(0,0,0,0.17)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px]"
               style={{
@@ -1463,7 +1472,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 </div>
 
                 {viewMode === "graph" && (
-                  <div className="h-[620px] mt-[80px]">
+                  <div className="h-[620px]">
                     <ResponsiveContainer width="100%" height="100%">
                       <ComposedChart
                         data={selectedItem.marketData}
@@ -1553,16 +1562,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             </div>
           </div>
         )}
-        {showFinancials && selectedItemForBuy && (
-          <FinancialsModal
-            item={selectedItemForBuy}
-            onClose={() => {
-              setShowFinancials(false);
-              setSelectedItemForBuy(null);
-            }}
-          />
-        )}
-      </div>
     </>
   );
 }
