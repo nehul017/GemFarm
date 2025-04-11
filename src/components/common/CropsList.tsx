@@ -528,6 +528,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   const [activeView, setActiveView] = useState("All");
   const { commodity } = useSelector((state: RootState) => state.auth);
   const [hasMounted, setHasMounted] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [crops, setCrops] = useState<any[]>([]);
 
   useEffect(() => {
@@ -573,6 +574,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
 
   useEffect(() => {
     if (!toogle) {
+      setSearchText("");
       setSortBy("systemType");
       setShowSortMenu(false);
       setActiveView("All");
@@ -1163,8 +1165,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     );
   };
 
-  const [searchText, setSearchText] = useState("");
-
   const processedCrops = items
     .filter((item) => {
       if (activeView === "All") return true;
@@ -1212,74 +1212,73 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
       >
         <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
-
-                <div className="pt-2 flex items-center justify-center mb-1 text-sm">
-                  <Searchbar onSearch={handleSearch} />
-                </div>
-                <div className="flex items-center justify-between mt-4 mb-1 text-sm">
-                  <button
-                    onClick={() => {
-                      setActiveView("All");
-                      setShowSortMenu(false);
-                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
-                      activeView === "All"
-                        ? "bg-primary text-white"
-                        : "bg-white/10 text-black"
-                    }`}
-                  >
-                    All
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveView("My");
-                      setShowSortMenu(false);
-                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
-                      activeView === "My"
-                        ? "bg-primary text-white"
-                        : "bg-white/10 text-black"
-                    }`}
-                  >
-                    My
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveView("NFT");
-                      setShowSortMenu(false);
-                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
-                      activeView === "NFT"
-                        ? "bg-primary text-white"
-                        : "bg-white/10 text-black"
-                    }`}
-                  >
-                    NFT
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveView("Dutch Bucket");
-                      setShowSortMenu(false);
-                      listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
-                      activeView === "Dutch Bucket"
-                        ? "bg-primary text-white"
-                        : "bg-white/10 text-black"
-                    }`}
-                  >
-                    Dutch Bucket
-                  </button>
-                  <button
-                    onClick={() => setShowSortMenu(!showSortMenu)}
-                    className="flex items-center gap-1 h-[42px] w-[42px] flex items-center justify-center  p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
-                  >
-                    <Filter className="w-4 h-4" />
-                  </button>
-                </div>
+            <div className="pt-2 flex items-center justify-center mb-1 text-sm">
+              <Searchbar onSearch={handleSearch} toogle={toogle} />
+            </div>
+            <div className="flex items-center justify-between mt-4 mb-1 text-sm">
+              <button
+                onClick={() => {
+                  setActiveView("All");
+                  setShowSortMenu(false);
+                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                  activeView === "All"
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-black"
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => {
+                  setActiveView("My");
+                  setShowSortMenu(false);
+                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                  activeView === "My"
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-black"
+                }`}
+              >
+                My
+              </button>
+              <button
+                onClick={() => {
+                  setActiveView("NFT");
+                  setShowSortMenu(false);
+                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                  activeView === "NFT"
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-black"
+                }`}
+              >
+                NFT
+              </button>
+              <button
+                onClick={() => {
+                  setActiveView("Dutch Bucket");
+                  setShowSortMenu(false);
+                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                  activeView === "Dutch Bucket"
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-black"
+                }`}
+              >
+                Dutch Bucket
+              </button>
+              <button
+                onClick={() => setShowSortMenu(!showSortMenu)}
+                className="flex items-center gap-1 h-[42px] w-[42px] flex items-center justify-center  p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
+              >
+                <Filter className="w-4 h-4" />
+              </button>
+            </div>
             {showSortMenu && (
               <div className="absolute right-[-15px] w-40 bg-white rounded-lg shadow-lg border z-50 mr-[1.00rem]">
                 <div className="py-1">
@@ -1405,163 +1404,163 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
         )}
       </div>
       {selectedItem && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div
-              className="bg-white rounded-[2rem] w-full max-w-md max-h-[90vh] overflow-hidden shadow-[rgba(0,0,0,0.25)_0px_54px_55px,rgba(0,0,0,0.12)_0px_-12px_30px,rgba(0,0,0,0.12)_0px_4px_6px,rgba(0,0,0,0.17)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px]"
-              style={{
-                transform: "translateY(-5%)",
-              }}
-            >
-              {" "}
-              <div className="p-4">
-                <div className="flex justify-between items-center mb-4">
-                  <div>
-                    <h2 className="text-sm font-bold text-gray-900">
-                      {selectedItem.name}
-                      <span className="text-sm text-gray-500 ml-1">
-                        ({selectedItem.variety})
-                      </span>
-                    </h2>
-                    <p
-                      className={`text-sm text-base ${
-                        selectedItem.isPositive
-                          ? "text-green-600"
-                          : "text-red-600"
-                      }`}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="bg-white rounded-[2rem] w-full max-w-md max-h-[90vh] overflow-hidden shadow-[rgba(0,0,0,0.25)_0px_54px_55px,rgba(0,0,0,0.12)_0px_-12px_30px,rgba(0,0,0,0.12)_0px_4px_6px,rgba(0,0,0,0.17)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px]"
+            style={{
+              transform: "translateY(-5%)",
+            }}
+          >
+            {" "}
+            <div className="p-4">
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <h2 className="text-sm font-bold text-gray-900">
+                    {selectedItem.name}
+                    <span className="text-sm text-gray-500 ml-1">
+                      ({selectedItem.variety})
+                    </span>
+                  </h2>
+                  <p
+                    className={`text-sm text-base ${
+                      selectedItem.isPositive
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    $
+                    {selectedItem?.previousDayHigh?.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}{" "}
+                    / kg
+                  </p>
+                </div>
+                <div
+                  onClick={() => {
+                    setSelectedItem(null);
+                    setViewMode("graph");
+                  }}
+                  className="p-2 text-gray-500 hover:text-gray-700"
+                >
+                  <CloseIcon />
+                </div>
+              </div>
+
+              <div className="flex space-x-2 mb-2">
+                <button
+                  className={`px-4 py-2.5 py-2 rounded-lg text-sm font-medium ${
+                    viewMode === "graph"
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-gray-700"
+                  }`}
+                  onClick={() => setViewMode("graph")}
+                >
+                  Graph
+                </button>
+                <button
+                  className={`px-4 py-2.5 py-2 rounded-lg text-sm font-medium ${
+                    viewMode === "table"
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-gray-700"
+                  }`}
+                  onClick={() => setViewMode("table")}
+                >
+                  Table
+                </button>
+              </div>
+
+              {viewMode === "graph" && (
+                <div className="h-[620px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <ComposedChart
+                      data={selectedItem.marketData}
+                      margin={{ top: 10, right: -20, left: -20, bottom: 0 }}
                     >
-                      $
-                      {selectedItem?.previousDayHigh?.toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}{" "}
-                      / kg
-                    </p>
-                  </div>
-                  <div
-                    onClick={() => {
-                      setSelectedItem(null);
-                      setViewMode("graph");
-                    }}
-                    className="p-2 text-gray-500 hover:text-gray-700"
-                  >
-                    <CloseIcon />
-                  </div>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" fontSize={10} tickMargin={8} />
+                      <YAxis
+                        yAxisId="price"
+                        domain={["auto", "auto"]}
+                        fontSize={10}
+                        tickFormatter={(value) => `$${value}`}
+                      />
+                      <YAxis
+                        yAxisId="volume"
+                        orientation="right"
+                        fontSize={10}
+                      />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Area
+                        yAxisId="volume"
+                        dataKey="volume"
+                        fill="#E5E7EB"
+                        stroke="#9CA3AF"
+                        opacity={0.5}
+                      />
+                      <Line
+                        yAxisId="price"
+                        type="monotone"
+                        dataKey="price"
+                        stroke="#2563EB"
+                        strokeWidth={1.5}
+                        dot={false}
+                      />
+                      <ReferenceLine
+                        y={selectedItem.basePrice}
+                        yAxisId="price"
+                        stroke="#DC2626"
+                        strokeDasharray="3 3"
+                      />
+                    </ComposedChart>
+                  </ResponsiveContainer>
                 </div>
+              )}
 
-                <div className="flex space-x-2 mb-2">
-                  <button
-                    className={`px-4 py-2.5 py-2 rounded-lg text-sm font-medium ${
-                      viewMode === "graph"
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-700"
-                    }`}
-                    onClick={() => setViewMode("graph")}
-                  >
-                    Graph
-                  </button>
-                  <button
-                    className={`px-4 py-2.5 py-2 rounded-lg text-sm font-medium ${
-                      viewMode === "table"
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-700"
-                    }`}
-                    onClick={() => setViewMode("table")}
-                  >
-                    Table
-                  </button>
-                </div>
-
-                {viewMode === "graph" && (
-                  <div className="h-[620px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart
-                        data={selectedItem.marketData}
-                        margin={{ top: 10, right: -20, left: -20, bottom: 0 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" fontSize={10} tickMargin={8} />
-                        <YAxis
-                          yAxisId="price"
-                          domain={["auto", "auto"]}
-                          fontSize={10}
-                          tickFormatter={(value) => `$${value}`}
-                        />
-                        <YAxis
-                          yAxisId="volume"
-                          orientation="right"
-                          fontSize={10}
-                        />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Area
-                          yAxisId="volume"
-                          dataKey="volume"
-                          fill="#E5E7EB"
-                          stroke="#9CA3AF"
-                          opacity={0.5}
-                        />
-                        <Line
-                          yAxisId="price"
-                          type="monotone"
-                          dataKey="price"
-                          stroke="#2563EB"
-                          strokeWidth={1.5}
-                          dot={false}
-                        />
-                        <ReferenceLine
-                          y={selectedItem.basePrice}
-                          yAxisId="price"
-                          stroke="#DC2626"
-                          strokeDasharray="3 3"
-                        />
-                      </ComposedChart>
-                    </ResponsiveContainer>
-                  </div>
-                )}
-
-                {viewMode === "table" && (
-                  <div className="h-[620px] overflow-x-auto -mx-4">
-                    <table className="w-full text-sm text-left text-gray-500">
-                      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
-                          <th className="px-4 py-2">Date</th>
-                          {/* <th className="px-4 py-2">Open</th> */}
-                          <th className="px-4 py-2">High</th>
-                          <th className="px-4 py-2">Low</th>
-                          {/* <th className="px-4 py-2">Close</th> */}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {selectedItem.marketData
-                          .sort(
-                            (a, b) =>
-                              new Date(b.date).getTime() -
-                              new Date(a.date).getTime()
-                          )
-                          .map((data, index) => (
-                            <tr key={index} className="border-b">
-                              <td className="px-4 py-2">{data.date}</td>
-                              {/* <td className="px-4 py-2">
+              {viewMode === "table" && (
+                <div className="h-[620px] overflow-x-auto -mx-4">
+                  <table className="w-full text-sm text-left text-gray-500">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                      <tr>
+                        <th className="px-4 py-2">Date</th>
+                        {/* <th className="px-4 py-2">Open</th> */}
+                        <th className="px-4 py-2">High</th>
+                        <th className="px-4 py-2">Low</th>
+                        {/* <th className="px-4 py-2">Close</th> */}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {selectedItem.marketData
+                        .sort(
+                          (a, b) =>
+                            new Date(b.date).getTime() -
+                            new Date(a.date).getTime()
+                        )
+                        .map((data, index) => (
+                          <tr key={index} className="border-b">
+                            <td className="px-4 py-2">{data.date}</td>
+                            {/* <td className="px-4 py-2">
                                 ${data.open.toFixed(2)}
                               </td> */}
-                              <td className="px-4 py-2">
-                                ${data.high.toFixed(2)}
-                              </td>
-                              <td className="px-4 py-2">
-                                ${data.low.toFixed(2)}
-                              </td>
-                              {/* <td className="px-4 py-2">
+                            <td className="px-4 py-2">
+                              ${data.high.toFixed(2)}
+                            </td>
+                            <td className="px-4 py-2">
+                              ${data.low.toFixed(2)}
+                            </td>
+                            {/* <td className="px-4 py-2">
                                 ${data.close.toFixed(2)}
                               </td> */}
-                            </tr>
-                          ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        </div>
+      )}
     </>
   );
 }

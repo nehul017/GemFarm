@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "@/icons/SearchIcon";
 import CloseIcon from "@/icons/closeIcon";
 interface SearchbarProps {
   onSearch: (value: string) => void;
+  toogle?: boolean;
 }
 
-export default function Searchbar({ onSearch }: SearchbarProps) {
+export default function Searchbar({ onSearch, toogle }: SearchbarProps) {
   const [searchText, setSearchText] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +18,12 @@ export default function Searchbar({ onSearch }: SearchbarProps) {
     setSearchText("");
     onSearch("");
   };
+
+  useEffect(() => {
+    if (!toogle) {
+      handleClear();
+    }
+  }, [toogle]);
 
   return (
     <div className="relative w-full">
@@ -31,7 +38,10 @@ export default function Searchbar({ onSearch }: SearchbarProps) {
         <SearchIcon />
       </div>
       {searchText && (
-        <div className="absolute top-[50%] translate-y-[-50%] right-3 flex items-center cursor-pointer" onClick={handleClear}>
+        <div
+          className="absolute top-[50%] translate-y-[-50%] right-3 flex items-center cursor-pointer"
+          onClick={handleClear}
+        >
           <CloseIcon />
         </div>
       )}
