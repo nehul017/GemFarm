@@ -1222,7 +1222,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
+                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "All"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1232,11 +1232,25 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
               </button>
               <button
                 onClick={() => {
+                  setActiveView("My");
+                  setShowSortMenu(false);
+                  listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                  activeView === "My"
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-black"
+                }`}
+              >
+                My
+              </button>
+              <button
+                onClick={() => {
                   setActiveView("NFT");
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
+                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "NFT"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1250,7 +1264,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`px-4 py-2.5 rounded-lg font-medium border transition-colors ${
+                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
                   activeView === "Dutch Bucket"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"

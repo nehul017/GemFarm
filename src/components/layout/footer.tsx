@@ -26,7 +26,7 @@ export default function Footer() {
             <Button
               rotateClass="rotate-180"
               buttonClass="flex items-center justify-center gap-3"
-              text="My Watch List"
+              text="Watch List"
               green
               path={DownIcon}
             />
@@ -47,7 +47,7 @@ export default function Footer() {
         <div onClick={() => setToogle(false)} className="p-5 pb-0">
           <Button
             buttonClass="flex items-center justify-center gap-3"
-            text="My Watch List"
+            text="Watch List"
             green
             path={DownIcon}
           />
