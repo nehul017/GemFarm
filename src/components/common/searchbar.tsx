@@ -10,7 +10,7 @@ export default function Searchbar({ onSearch, toogle }: SearchbarProps) {
   const [searchText, setSearchText] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.trimStart();
     setSearchText(value);
     onSearch(value);
   };
@@ -32,7 +32,7 @@ export default function Searchbar({ onSearch, toogle }: SearchbarProps) {
         type="text"
         value={searchText}
         onChange={handleChange}
-        placeholder="Search Crops..."
+        placeholder="Search Crops By Name...."
       />
       <div className="absolute top-[50%] translate-y-[-50%] left-3 flex items-center cursor-pointer">
         <SearchIcon />
