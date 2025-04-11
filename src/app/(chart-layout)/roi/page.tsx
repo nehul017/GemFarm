@@ -5,7 +5,7 @@ import Header from "@/components/layout/header";
 import PerformanceChart from "@/components/sections/performanceChart";
 import ROIChart from "@/components/sections/ROIChart";
 import GrowthIcon from "@/icons/growthIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const tabs = [
   { key: "performance", label: "Performance" },
@@ -22,6 +22,14 @@ export default function page() {
   const [selectedTab2, setSelectedTab2] = useState(tabs2[0].key);
   const [selectedOption, setSelectedOption] = useState("farm");
   const [toogle, setToogle] = useState(false);
+
+    useEffect(() => {
+      if (toogle) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    }, [toogle]);
 
   return (
     <div>
@@ -196,7 +204,7 @@ export default function page() {
         {toogle && (
           <div
             onClick={() => setToogle(false)}
-            className="fixed top-0 left-0 w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px] mobile:max-w-[100%]"
+            className="fixed top-0  w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px] mobile:max-w-[100%]"
           ></div>
         )}
 
