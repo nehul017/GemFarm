@@ -1212,9 +1212,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
       >
         <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
-            <div className="pt-2 flex items-center justify-center mb-1 text-sm">
-              <Searchbar onSearch={handleSearch} />
-            </div>
+            {!selectedItem && (
+              <div className="pt-2 flex items-center justify-center mb-1 text-sm">
+                <Searchbar onSearch={handleSearch} />
+              </div>
+            )}
             <div className="flex items-center justify-between mt-4 mb-1 text-sm">
               <button
                 onClick={() => {
@@ -1461,7 +1463,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 </div>
 
                 {viewMode === "graph" && (
-                  <div className="h-[620px]">
+                  <div className="h-[620px] mt-[80px]">
                     <ResponsiveContainer width="100%" height="100%">
                       <ComposedChart
                         data={selectedItem.marketData}

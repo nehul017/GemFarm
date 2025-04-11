@@ -1,5 +1,3 @@
-import NewButton from "./NewButton";
-
 export default function Input({
   label,
   placeholder,
