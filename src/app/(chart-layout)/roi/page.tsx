@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 const tabs = [
   { key: "performance", label: "Performance" },
-  { key: "roi", label: "ROI" },
+  { key: "roi", label: "Projections" },
 ];
 
 const tabs2 = [
