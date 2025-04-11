@@ -24,6 +24,9 @@ export default {
         modalBackdrop:'rgba(0,0,0,.5)',
         lineargradient:'linear-gradient(180deg, #E5F8F6 0%, #F1F1E6 100%)',
       },
+      screens: {
+        mobile: { max: '576px' }, // custom max-width media query
+      },
       fontFamily: {
         heading: 'Arial'
       },

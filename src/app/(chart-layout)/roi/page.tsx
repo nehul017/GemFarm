@@ -1,10 +1,10 @@
 "use client";
+import FarmCropsList from "@/components/common/FarmCropsList";
 import Tab from "@/components/common/tab";
 import Header from "@/components/layout/header";
 import PerformanceChart from "@/components/sections/performanceChart";
 import ROIChart from "@/components/sections/ROIChart";
 import GrowthIcon from "@/icons/growthIcon";
-import Link from "next/link";
 import { useState } from "react";
 
 const tabs = [
@@ -21,6 +21,7 @@ export default function page() {
   const [selectedTab, setSelectedTab] = useState(tabs[0].key);
   const [selectedTab2, setSelectedTab2] = useState(tabs2[0].key);
   const [selectedOption, setSelectedOption] = useState("farm");
+  const [toogle, setToogle] = useState(false);
 
   return (
     <div>
@@ -69,7 +70,10 @@ export default function page() {
               before:-translate-x-1/2 before:-translate-y-1/2 checked:before:bg-[#36BA7E]"
                     value="crop"
                     checked={selectedOption === "crop"}
-                    onChange={() => setSelectedOption("crop")}
+                    onChange={() => {
+                      setSelectedOption("crop");
+                      setToogle(!toogle);
+                    }}
                   />
                   <span className="text-sm font-medium text-black">Crop</span>
                 </label>
@@ -189,6 +193,27 @@ export default function page() {
             </div>
           </div>
         </div>
+        {toogle && (
+          <div
+            onClick={() => setToogle(false)}
+            className="fixed top-0 left-0 w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px] mobile:max-w-[100%]"
+          ></div>
+        )}
+
+          <div
+            className={`bg-white max-w-[380px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${
+              toogle ? "translate-y-[0%]" : "translate-y-[100%]"
+            }`}
+          >
+            <div onClick={() => setToogle(!toogle)} className="p-5 pb-0">
+              <h3 className="flex items-center justify-center">
+                Farm Crops
+              </h3>
+            </div>
+            <div className="p-5 pt-0">
+              <FarmCropsList toogle={toogle} />
+            </div>
+          </div>
       </div>
     </div>
   );

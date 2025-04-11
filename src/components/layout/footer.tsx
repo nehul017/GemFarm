@@ -36,7 +36,7 @@ export default function Footer() {
       {toogle && (
         <div
           onClick={() => setToogle(false)}
-          className="fixed top-0 left-[50%] translate-x-[-50%] w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px]"
+          className="fixed top-0 left-0 w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px] mobile:max-w-[100%]"
         ></div>
       )}
       <div
@@ -52,10 +52,7 @@ export default function Footer() {
             path={DownIcon}
           />
         </div>
-        <div
-          className="p-5 pt-0"
-          ref={cropsListRef}
-        >
+        <div className="p-5 pt-0" ref={cropsListRef}>
           <CropsList toogle={toogle} />
         </div>
       </div>
