@@ -36,7 +36,7 @@ export default function Footer() {
       {toogle && (
         <div
           onClick={() => setToogle(false)}
-          className="fixed top-0 left-0 w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px] mobile:max-w-[100%]"
+          className="fixed top-0 w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px] mobile:max-w-[100%]"
         ></div>
       )}
       <div
