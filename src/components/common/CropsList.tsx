@@ -26,6 +26,7 @@ import Button from "./button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { fetchKGPriceData } from "../redux/slices/authSlice";
+import Searchbar from "./searchbar";
 const generateMarketData = (basePrice: number, days: number) => {
   const data = [];
   let currentPrice = basePrice;
@@ -1162,6 +1163,8 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     );
   };
 
+  const [searchText, setSearchText] = useState("");
+
   const processedCrops = items
     .filter((item) => {
       if (activeView === "All") return true;
@@ -1169,6 +1172,13 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
       if (activeView === "Dutch Bucket")
         return item.systemType === "Dutch Bucket";
       return false;
+    })
+    .filter((item) => {
+      // Filter by name or variety based on search input
+      return (
+        item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.variety.toLowerCase().includes(searchText.toLowerCase())
+      );
     })
     .sort((a, b) => {
       switch (sortBy) {
@@ -1188,6 +1198,10 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   const handleScroll = () => {
     window.dispatchEvent(new CustomEvent("closeSortMenu"));
   };
+
+  const handleSearch = (text: string) => {
+    setSearchText(text.toLowerCase());
+  };
   return (
     <>
       {/* <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
@@ -1198,6 +1212,9 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
       >
         <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
+            <div className="pt-2 flex items-center justify-center mb-1 text-sm">
+              <Searchbar onSearch={handleSearch} />
+            </div>
             <div className="flex items-center justify-between mt-4 mb-1 text-sm">
               <button
                 onClick={() => {
@@ -1363,7 +1380,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
           </div>
         ))}
         {selectedItem && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-500 flex items-center justify-center p-4">
             <div
               className="bg-white rounded-[2rem] w-full max-w-md max-h-[90vh] overflow-hidden shadow-[rgba(0,0,0,0.25)_0px_54px_55px,rgba(0,0,0,0.12)_0px_-12px_30px,rgba(0,0,0,0.12)_0px_4px_6px,rgba(0,0,0,0.17)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px]"
               style={{
