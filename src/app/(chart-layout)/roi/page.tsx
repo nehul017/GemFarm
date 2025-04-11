@@ -13,7 +13,7 @@ const tabs = [
 ];
 
 const tabs2 = [
-  { key: "rev", label: "REV" },
+  { key: "rev", label: "Revenue" },
   { key: "yield", label: "Yield" },
 ];
 
@@ -23,13 +23,13 @@ export default function page() {
   const [selectedOption, setSelectedOption] = useState("farm");
   const [toogle, setToogle] = useState(false);
 
-    useEffect(() => {
-      if (toogle) {
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.overflow = "";
-      }
-    }, [toogle]);
+  useEffect(() => {
+    if (toogle) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [toogle]);
 
   return (
     <div>
@@ -37,15 +37,15 @@ export default function page() {
       <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <Tab
-            tabs={tabs}
-            selectedTab={selectedTab}
-            onChange={setSelectedTab}
+            tabs={tabs2}
+            selectedTab={selectedTab2}
+            onChange={setSelectedTab2}
           />
           <div className="pt-4">
             <Tab
-              tabs={tabs2}
-              selectedTab={selectedTab2}
-              onChange={setSelectedTab2}
+              tabs={tabs}
+              selectedTab={selectedTab}
+              onChange={setSelectedTab}
             />
           </div>
           <div className="pt-6">
@@ -208,20 +208,18 @@ export default function page() {
           ></div>
         )}
 
-          <div
-            className={`bg-white max-w-[380px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${
-              toogle ? "translate-y-[0%]" : "translate-y-[100%]"
-            }`}
-          >
-            <div onClick={() => setToogle(!toogle)} className="p-5 pb-0">
-              <h3 className="flex items-center justify-center">
-                Farm Crops
-              </h3>
-            </div>
-            <div className="p-5 pt-0">
-              <FarmCropsList toogle={toogle} />
-            </div>
+        <div
+          className={`bg-white max-w-[380px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${
+            toogle ? "translate-y-[0%]" : "translate-y-[100%]"
+          }`}
+        >
+          <div onClick={() => setToogle(!toogle)} className="p-5 pb-0">
+            <h3 className="flex items-center justify-center">Farm Crops</h3>
           </div>
+          <div className="p-5 pt-0">
+            <FarmCropsList toogle={toogle} />
+          </div>
+        </div>
       </div>
     </div>
   );
