@@ -28,7 +28,7 @@ export default function Searchbar({ onSearch, toogle }: SearchbarProps) {
   return (
     <div className="relative w-full">
       <input
-        className="pl-10 pr-10 text-sm bg-inputBackground placeholder:text-black placeholder:opacity-[0.45] rounded-full placeholder:text-sm outline-none h-[50px] w-full text-black font-normal border border-solid border-black"
+        className="pl-10 pr-10 text-[16px] bg-inputBackground placeholder:text-black placeholder:opacity-[0.45] rounded-full placeholder:text-sm outline-none h-[50px] w-full text-black font-normal border border-solid border-black"
         type="text"
         value={searchText}
         onChange={handleChange}
