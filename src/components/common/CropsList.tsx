@@ -1201,6 +1201,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
 
   const handleSearch = (text: string) => {
     setSearchText(text.toLowerCase());
+    setShowSortMenu(false);
   };
   return (
     <>
