@@ -68,7 +68,7 @@ function page() {
           isNotificationIcon={true}
           isOnlyBackButton={true}
           isWhite={false}
-          isShowProfile={true}
+          isShowProfile={loading || initialLoad ? false : true}
         />
         <div className="bg-primary px-5 pb-[120px] rounded-b-[30px]">
           <div className="pt-2 flex items-center justify-between">

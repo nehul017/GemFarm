@@ -37,9 +37,9 @@ function page() {
 
   // useEffect(() => {
   //   const fetchData = async () => {
-      
+
   //     const resultAction = await dispatch(fetchCommodityData());
-      
+
   //   };
 
   //   fetchData();
@@ -80,38 +80,44 @@ function page() {
     <div>
       <div className="bg-white relative min-h-[calc(100vh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="bg-primary pt-5 px-5 pb-[120px] rounded-b-[30px]">
-          <div className="grid grid-cols-[1fr_100px] pb-5 gap-1">
-            <div>
-              <h2 className="text-white text-[22px] break-words font-semibold mb-1">
-                Hello,{" "}
-                <span className="text-green break-all">{user?.username}</span>
-              </h2>
-              <p className="text-white opacity-[.55] text-xs font-medium">
-                {currentDate}
-              </p>
-            </div>
-            <div className="flex gap-[10px]">
-              <div
-                className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer"
-                onClick={onClickSetting}
-              >
-                <img
-                  className="w-full h-full rounded-full block object-cover"
-                  src={user?.profileImage || ProfileImage}
-                  alt="Profile"
-                />
+          {(!loading || !initialLoad) && (
+            <>
+              <div className="grid grid-cols-[1fr_100px] pb-5 gap-1">
+                <div>
+                  <h2 className="text-white text-[22px] break-words font-semibold mb-1">
+                    Hello,{" "}
+                    <span className="text-green break-all">
+                      {user?.username}
+                    </span>
+                  </h2>
+                  <p className="text-white opacity-[.55] text-xs font-medium">
+                    {currentDate}
+                  </p>
+                </div>
+                <div className="flex gap-[10px]">
+                  <div
+                    className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer"
+                    onClick={onClickSetting}
+                  >
+                    <img
+                      className="w-full h-full rounded-full block object-cover"
+                      src={user?.profileImage || ProfileImage}
+                      alt="Profile"
+                    />
+                  </div>
+                  <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer">
+                    <NotificationIcon />
+                  </div>
+                </div>
               </div>
-              <div className="w-11 h-11 bg-white flex items-center justify-center rounded-full cursor-pointer">
-                <NotificationIcon />
+              <div className="pt-6 flex items-center justify-between">
+                <p className="text-sm font-medium text-white">Your Farms</p>
+                <p className="text-sm font-medium text-white">
+                  <span className="text-green">{data.length}</span> Farm
+                </p>
               </div>
-            </div>
-          </div>
-          <div className="pt-6 flex items-center justify-between">
-            <p className="text-sm font-medium text-white">Your Farms</p>
-            <p className="text-sm font-medium text-white">
-              <span className="text-green">{data.length}</span> Farm
-            </p>
-          </div>
+            </>
+          )}
         </div>
         {loading || initialLoad ? (
           <div className="flex justify-center items-center h-dvh">

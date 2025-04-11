@@ -782,46 +782,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
           <div className="p-4">
             {activeTab === "overview" ? (
               <div className="">
-                <div className="bg-blue-50 mb-2 p-3 border border-solid border-borderColor rounded-md">
-                  <h3 className="text-lg font-semibold text-black200 mb-2">
-                    System Investment
-                  </h3>
-                  <div className="grid grid-cols-2 gap-x-1.5">
-                    <div className="py-2 border-b border-solid border-borderColor">
-                      <p className="text-xs text-gray600">Base System Cost</p>
-                      <p className="text-sm text-black font-medium">
-                        $
-                        {SYSTEM_COSTS.base.toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </p>
-                    </div>
-                    <div className="py-2 border-b border-solid border-borderColor">
-                      <p className="text-xs text-gray600">Installation</p>
-                      <p className="text-sm text-black font-medium">
-                        $
-                        {SYSTEM_COSTS.installation.toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </p>
-                    </div>
-                    <div className="py-2 border-b border-solid border-borderColor col-span-2">
-                      <p className="text-xs text-gray600">
-                        Total Initial Investment
-                      </p>
-                      <p className="text-sm text-black font-medium">
-                        $
-                        {roi.initialCost.toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="bg-white p-3 mb-2 border border-solid border-borderColor rounded-md">
                   <h3 className="text-lg font-semibold text-black200 mb-2">
                     Annual Projections
@@ -886,6 +846,45 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                       <p className="text-sm text-black font-medium">
                         $
                         {roi.fiveYearPL.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-blue-50 mb-2 p-3 border border-solid border-borderColor rounded-md">
+                  <h3 className="text-lg font-semibold text-black200 mb-2">
+                    System Investment
+                  </h3>
+                  <div className="grid grid-cols-2 gap-x-1.5">
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Base System Cost</p>
+                      <p className="text-sm text-black font-medium">
+                        $
+                        {SYSTEM_COSTS.base.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </p>
+                    </div>
+                    <div className="py-2 border-b border-solid border-borderColor">
+                      <p className="text-xs text-gray600">Installation</p>
+                      <p className="text-sm text-black font-medium">
+                        $
+                        {SYSTEM_COSTS.installation.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </p>
+                    </div>
+                    <div className="py-2 border-b border-solid border-borderColor col-span-2">
+                      <p className="text-xs text-gray600">
+                        Total Initial Investment
+                      </p>
+                      <p className="text-sm text-black font-medium">
+                        $
+                        {roi.initialCost.toLocaleString("en-US", {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
                         })}
@@ -1192,7 +1191,11 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   return (
     <>
       {/* <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
-      <div className="pt-0 h-[calc(100dvh-194px)]  overflow-auto" ref={listRef} onScroll={handleScroll}>
+      <div
+        className="pt-0 h-[calc(100dvh-194px)]  overflow-auto"
+        ref={listRef}
+        onScroll={handleScroll}
+      >
         <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
             <div className="flex items-center justify-between mt-4 mb-1 text-sm">
