@@ -5,6 +5,8 @@ import NotificationIcon from "@/icons/notificationIcon";
 import SignOutIcon from "@/icons/signOutIcon";
 import React from "react";
 import SignOutModal from "../modal/signOutModal";
+import OnBoardingIcon from "@/icons/Onbodaring";
+import FinancialIcon from "./Financial";
 
 export default function OtherSetting() {
   const [showSignOutModal, setShowSignOutModal] = React.useState(false);
@@ -15,6 +17,18 @@ export default function OtherSetting() {
         Other Settings
       </h2>
       <div className="shadow-lg bg-white rounded-xl px-5">
+        <div className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4">
+          <OnBoardingIcon />
+          <span className="block font-medium text-black200 text-base">
+            Onboarding
+          </span>
+        </div>
+        <div className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4">
+          <FinancialIcon />
+          <span className="block font-medium text-black200 text-base">
+            Financial
+          </span>
+        </div>
         <div className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4">
           <NotificationIcon />
           <span className="block font-medium text-black200 text-base">
