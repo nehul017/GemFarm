@@ -11,13 +11,6 @@ export default function FarmCropsList({ toogle }: { toogle: boolean }) {
   // const [crops, setCrops] = useState<any[]>([]);
   const crops = [
     {
-      id: 1,
-      name: "Lettuce",
-      image:
-        "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Romain.webp",
-    },
-    { id: 2, name: "Cucumber", image: CucumberImage },
-    {
       id: 3,
       name: "Strawberry",
       image:
@@ -29,10 +22,10 @@ export default function FarmCropsList({ toogle }: { toogle: boolean }) {
       image:
         "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/jalapeno1-700x700.webp",
     },
-    { id: 5, name: "Tomato", image: TomatoImage },
+    { id: 5, name: "Dwarf Cherry Tomatoes", image: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dwarf-Cherry-Tomato-Rosie-F1-Hybrid.jpeg" },
     {
       id: 6,
-      name: "Peas",
+      name: "Snow Peas",
       image:
         "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Snow+Peas.webp",
     },
@@ -77,31 +70,29 @@ export default function FarmCropsList({ toogle }: { toogle: boolean }) {
               >
                 <div className="grid-cols-[60px_1fr] grid gap-2 items-center">
                   <div>
-                  <img
+                    <img
                       src={crop.image}
                       alt={crop.name}
                       className="block w-full h-10 rounded-md object-cover"
                     />
                   </div>
                   <div className="flex items-center justify-between">
-                  <p className="text-sm text-black font-medium truncate max-w-[130px]">
-                        {crop.name}
-                      </p>
-                      <input
-                        type="radio"
-                        className="w-[18px] h-[18px] cursor-pointer appearance-none rounded-full border-2 border-gray-300 checked:border-[#36BA7E] relative
+                    <p className="text-sm text-black font-medium truncate max-w-[130px]">
+                      {crop.name}
+                    </p>
+                    <input
+                      type="radio"
+                      className="w-[18px] h-[18px] cursor-pointer appearance-none rounded-full border-2 border-gray-300 checked:border-[#36BA7E] relative
                       before:content-[''] before:block before:w-[10px] before:h-[10px] before:rounded-full before:absolute before:top-1/2 before:left-1/2 
                       before:-translate-x-1/2 before:-translate-y-1/2 checked:before:bg-[#36BA7E]"
-                        value="crop"
-                        // checked={selectedOption === "crop"}
-                        // onChange={() => {
-                        //   setSelectedOption("crop");
-                        //   setToogle(!toogle);
-                        // }}
-                      />
+                      value="crop"
+                      // checked={selectedOption === "crop"}
+                      // onChange={() => {
+                      //   setSelectedOption("crop");
+                      //   setToogle(!toogle);
+                      // }}
+                    />
                   </div>
-
-                  
                 </div>
               </div>
             ))}
