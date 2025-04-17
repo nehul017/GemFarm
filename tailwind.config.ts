@@ -17,6 +17,7 @@ export default {
         gray600:'#6C6F75',
         bglight:'#FAFAFA',
         borderColor:'#E6E6E6',
+        borderColorlight:'#CDCDCD',
         borderColor2:'rgba(218, 218, 218, 0.80)',
         borderColor3:'rgba(255, 255, 255, 0.10)',
         borderColor4:'rgba(208, 213, 220, 0.60)',
@@ -33,6 +34,7 @@ export default {
       boxShadow: {
         md:'0px 0px 6px 0px rgba(113, 128, 150, 0.16)',
         lg:'0px 2px 15px 0px rgba(0, 0, 0, 0.08)',
+        cardShadow:'0px 2px 10px 0px rgba(113, 128, 150, 1)',
       }
     },
   },

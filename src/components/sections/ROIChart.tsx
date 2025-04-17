@@ -9,20 +9,46 @@ import {
   CartesianGrid,
 } from "recharts";
 import { useState } from "react";
-export default function ROIChart() {
-  const [selectedRange, setSelectedRange] = useState("1W");
 
-  const data = [
-    { name: "Mon", value: 350000 , value2: 320000 },
-    { name: "Tue", value: 345000 , value2: 315000 },
-    { name: "Wed", value: 360000 , value2: 325000 },
-    { name: "Thu", value: 352521.5 , value2: 340000 },
-    { name: "Fri", value: 365000 , value2: 335000 },
-    { name: "Sat", value: 375000 , value2: 355000 },
-    { name: "Sun", value: 380108 , value2: 345000 },
-  ];
+const generateData = () => {
+  const weeks = 260;
+  const result = [];
+  const today = new Date();
+  for (let i = weeks - 1; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i * 7); // weekly data
+    result.push({
+      name: `${date.toLocaleDateString("en-US", {
+        month: "short",
+        year: "2-digit",
+      })}`,
+      value: 300000 + Math.random() * 100000,
+      value2: 280000 + Math.random() * 80000,
+      kg: 40 + Math.random() * 20,
+      kg2: 35 + Math.random() * 15,
+    });
+  }
+  return result;
+};
+export default function ROIChart({ selectedTab2 }: { selectedTab2: string }) {
+  const [selectedRange, setSelectedRange] = useState("2W");
+  const timeRanges = ["2W", "1M", "3M", "6M", "1Y", "All"];
+  const fullData = generateData();
 
-  const timeRanges = ["1D", "1W", "1M", "1Y", "All"];
+  const getFilteredData = () => {
+    const rangeMap: Record<string, number> = {
+      "2W": 4,
+      "1M": 12,
+      "3M": 26,
+      "6M": 52,
+      "1Y": 104,
+      "All": fullData.length,
+    };
+    const weeksToShow = rangeMap[selectedRange] || 4;
+    return fullData.slice(-weeksToShow);
+  };
+
+  const data = getFilteredData();
 
 
   const CustomTooltip = ({ active, payload }: any) => {
@@ -35,7 +61,9 @@ export default function ROIChart() {
               className="text-sm font-semibold"
               style={{ color: entry.color }}
             >
-              ${entry.value.toLocaleString()}
+              {selectedTab2 === "yield"
+                ? `${entry.value.toLocaleString()} kg`
+                : `$${entry.value.toLocaleString()}`}
             </p>
           ))}
         </div>
@@ -44,12 +72,11 @@ export default function ROIChart() {
     return null;
   };
 
-
   return (
     <div className=" bg-white ">
       <div className="max-w-md mx-auto">
         <div className="h-64 mb-5">
-        <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={data}
               margin={{ top: 10, right: -15, left: 20, bottom: 0 }}
@@ -70,21 +97,22 @@ export default function ROIChart() {
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12 }}
+                interval="preserveStartEnd"
               />
               <YAxis
                 orientation="right"
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12 }}
-                domain={['auto', 'auto']}
-                tickFormatter={(value) => `$${value / 1000}K`}
+                domain={["auto", "auto"]}
+                tickFormatter={(value) =>
+                  selectedTab2 === "yield" ? `${value}kg` : `$${value / 1000}K`
+                }
               />
-              <Tooltip
-                content={<CustomTooltip />}
-              />
+              <Tooltip content={<CustomTooltip />} />
               <Area
                 type="monotone"
-                dataKey="value"
+                dataKey={selectedTab2 === "yield" ? "kg" : "value"}
                 stroke="#22C55E"
                 strokeWidth={2}
                 fillOpacity={1}
@@ -92,7 +120,7 @@ export default function ROIChart() {
               />
               <Area
                 type="monotone"
-                dataKey="value2"
+                dataKey={selectedTab2 === "yield" ? "kg2" : "value2"}
                 stroke="#3B82F6"
                 strokeWidth={2}
                 fillOpacity={1}
@@ -108,10 +136,10 @@ export default function ROIChart() {
             <button
               key={range}
               onClick={() => setSelectedRange(range)}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
+              className={`px-2 py-2 rounded-full text-sm transition-colors ${
                 selectedRange === range
-                  ? 'bg-gray-200 font-medium'
-                  : 'text-gray-500 hover:bg-gray-100'
+                  ? "bg-gray-200 font-medium"
+                  : "text-gray-500 hover:bg-gray-100"
               }`}
             >
               {range}

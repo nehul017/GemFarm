@@ -15,6 +15,10 @@ import withAuth from "../withAuth";
 import { fetchContainers } from "@/components/redux/slices/containerSlice";
 import Header from "@/components/layout/header";
 import { useRef } from "react";
+import LeftIcon from "@/icons/leftIcon";
+import SearchIcon from "@/icons/SearchIcon";
+import AllContainer from "@/components/sections/allContainer";
+const ContainerImage = "/assets/images/container.png";
 
 function page() {
   const hasFetched = useRef(false);
@@ -22,13 +26,14 @@ function page() {
   const { user, loading } = useSelector((state: RootState) => state.auth);
   const [initialLoad, setInitialLoad] = useState(true);
   const [data, setData] = useState<any[]>([]);
+  const farm = JSON.parse(localStorage.getItem("farm") || "{}");
 
   useEffect(() => {
     setInitialLoad(true);
     if (!user) {
       dispatch(fetchUserProfile());
     }
-  }, []);
+  }, []);useRouter
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,14 +67,32 @@ function page() {
 
   return (
     <div>
-      <div className="bg-white relative min-h-[calc(100vh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
-        <Header
-          header="Containers"
-          isNotificationIcon={true}
-          isOnlyBackButton={true}
-          isWhite={false}
-          isShowProfile={loading || initialLoad ? false : true}
-        />
+      <Header
+        header={farm.name}
+        isNotificationIcon={true}
+        isOnlyBackButton={true}
+        isWhite={true}
+        isShowProfile={loading || initialLoad ? false : true}
+      />
+
+      <div className="bg-white relative min-h-[calc(100dvh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
+        {loading || initialLoad ? (
+          <div className="flex justify-center items-center h-dvh">
+            <div className="relative bottom-[150px] w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="px-5 pt-3">
+            <div className="h-[160px]">
+              <img
+                src={farm.farmImage || ContainerImage}
+                className="w-full h-full block rounded-xl object-cover"
+                alt="ContainerImage"
+              />
+            </div>
+            <AllContainer data={data}/>
+          </div>
+        )}
+        {/*
         <div className="bg-primary px-5 pb-[120px] rounded-b-[30px]">
           <div className="pt-2 flex items-center justify-between">
             <p className="text-sm font-medium text-white">Your Containers</p>
@@ -114,7 +137,7 @@ function page() {
               </div>
             ))}
           </div>
-        )}
+        )} */}
       </div>
       <Footer />
     </div>

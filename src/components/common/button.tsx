@@ -19,7 +19,7 @@ export default function Button({
   onClick,
   rotateClass,
   path,
-  buttonClass
+  buttonClass,
 }: ButtonProps) {
   return (
     <button
@@ -34,6 +34,7 @@ export default function Button({
       `}
       type={type} // Add the type prop here
       disabled={disabled} // Disable button functionality
+      onClick={onClick} // Add the onClick prop here
     >
       {children ? children : text}
       {path && <img className={ `'cursor-pointer' ${rotateClass}`} src={path} alt="path" />}

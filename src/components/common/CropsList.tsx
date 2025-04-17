@@ -1205,7 +1205,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   };
   return (
     <>
-      {/* <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
+      {/* <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
       <div
         className="pt-0 h-[calc(100dvh-194px)]  overflow-auto"
         ref={listRef}

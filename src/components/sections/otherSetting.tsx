@@ -7,9 +7,11 @@ import React from "react";
 import SignOutModal from "../modal/signOutModal";
 import OnBoardingIcon from "@/icons/Onbodaring";
 import FinancialIcon from "./Financial";
+import { useRouter } from "next/navigation";
 
 export default function OtherSetting() {
   const [showSignOutModal, setShowSignOutModal] = React.useState(false);
+  const router = useRouter();
 
   return (
     <div className="pt-[25px]">
@@ -17,7 +19,10 @@ export default function OtherSetting() {
         Other Settings
       </h2>
       <div className="shadow-lg bg-white rounded-xl px-5">
-        <div className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4">
+        <div
+          className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4 cursor-pointer"
+          onClick={() => router.push("/add-farm-details")}
+        >
           <OnBoardingIcon />
           <span className="block font-medium text-black200 text-base">
             Onboarding

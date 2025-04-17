@@ -6,7 +6,19 @@ import Searchbar from "./searchbar";
 const CucumberImage = "/assets/images/Cucumber.png";
 const TomatoImage = "/assets/images/Tomato.png";
 
-export default function FarmCropsList({ toogle }: { toogle: boolean }) {
+interface FarmCropsListProps {
+  toogle: boolean;
+  selectedCrop: string;
+  setSelectedCrop: React.Dispatch<React.SetStateAction<string>>;
+  setToogle: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function FarmCropsList({
+  selectedCrop,
+  setSelectedCrop,
+  toogle,
+  setToogle,
+}: FarmCropsListProps) {
   const [searchText, setSearchText] = useState("");
   // const [crops, setCrops] = useState<any[]>([]);
   const crops = [
@@ -22,7 +34,12 @@ export default function FarmCropsList({ toogle }: { toogle: boolean }) {
       image:
         "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/jalapeno1-700x700.webp",
     },
-    { id: 5, name: "Dwarf Cherry Tomatoes", image: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dwarf-Cherry-Tomato-Rosie-F1-Hybrid.jpeg" },
+    {
+      id: 5,
+      name: "Dwarf Cherry Tomatoes",
+      image:
+        "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dwarf-Cherry-Tomato-Rosie-F1-Hybrid.jpeg",
+    },
     {
       id: 6,
       name: "Snow Peas",
@@ -38,11 +55,6 @@ export default function FarmCropsList({ toogle }: { toogle: boolean }) {
   }, [toogle]);
 
   const listRef = useRef<HTMLDivElement>(null);
-  const handleBuyClick = (item: any, e: React.MouseEvent) => {
-    e.stopPropagation();
-    console.log("Buy clicked", item);
-  };
-  const [selectedCrop, setSelectedCrop] = useState("Lettuce");
   const handleSearch = (text: string) => {
     setSearchText(text.toLowerCase());
   };
@@ -85,12 +97,12 @@ export default function FarmCropsList({ toogle }: { toogle: boolean }) {
                       className="w-[18px] h-[18px] cursor-pointer appearance-none rounded-full border-2 border-gray-300 checked:border-[#36BA7E] relative
                       before:content-[''] before:block before:w-[10px] before:h-[10px] before:rounded-full before:absolute before:top-1/2 before:left-1/2 
                       before:-translate-x-1/2 before:-translate-y-1/2 checked:before:bg-[#36BA7E]"
-                      value="crop"
-                      // checked={selectedOption === "crop"}
-                      // onChange={() => {
-                      //   setSelectedOption("crop");
-                      //   setToogle(!toogle);
-                      // }}
+                      value={crop.id}
+                      checked={selectedCrop === crop.name.toString()}
+                      onChange={() => {
+                        setSelectedCrop(crop.name.toString());
+                        setToogle(false);
+                      }}
                     />
                   </div>
                 </div>

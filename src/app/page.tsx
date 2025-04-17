@@ -33,7 +33,7 @@ export default function Home() {
       <div className="h-[360px]">
         <LoginBanner />
       </div>
-      <div className="h-[calc(100vh-381px)] relative flex items-center">
+      <div className="h-[calc(100dvh-381px)] relative flex items-center">
         <div className="absolute left-[50%] top-[-40px] translate-x-[-50%]">
           <Image src={Vector} alt="Vector" width={100} height={100} priority />
         </div>

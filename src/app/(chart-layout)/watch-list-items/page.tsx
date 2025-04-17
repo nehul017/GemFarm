@@ -127,7 +127,7 @@ export default function page() {
   return (
     <>
       <Header header="Watch List" isNotificationIcon={true} />
-      <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
+      <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-5 pb-10 px-5">
           <div className="mb-4">
             <div className="relative">

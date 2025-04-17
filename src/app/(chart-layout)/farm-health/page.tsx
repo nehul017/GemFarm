@@ -61,7 +61,7 @@ export default function Page() {
   return (
     <>
       <Header header="Farm Health" isNotificationIcon={false} />
-      <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
+      <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <div className="card-background border border-solid border-borderColor2 p-3 rounded-lg">
             <h2 className="text-[30px] leading-7 text-green uppercase font-bold mb-1 ">

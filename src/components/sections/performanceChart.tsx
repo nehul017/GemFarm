@@ -8,28 +8,64 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { useState } from "react";
-export default function PerformanceChart() {
+import { useMemo, useState } from "react";
+
+const generateChartData = (range: string) => {
+  const today = new Date();
+  let days;
+
+  switch (range) {
+    case "2W":
+      days = 14;
+      break;
+    case "1M":
+      days = 30;
+      break;
+    case "3M":
+      days = 90;
+      break;
+    case "6M":
+      days = 180;
+      break;
+    case "1Y":
+      days = 365;
+      break;
+    case "All":
+      days = 365 * 5;
+      break;
+    default:
+      days = 30;
+  }
+
+  const data = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    const value = 30000 + Math.floor(Math.random() * 10000); // dummy value
+    data.push({ date: date.toISOString(), value });
+  }
+
+  return data;
+};
+
+export default function PerformanceChart({
+  selectedTab2,
+}: {
+  selectedTab2: string;
+}) {
   const [selectedRange, setSelectedRange] = useState("2W");
 
-  const data = [
-    { name: "Mon", value: 32000 },
-    { name: "Tue", value: 33200 },
-    { name: "Wed", value: 34500 },
-    { name: "Thu", value: 35221.5 },
-    { name: "Fri", value: 36000 },
-    { name: "Sat", value: 37000 },
-    { name: "Sun", value: 38108 },
-  ];
-
-  const timeRanges = ["2W", "1M", "3M", "6M","1Y", "All"];
+  const timeRanges = ["2W", "1M", "3M", "6M", "1Y", "All"];
+  const data = useMemo(() => generateChartData(selectedRange), [selectedRange]);
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-1 shadow-lg rounded-lg border border-gray-100">
           <p className="text-sm font-semibold text-gray-900">
-            ${payload[0].value.toLocaleString()}
+            {selectedTab2 === "yield"
+              ? `${payload[0].value.toLocaleString()} kg`
+              : `$${payload[0].value.toLocaleString()}`}
           </p>
         </div>
       );
@@ -44,7 +80,12 @@ export default function PerformanceChart() {
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={data}
-              margin={{ top: 10, right: -24, left: 20, bottom: 0 }}
+              margin={{
+                top: 10,
+                right: selectedTab2 === "yield" ? -10 : -20,
+                left: 20,
+                bottom: 0,
+              }}
               onMouseMove={(e) => {
                 if (e.isTooltipActive) {
                   // You can add additional hover effects here if needed
@@ -60,10 +101,16 @@ export default function PerformanceChart() {
               <CartesianGrid strokeDasharray="3 3" />{" "}
               {/* This adds the dotted grid */}
               <XAxis
-                dataKey="name"
+                dataKey="date"
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12 }}
+                tickFormatter={(date: string) =>
+                  new Date(date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })
+                }
               />
               <YAxis
                 orientation="right"
@@ -71,7 +118,11 @@ export default function PerformanceChart() {
                 tickLine={false}
                 tick={{ fontSize: 12 }}
                 domain={["auto", "auto"]}
-                tickFormatter={(value) => `${value / 1000}K`}
+                tickFormatter={(value) =>
+                  selectedTab2 === "yield"
+                    ? `${value / 1000}K kg`
+                    : `$${value / 1000}K`
+                }
               />
               <Tooltip
                 content={<CustomTooltip />}
@@ -82,18 +133,18 @@ export default function PerformanceChart() {
                 }}
               />
               <Area
-              type="monotone"
-              dataKey="value"
-              stroke="#22C55E"
-              strokeWidth={2}
-              fillOpacity={1}
-              fill="url(#colorValue)"
-              activeDot={{
-                r: 6,
-                fill: "#22C55E",
-                stroke: "#fff",
-                strokeWidth: 2,
-              }}
+                type="monotone"
+                dataKey="value"
+                stroke="#22C55E"
+                strokeWidth={2}
+                fillOpacity={1}
+                fill="url(#colorValue)"
+                activeDot={{
+                  r: 6,
+                  fill: "#22C55E",
+                  stroke: "#fff",
+                  strokeWidth: 2,
+                }}
               />
             </AreaChart>
           </ResponsiveContainer>

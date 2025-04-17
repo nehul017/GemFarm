@@ -15,6 +15,10 @@ import NotificationIcon from "@/icons/notificationIcon";
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
 import { fetchFarms } from "@/components/redux/slices/farmSlice";
+import Button from "@/components/common/button";
+import GrowWhiteIcon from "@/icons/growWhiteIcon";
+import GrowPrimaryIcon from "@/icons/growPrimaryIcon";
+import { Plus } from "lucide-react";
 
 // const FarmImage = "/assets/images/farm.png";
 const ProfileImage = "/assets/images/Ty1.png";
@@ -64,10 +68,17 @@ function page() {
 
   const router = useRouter();
 
+  const onClickContainer = (farm: any) => {
+    localStorage.setItem("farm", JSON.stringify(farm));
+    localStorage.setItem("farmId", farm.id);
+    localStorage.setItem("isFarm", "false");
+    router.push("/container");
+  };
   const onClickFarm = (farm: any) => {
     localStorage.setItem("farm", JSON.stringify(farm));
     localStorage.setItem("farmId", farm.id);
-    router.push("/container");
+    localStorage.setItem("isFarm", "true");
+    router.push("/watch-list");
   };
 
   const onClickSetting = () => {
@@ -78,10 +89,14 @@ function page() {
 
   return (
     <div>
-      <div className="bg-white relative min-h-[calc(100vh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
-        <div className="bg-primary pt-5 px-5 pb-[120px] rounded-b-[30px]">
-          {(!loading || !initialLoad) && (
-            <>
+      {loading || initialLoad ? (
+        <div className="flex justify-center items-center h-dvh">
+          <div className="relative w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        <>
+          <div className="bg-white relative min-h-[calc(100dvh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
+            <div className="bg-primary pt-5 px-5 pb-[80px] rounded-b-[30px]">
               <div className="grid grid-cols-[1fr_100px] pb-5 gap-1">
                 <div>
                   <h2 className="text-white text-[22px] break-words font-semibold mb-1">
@@ -116,48 +131,65 @@ function page() {
                   <span className="text-green">{data.length}</span> Farm
                 </p>
               </div>
-            </>
-          )}
-        </div>
-        {loading || initialLoad ? (
-          <div className="flex justify-center items-center h-dvh">
-            <div className="relative bottom-[150px] w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          <div className="mt-[-100px] px-5 pb-[100px]">
-            {data.map((item, index) => (
-              <div
-                key={index}
-                className="bg-white sha p-4 rounded-xl mb-[18px] cursor-pointer shadow-[rgba(0,0,0,0.25)_0px_54px_55px,rgba(0,0,0,0.12)_0px_-12px_30px,rgba(0,0,0,0.12)_0px_4px_6px,rgba(0,0,0,0.17)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px]"
-                onClick={() => onClickFarm(item)}
-              >
-                <img
-                  src={item.farmImage}
-                  alt="FarmImage"
-                  className="block w-full h-[120px] rounded-lg object-cover"
-                />
-                <div className="flex items-center justify-between pt-4">
-                  <div>
-                    <p className="text-sm font-medium text-black ">
-                      {item.name}
-                    </p>
-                    <div className="flex items-center gap-1">
-                      <LocationIcon />
-                      <span className="block text-sm text-black opacity-[.4]">
-                        {item.location}
-                      </span>
+            </div>
+            <div className="mt-[-50px] px-5 pb-[100px]">
+              {data.map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl shadow-cardShadow p-3 mb-4 last:mb-0"
+                >
+                  <div className="grid grid-cols-[105px_1fr] gap-2.5">
+                    <img
+                      src={item.farmImage}
+                      alt="FarmImage"
+                      className="block w-full h-[105px] rounded-[10px] object-cover"
+                    />
+                    <div>
+                      <h2 className="text-sm font-medium text-black mb-2">
+                        {item.name}
+                      </h2>
+                      <div className="flex pb-2 items-center gap-1">
+                        <LocationIcon />
+                        <span className="text-xs font-medium text-gray800">
+                          {" "}
+                          {item.location}
+                        </span>
+                      </div>
+                      <p className="text-xs font-medium text-gray800 mb-2.5">
+                        {moment(item.createdAt).format("DD MMM YYYY")}
+                      </p>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          onClick={() => onClickFarm(item)}
+                          className="p-2 flex items-center gap-2 rounded-full justify-center border border-solid border-primary bg-primary text-white text-xs font-medium"
+                        >
+                          Farm
+                          <GrowWhiteIcon />
+                        </button>
+                        <button
+                          onClick={() => onClickContainer(item)}
+                          className="p-2 flex items-center gap-2 rounded-full justify-center border border-solid border-green bg-transparent text-green text-xs font-medium"
+                        >
+                          Container
+                          <GrowPrimaryIcon />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  {/* <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                  ${prices[index] || 12}
-                </button> */}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <Button
+              green
+              buttonClass="fixed right-4 bottom-24 rounded-full w-14 h-14"
+              onClick={() => router.push("/add-farm-details")}
+            >
+              <Plus className="h-6 w-6" />
+            </Button>
           </div>
-        )}
-      </div>
-      <Footer />
+          <Footer />
+        </>
+      )}
     </div>
   );
 }

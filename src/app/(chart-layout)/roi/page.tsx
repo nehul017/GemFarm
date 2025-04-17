@@ -5,6 +5,7 @@ import Header from "@/components/layout/header";
 import PerformanceChart from "@/components/sections/performanceChart";
 import ROIChart from "@/components/sections/ROIChart";
 import GrowthIcon from "@/icons/growthIcon";
+import { Sprout } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const tabs = [
@@ -21,6 +22,7 @@ export default function page() {
   const [selectedTab, setSelectedTab] = useState(tabs[0].key);
   const [selectedTab2, setSelectedTab2] = useState(tabs2[0].key);
   const [selectedOption, setSelectedOption] = useState("farm");
+  const [selectedCrop, setSelectedCrop] = useState("");
   const [toogle, setToogle] = useState(false);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export default function page() {
   return (
     <div>
       <Header isNotificationIcon={true} />
-      <div className="bg-white relative min-h-[calc(100vh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
+      <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <Tab
             tabs={tabs2}
@@ -78,20 +80,33 @@ export default function page() {
               before:-translate-x-1/2 before:-translate-y-1/2 checked:before:bg-[#36BA7E]"
                     value="crop"
                     checked={selectedOption === "crop"}
-                    onChange={() => {
-                      setSelectedOption("crop");
-                      setToogle(!toogle);
+                    onClick={() => {
+                      if (selectedOption === "crop") {
+                        setToogle(prev => !prev); // toggle when clicking again
+                      } else {
+                        setSelectedOption("crop");
+                        setToogle(true); // or false, depending on your default
+                      }
                     }}
                   />
                   <span className="text-sm font-medium text-black">Crop</span>
                 </label>
               </div>
             </div>
-            {/* <div className="h-[283px] border border-solid border-borderColor rounded-xl bg-white"></div> */}
+
+            {/* Selected Crop Display */}
+            {selectedOption === "crop" && (
+              <div className="flex items-center gap-2 mb-4 bg-[#36BA7E]/10 py-2 px-3 rounded-lg">
+                <Sprout className="w-4 h-4 text-[#36BA7E]" />
+                <span className="text-sm font-medium text-[#36BA7E] capitalize">
+                  {selectedCrop}
+                </span>
+              </div>
+            )}
             {selectedTab === "performance" ? (
-              <PerformanceChart />
+              <PerformanceChart selectedTab2={selectedTab2} />
             ) : (
-              <ROIChart />
+              <ROIChart selectedTab2={selectedTab2} />
             )}
 
             <div className="grid grid-cols-2 gap-3 pb-16">
@@ -217,7 +232,12 @@ export default function page() {
             <h3 className="flex items-center justify-center">Farm Crops</h3>
           </div>
           <div className="p-5 pt-0">
-            <FarmCropsList toogle={toogle} />
+            <FarmCropsList
+              toogle={toogle}
+              setToogle={setToogle}
+              selectedCrop={selectedCrop}
+              setSelectedCrop={setSelectedCrop}
+            />
           </div>
         </div>
       </div>
