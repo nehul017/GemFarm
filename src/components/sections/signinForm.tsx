@@ -63,8 +63,10 @@ export default function SigninForm() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (errorMessage) {
+    if (errorMessage && errorMessage !== "✅ Logged out successfully.") {
       toast.error(errorMessage);
+    }else{
+      toast.success(errorMessage);
     }
   }, [errorMessage]);
   // Load saved email from sessionStorage

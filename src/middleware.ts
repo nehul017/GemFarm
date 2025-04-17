@@ -12,6 +12,7 @@ export async function middleware(req: NextRequest) {
 
   try {
     const { payload } = await jwtVerify(token, SECRET_KEY);
+    console.log('payload', payload)
 
     if (payload.exp && Date.now() >= payload.exp * 1000) {
       return NextResponse.redirect(new URL('/signin?error=session_expired', req.url));
