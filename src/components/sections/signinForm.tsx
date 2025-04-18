@@ -52,7 +52,7 @@ export default function SigninForm() {
       } else if (error === "logged_out") {
         Cookies.remove("authToken");
         Cookies.remove("user");
-        setErrorMessage("✅ Logged out successfully.");
+        setErrorMessage("Logged out successfully.");
       }
       // Remove the error query param from the URL
       const params = new URLSearchParams(window.location.search);
