@@ -30,19 +30,12 @@ export default function Home() {
     </div>
   ) : (
     <div className="bg-primary h-dvh md:max-w-[375px] md:mx-auto">
-      <div className="h-[360px]">
+      <div className="h-[360px] mobile:h-[280px]">
         <LoginBanner />
       </div>
-      <div className="h-[calc(100dvh-381px)] relative flex items-center">
+      <div className="h-[calc(100dvh-381px)] mobile:h-[calc(100dvh-280px)] relative flex items-center">
         <div className="absolute left-[50%] top-[-40px] translate-x-[-50%]">
-          <Image
-            src={Vector}
-            alt="Vector"
-            width={100}
-            height={100}
-            priority
-            className="w-[80px] h-[80px] sm:w-[60px] sm:h-[60px]"
-          />
+          <Image src={Vector} alt="Vector" width={100} height={100} priority />
         </div>
         <div className="px-5">
           <div className="absolute inset-0 bg-[linear-gradient(transparent_95%,rgba(255,255,255,0.07)_5%),linear-gradient(90deg,transparent_95%,rgba(255,255,255,0.07)_5%)] bg-[length:50px_50px] opacity-20 pointer-events-none"></div>

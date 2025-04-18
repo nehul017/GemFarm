@@ -26,7 +26,7 @@ export default {
         lineargradient:'linear-gradient(180deg, #E5F8F6 0%, #F1F1E6 100%)',
       },
       screens: {
-        mobile: { max: '576px' }, // custom max-width media query
+        mobile: { max: "380px" },
       },
       fontFamily: {
         heading: 'Arial'
