@@ -24,6 +24,19 @@ export default function page() {
   const [selectedOption, setSelectedOption] = useState("farm");
   const [selectedCrop, setSelectedCrop] = useState("");
   const [toogle, setToogle] = useState(false);
+  const [data, setData] = useState<any>({});
+  useEffect(() => {
+    const isFarm = localStorage.getItem("isFarm");
+
+    if (isFarm === "false") {
+      const data = JSON.parse(localStorage.getItem("container") || "{}");
+      setData(data);
+      setSelectedOption("crop");
+      setSelectedCrop(data.container_crop);
+    } else {
+      setData(JSON.parse(localStorage.getItem("farm") || "{}"));
+    }
+  }, []);
 
   useEffect(() => {
     if (toogle) {
@@ -35,7 +48,10 @@ export default function page() {
 
   return (
     <div>
-      <Header isNotificationIcon={true} />
+      <Header
+        header={data.name || data.container_crop}
+        isNotificationIcon={true}
+      />
       <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <Tab
@@ -82,7 +98,7 @@ export default function page() {
                     checked={selectedOption === "crop"}
                     onClick={() => {
                       if (selectedOption === "crop") {
-                        setToogle(prev => !prev); // toggle when clicking again
+                        setToogle((prev) => !prev); // toggle when clicking again
                       } else {
                         setSelectedOption("crop");
                         setToogle(true); // or false, depending on your default
@@ -155,7 +171,7 @@ export default function page() {
                       $520,64.00
                     </h4>
                     <div className="flex items-center gap-1">
-                      <button className="bg-white rounded py-1.5 px-1 flex items-center gap-1 text-[8px] text-green font-semibold">
+                      <button className="bg-whi.datate rounded py-1.5 px-1 flex items-center gap-1 text-[8px] text-green font-semibold">
                         <GrowthIcon />
                         2.67%
                       </button>

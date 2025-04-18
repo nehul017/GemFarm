@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import LineChartIcon from "@/icons/lineChart";
-import LineChartRed from "@/icons/lineChartRed";
+import { useDispatch, useSelector } from "react-redux";
+
 import Searchbar from "./searchbar";
-const CucumberImage = "/assets/images/Cucumber.png";
-const TomatoImage = "/assets/images/Tomato.png";
+import { AppDispatch } from "../redux/store";
+import { fetchFarmById } from "../redux/slices/farmSlice";
 
 interface FarmCropsListProps {
   toogle: boolean;
@@ -20,33 +20,31 @@ export default function FarmCropsList({
   setToogle,
 }: FarmCropsListProps) {
   const [searchText, setSearchText] = useState("");
-  // const [crops, setCrops] = useState<any[]>([]);
-  const crops = [
-    {
-      id: 3,
-      name: "Strawberry",
-      image:
-        "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Albion+strawberries.webp",
-    },
-    {
-      id: 4,
-      name: "Jalapenos",
-      image:
-        "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/jalapeno1-700x700.webp",
-    },
-    {
-      id: 5,
-      name: "Dwarf Cherry Tomatoes",
-      image:
-        "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dwarf-Cherry-Tomato-Rosie-F1-Hybrid.jpeg",
-    },
-    {
-      id: 6,
-      name: "Snow Peas",
-      image:
-        "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Snow+Peas.webp",
-    },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
+  const [containers, setContainers] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchCrops = async (farmId: string) => {
+      const response = await dispatch(fetchFarmById(farmId));
+      console.log("response", response);
+      const payload = response.payload as { data: { containers: any } };
+
+      const crop = payload.data.containers.map((item: any) => {
+        return {
+          id: item.id,
+          name: item.container_crop,
+          image: item.container_image,
+        };
+      });
+      console.log("crop", crop);
+
+      setContainers(crop);
+    };
+    const farmId = localStorage.getItem("farmId");
+    if (farmId) {
+      fetchCrops(farmId);
+    }
+  }, []);
 
   useEffect(() => {
     if (!toogle) {
@@ -59,7 +57,7 @@ export default function FarmCropsList({
     setSearchText(text.toLowerCase());
   };
 
-  const filteredCrops = crops.filter((crop) =>
+  const filteredCrops = containers.filter((crop) =>
     crop.name.toLowerCase().includes(searchText.toLowerCase())
   );
   return (

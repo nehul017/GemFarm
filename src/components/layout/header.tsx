@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 export default function Header({
-  header = "GemFarms",
+  header = "",
   isNotificationIcon = false,
   isOnlyBackButton = false,
   isWhite = false,

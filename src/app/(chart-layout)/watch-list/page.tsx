@@ -4,12 +4,23 @@ import Header from "@/components/layout/header";
 import WatchListChart from "@/components/sections/watchListChart";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 const CashIcon = "/assets/icons/cash.svg";
 const PlantCareIcon = "/assets/icons/plant-care.svg";
 
 export default function page() {
   const router = useRouter();
-  const isFarm = localStorage.getItem("isFarm") === "true";
+  const [isFarm, setIsFarm] = useState(true);
+  const [data, setData] = useState<any>({});
+  useEffect(() => {
+    const farmId = localStorage.getItem("isFarm");
+    if (farmId === "false") {
+      setIsFarm(false);
+      setData(JSON.parse(localStorage.getItem("container") || "{}"));
+    } else {
+      setData(JSON.parse(localStorage.getItem("farm") || "{}"));
+    }
+  }, []);
 
   const handleClickOnCashFlow = () => {
     router.push("/roi");
@@ -19,7 +30,10 @@ export default function page() {
   };
   return (
     <>
-      <Header isNotificationIcon={true} />
+      <Header
+        header={data.name || data.container_crop}
+        isNotificationIcon={true}
+      />
       <div className="bg-white relative min-h-[calc(90vh-52px-78px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <WatchListChart />

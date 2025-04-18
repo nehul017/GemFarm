@@ -15,6 +15,17 @@ export default function Page() {
   const [initialLoad, setInitialLoad] = useState(true);
   const [data, setData] = useState<Record<string, any>>({});
   const [container, setContainer] = useState<any | null>({});
+  const [farmData, setFarmData] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    const farmId = localStorage.getItem("isFarm");
+    if (farmId === "false") {
+      setFarmData(JSON.parse(localStorage.getItem("container") || "{}"));
+    } else {
+      setFarmData(JSON.parse(localStorage.getItem("farm") || "{}"));
+    }
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +59,7 @@ export default function Page() {
     fetchData();
   }, []);
 
-  const currentDate = moment(container.harvest_date).format("MMM DD, YYYY");
+  const currentDate = moment(farmData.harvest_date).format("MMM DD, YYYY");
 
   if (initialLoad) {
     return (
@@ -68,7 +79,7 @@ export default function Page() {
               HEALTHY
             </h2>
             <p className="text-base font-bold text-black mb-1">
-              GemFarms {container.location}
+              {farmData.name || farmData.container_crop}, {farmData.farm.location}
             </p>
             <p className="text-sm text-balance font-medium">
               Harvest Date : <span className="text-xs">{currentDate}</span>

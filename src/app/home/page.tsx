@@ -179,13 +179,14 @@ function page() {
                 </div>
               ))}
             </div>
-            <Button
-              green
-              buttonClass="fixed right-4 bottom-24 rounded-full w-14 h-14"
-              onClick={() => router.push("/add-farm-details")}
-            >
-              <Plus className="h-6 w-6" />
-            </Button>
+            <div className="fixed right-4 bottom-24 rounded-full w-14 h-14">
+              <Button
+                green
+                onClick={() => router.push("/add-farm-details")}
+              >
+                <Plus className="h-6 w-6" />
+              </Button>
+            </div>
           </div>
           <Footer />
         </>

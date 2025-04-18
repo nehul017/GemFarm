@@ -18,6 +18,8 @@ import { useRef } from "react";
 import LeftIcon from "@/icons/leftIcon";
 import SearchIcon from "@/icons/SearchIcon";
 import AllContainer from "@/components/sections/allContainer";
+import Button from "@/components/common/button";
+import { Plus } from "lucide-react";
 const ContainerImage = "/assets/images/container.png";
 
 function page() {
@@ -26,14 +28,15 @@ function page() {
   const { user, loading } = useSelector((state: RootState) => state.auth);
   const [initialLoad, setInitialLoad] = useState(true);
   const [data, setData] = useState<any[]>([]);
-  const farm = JSON.parse(localStorage.getItem("farm") || "{}");
+  const [farm, setFarm] = useState<any>({});
 
   useEffect(() => {
     setInitialLoad(true);
     if (!user) {
       dispatch(fetchUserProfile());
     }
-  }, []);useRouter
+  }, []);
+  useRouter;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +46,7 @@ function page() {
         const { data: containerData } = response.payload as { data: any[] };
         setData(containerData);
         setInitialLoad(false);
+        setFarm(JSON.parse(localStorage.getItem("farm") || "{}"));
       } catch (error) {
         console.error("API request error:", error);
         setInitialLoad(false);
@@ -89,7 +93,12 @@ function page() {
                 alt="ContainerImage"
               />
             </div>
-            <AllContainer data={data}/>
+            <AllContainer data={data} />
+            <div className="fixed right-4 bottom-24 rounded-full w-14 h-14">
+              <Button green onClick={() => router.push("/add-container-details")}>
+                <Plus className="h-6 w-6" />
+              </Button>
+            </div>
           </div>
         )}
         {/*

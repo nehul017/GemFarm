@@ -9,12 +9,14 @@ interface Farm {
 
 interface FarmState {
     farms: Farm[];
+    farm: Farm;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: FarmState = {
     farms: [],
+    farm: {} as Farm,
     loading: false,
     error: null,
 };
@@ -33,6 +35,19 @@ export const createFarm = createAsyncThunk(
     }
 );
 
+// READ SINGLE FARM
+export const fetchFarmById = createAsyncThunk<Farm, string>(
+    "farm/fetchFarmById",
+    async (id: string, { rejectWithValue }) => {
+        const axiosInstance = (await import("../../utils/axiosInstance")).default;
+        try {
+            const res = await axiosInstance.get(`/farms/by-id/${id}`);
+            return res.data;
+        } catch (error: any) {
+            return rejectWithValue(error?.response?.data?.message || "Fetch failed");
+        }
+    }
+);
 // READ
 export const fetchFarms = createAsyncThunk<Farm[]>(
     "farm/fetchFarms",
@@ -129,7 +144,22 @@ const farmSlice = createSlice({
             })
             .addCase(deleteFarm.fulfilled, (state, action) => {
                 state.farms = state.farms.filter(f => f.id !== action.payload);
-            });
+            })
+            .addCase(fetchFarmById.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchFarmById.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = null;
+                state.farm = action.payload;
+            }
+            )
+            .addCase(fetchFarmById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            }
+            );
     },
 });
 
