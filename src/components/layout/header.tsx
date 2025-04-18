@@ -6,7 +6,10 @@ import SearchIcon from "@/icons/SearchIcon";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
-import { fetchCommodityData } from "../redux/slices/authSlice";
+import {
+  fetchCommodityData,
+  fetchUserProfile,
+} from "../redux/slices/authSlice";
 
 const ProfileImage = "/assets/images/Ty1.png";
 
@@ -25,6 +28,8 @@ export default function Header({
   isWhite = false,
   isShowProfile = true,
 }: HeaderProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleLeftIconClick = () => {
     window.history.back();
   };
@@ -35,7 +40,14 @@ export default function Header({
     router.push("/setting");
   };
 
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth) as any;
+  console.log("user = = =>", user);
+  useEffect(() => {
+    if (!user) {
+      dispatch(fetchUserProfile());
+    }
+  }, []);
+
   return (
     <div
       className={`flex relative top-0 md:max-w-[375px] md:mx-auto z-10 items-center justify-between py-3 px-5 ${
@@ -60,14 +72,14 @@ export default function Header({
         {header}
       </div>
       <div className="flex gap-[10px]">
-        {isShowProfile && (
+        {isShowProfile && user?.profileImage && (
           <div
             className="w-11 h-11 bg-white flex items-center rounded-full cursor-pointer border-2 border-gray-500"
             onClick={onClickSetting}
           >
             <img
               className="w-full h-full rounded-full block object-cover"
-              src={user?.profileImage || ProfileImage}
+              src={user?.profileImage}
               alt="Profile"
             />
           </div>
