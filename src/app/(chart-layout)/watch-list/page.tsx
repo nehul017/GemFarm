@@ -32,7 +32,7 @@ export default function page() {
     <>
       <Header
         header={data.name || data.container_crop}
-        isNotificationIcon={true}
+        isNotificationIcon={false}
       />
       <div className="bg-white relative min-h-[calc(90vh-52px-78px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
@@ -64,10 +64,10 @@ export default function page() {
                 </div>
                 <div>
                   <p className="text-sm text-black font-semibold mb-1">
-                    Farm Health
+                    Container Health
                   </p>
                   <span className="text-xs text-gray800 font-normal block">
-                    Farm health measures wellbeing.
+                    Container health measures wellbeing.
                   </span>
                 </div>
               </div>

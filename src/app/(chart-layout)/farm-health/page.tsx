@@ -26,7 +26,6 @@ export default function Page() {
     }
   }, []);
 
-
   useEffect(() => {
     const fetchData = async () => {
       const containerItem = localStorage.getItem("container");
@@ -61,17 +60,21 @@ export default function Page() {
 
   const currentDate = moment(farmData.harvest_date).format("MMM DD, YYYY");
 
-  if (initialLoad) {
-    return (
-      <div className="flex justify-center items-center h-dvh">
-        <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-      </div>
-    );
-  }
+  // if (initialLoad) {
+  //   return (
+  //     <div className="flex justify-center items-center h-dvh">
+  //       <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+  //     </div>
+  //   );
+  // }
 
-  return (
+  return initialLoad ? (
+    <div className="flex justify-center items-center h-dvh">
+      <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+    </div>
+  ) : (
     <>
-      <Header header="Farm Health" isNotificationIcon={false} />
+      <Header header="Container Health" isNotificationIcon={false} />
       <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <div className="card-background border border-solid border-borderColor2 p-3 rounded-lg">
@@ -79,7 +82,8 @@ export default function Page() {
               HEALTHY
             </h2>
             <p className="text-base font-bold text-black mb-1">
-              {farmData.name || farmData.container_crop}, {farmData.farm.location}
+              {farmData.name || farmData.container_crop},{" "}
+              {farmData.farm.location}
             </p>
             <p className="text-sm text-balance font-medium">
               Harvest Date : <span className="text-xs">{currentDate}</span>
