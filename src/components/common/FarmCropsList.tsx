@@ -76,7 +76,11 @@ export default function FarmCropsList({
             {filteredCrops.map((crop, i) => (
               <div
                 key={i}
-                className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5"
+                className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5 cursor-pointer hover:bg-[#F5F5F5] transition-all duration-200 ease-in-out"
+                onClick={() => {
+                  setSelectedCrop(crop.name.toString());
+                  setToogle(false);
+                }}
               >
                 <div className="grid-cols-[60px_1fr] grid gap-2 items-center">
                   <div>

@@ -103,7 +103,7 @@ export default function ROIChart({ selectedTab2 }: { selectedTab2: string }) {
                 orientation="right"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 10 }}
                 domain={["auto", "auto"]}
                 tickFormatter={(value) =>
                   selectedTab2 === "yield" ? `${value}kg` : `$${value / 1000}K`
