@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { fetchKGPriceData } from "../redux/slices/authSlice";
 import Searchbar from "./searchbar";
+import TrashIcon from "@/icons/trashIcon";
 const generateMarketData = (basePrice: number, days: number) => {
   const data = [];
   let currentPrice = basePrice;
@@ -516,6 +517,58 @@ const items = [
     previousDayHigh,
   };
 });
+
+const myCrops = [
+  {
+    name: "Jalapenos",
+    basePrice: 3.8,
+    img: JalapenosImage,
+    isPositive: true,
+    systemType: "Dutch Bucket",
+    category: "Fruiting Vegetables",
+    variety: "Jalapeno",
+  },
+  {
+    name: "Dwarf Cherry Tomatoes",
+    basePrice: 6.62,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Dwarf-Cherry-Tomato-Rosie-F1-Hybrid.jpeg",
+    isPositive: true,
+    systemType: "NFT",
+    category: "Small Fruiting Plants",
+    variety: "Cherry Tomatoes",
+  },
+  {
+    name: "Peas",
+    basePrice: 3.97,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Snow+Peas.webp",
+    isPositive: true,
+    systemType: "Dutch Bucket",
+    category: "Legumes & Climbing Plants",
+    variety: "Snow Peas",
+  },
+  {
+    name: "Peas",
+    basePrice: 5.37,
+    img: "https://dev-gemfarm.s3.us-east-1.amazonaws.com/images/Sugar+Snap+Peas.jpg",
+    isPositive: true,
+    systemType: "Dutch Bucket",
+    category: "Legumes & Climbing Plants",
+    variety: "Sugar Snap Peas",
+  },
+].map((item) => {
+  const marketData = generateMarketData(item.basePrice, 30);
+
+  // Find the high price of the previous day
+  const previousDayHigh =
+    marketData.length > 1 ? marketData[marketData.length - 1].high : null;
+
+  return {
+    ...item,
+    marketData,
+    previousDayHigh,
+  };
+});
+
 export default function CropsList({ toogle }: { toogle: boolean }) {
   const [viewMode, setViewMode] = useState("graph"); // 'graph' or 'table'
   const dispatch: AppDispatch = useDispatch();
@@ -1165,35 +1218,38 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     );
   };
 
-  const processedCrops = items
-    .filter((item) => {
-      if (activeView === "All") return true;
-      if (activeView === "NFT") return item.systemType === "NFT";
-      if (activeView === "Dutch Bucket")
-        return item.systemType === "Dutch Bucket";
-      return false;
-    })
-    .filter((item) => {
-      // Filter by name or variety based on search input
-      return (
-        item.name.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.variety.toLowerCase().includes(searchText.toLowerCase())
-      );
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "systemType":
-          return a.systemType.localeCompare(b.systemType);
-        case "category":
-          return a.category.localeCompare(b.category);
-        case "name":
-          return a.name.localeCompare(b.name);
-        case "variety":
-          return a.variety.localeCompare(b.variety);
-        default:
-          return 0;
-      }
-    });
+  const processedCrops =
+    activeView === "My"
+      ? myCrops
+      : items
+          .filter((item) => {
+            if (activeView === "All") return true;
+            if (activeView === "NFT") return item.systemType === "NFT";
+            if (activeView === "Dutch Bucket")
+              return item.systemType === "Dutch Bucket";
+            return false;
+          })
+          .filter((item) => {
+            // Filter by name or variety based on search input
+            return (
+              item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+              item.variety.toLowerCase().includes(searchText.toLowerCase())
+            );
+          })
+          .sort((a, b) => {
+            switch (sortBy) {
+              case "systemType":
+                return a.systemType.localeCompare(b.systemType);
+              case "category":
+                return a.category.localeCompare(b.category);
+              case "name":
+                return a.name.localeCompare(b.name);
+              case "variety":
+                return a.variety.localeCompare(b.variety);
+              default:
+                return 0;
+            }
+          });
   const listRef = useRef<HTMLDivElement>(null);
   const handleScroll = () => {
     window.dispatchEvent(new CustomEvent("closeSortMenu"));
@@ -1342,7 +1398,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5"
           >
             <div
-              className="grid-cols-[1fr_48px_60px] grid gap-2 items-center"
+              className="grid-cols-[1fr_115px] grid gap-2 items-center"
               onClick={() => {
                 setSelectedItem(item);
                 setShowSortMenu(false);
@@ -1365,30 +1421,40 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                     <span className="block">{item.systemType}</span>
                     <span className="block">• {item.category}</span>
                   </div>
-                  <button
-                    className={`text-xs font-semibold border-none cursor-pointer py-[5px] px-2.5 rounded-sm ${
-                      item.isPositive
-                        ? "text-green bg-[#E6F4EE]"
-                        : "text-[#FF4747] bg-[#FAE8E8]"
-                    }`}
-                  >
-                    $
-                    {item?.previousDayHigh?.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}{" "}
-                    / kg
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      className={`text-xs font-semibold border-none cursor-pointer py-[5px] px-[5px] rounded-sm ${
+                        item.isPositive
+                          ? "text-green bg-[#E6F4EE]"
+                          : "text-[#FF4747] bg-[#FAE8E8]"
+                      }`}
+                    >
+                      $
+                      {item?.previousDayHigh?.toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}{" "}
+                      / kg
+                    </button>
+                    {item.isPositive ? <LineChartIcon /> : <LineChartRed />}
+                  </div>
                 </div>
               </div>
-              {item.isPositive ? <LineChartIcon /> : <LineChartRed />}
-              <div>
+
+              <div className="flex items-center gap-3">
                 <button
-                  className="py-2.5 px-4 bg-primary text-white text-sm font-medium border-none rounded-full"
+                  className="py-2 px-5 bg-primary text-white text-sm font-medium border-none rounded-full"
                   onClick={(e) => handleBuyClick(item, e)}
                 >
                   Buy
                 </button>
+                {activeView !== "My" ? (
+                  <span className="block text-sm font-medium text-primary">
+                    Add+
+                  </span>
+                ) : (
+                  <TrashIcon />
+                )}
               </div>
             </div>
           </div>
