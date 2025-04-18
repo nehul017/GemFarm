@@ -1,11 +1,15 @@
-import LeftIcon from "@/icons/leftIcon";
+"use client";
+
 import React from "react";
 import Input from "../common/Input";
 import AddCoverPhoto from "./addCoverPhoto";
 import Button from "../common/button";
 import Header from "../layout/header";
+import { useRouter } from "next/navigation";
 
 export default function AddContainerDetails() {
+  const router = useRouter();
+
   return (
     <div>
       <Header
@@ -53,7 +57,11 @@ export default function AddContainerDetails() {
         </div>
       </div>
       <div className="sticky px-5 py-2 bottom-0 left-0 bg-white">
-        <Button green text="Save" />
+        <Button
+          green
+          text="Save"
+          onClick={() => router.push("/home")}
+        />
       </div>
     </div>
   );

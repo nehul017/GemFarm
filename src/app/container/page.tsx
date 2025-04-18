@@ -94,7 +94,7 @@ function page() {
               />
             </div>
             <AllContainer data={data} />
-            <div className="fixed right-4 bottom-24 rounded-full w-14 h-14">
+            <div className="absolute right-4 bottom-24 rounded-full w-14 h-14">
               <Button green onClick={() => router.push("/add-container-details")}>
                 <Plus className="h-6 w-6" />
               </Button>
