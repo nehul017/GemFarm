@@ -41,7 +41,7 @@ export default function Header({
   };
 
   const { user } = useSelector((state: RootState) => state.auth) as any;
-  console.log("user = = =>", user);
+
   useEffect(() => {
     if (!user) {
       dispatch(fetchUserProfile());

@@ -74,7 +74,12 @@ export default function Page() {
     </div>
   ) : (
     <>
-      <Header header="Container Health" isNotificationIcon={false} />
+      <Header
+        header="Container Health"
+        isNotificationIcon={false}
+        isOnlyBackButton={true}
+        isWhite={true}
+      />
       <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
           <div className="card-background border border-solid border-borderColor2 p-3 rounded-lg">
