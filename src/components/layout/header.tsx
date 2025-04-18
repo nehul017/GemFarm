@@ -67,7 +67,7 @@ export default function Header({
       <div
         className={`absolute left-1/2 transform -translate-x-1/2 text-lg font-semibold ${
           isOnlyBackButton && !isWhite ? "text-white" : "text-black"
-        }`}
+        } flex w-max`}
       >
         {header}
       </div>
