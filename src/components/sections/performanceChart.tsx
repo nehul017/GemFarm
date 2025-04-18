@@ -82,7 +82,7 @@ export default function PerformanceChart({
               data={data}
               margin={{
                 top: 10,
-                right: selectedTab2 === "yield" ? -10 : -20,
+                right: selectedTab2 === "yield" ? -10 : -15,
                 left: 20,
                 bottom: 0,
               }}
@@ -116,7 +116,7 @@ export default function PerformanceChart({
                 orientation="right"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 10 }}
                 domain={["auto", "auto"]}
                 tickFormatter={(value) =>
                   selectedTab2 === "yield"

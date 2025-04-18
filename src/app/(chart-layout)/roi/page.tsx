@@ -50,7 +50,9 @@ export default function page() {
     <div>
       <Header
         header={data.name || data.container_crop}
-        isNotificationIcon={true}
+        isNotificationIcon={false}
+        isOnlyBackButton={true}
+        isWhite={true}
       />
       <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
         <div className="pt-4 pb-10 px-5">
