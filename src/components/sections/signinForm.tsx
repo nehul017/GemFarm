@@ -63,7 +63,7 @@ export default function SigninForm() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (errorMessage && errorMessage !== "✅ Logged out successfully.") {
+    if (errorMessage && errorMessage !== "Logged out successfully.") {
       toast.error(errorMessage);
     } else if (errorMessage) {
       toast.success(errorMessage);
