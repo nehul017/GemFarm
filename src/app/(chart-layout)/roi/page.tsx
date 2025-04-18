@@ -234,7 +234,14 @@ export default function page() {
         </div>
         {toogle && (
           <div
-            onClick={() => setToogle(false)}
+            onClick={() => {
+              if (selectedCrop) {
+                setToogle(false);
+              } else {
+                setSelectedOption("farm");
+                setToogle(false);
+              }
+            }}
             className="fixed top-0  w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px] mobile:max-w-[100%]"
           ></div>
         )}

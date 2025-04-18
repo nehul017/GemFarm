@@ -583,6 +583,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
   const [hasMounted, setHasMounted] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [crops, setCrops] = useState<any[]>([]);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setHasMounted(true);
@@ -634,6 +635,10 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
       setShowFinancials(false);
       setSelectedItem(null);
       setViewMode("graph");
+
+      if (listRef.current) {
+        listRef.current.scrollTop = 0;
+      }
     }
   }, [toogle]);
 
@@ -1250,7 +1255,6 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 return 0;
             }
           });
-  const listRef = useRef<HTMLDivElement>(null);
   const handleScroll = () => {
     window.dispatchEvent(new CustomEvent("closeSortMenu"));
   };
