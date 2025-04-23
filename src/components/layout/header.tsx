@@ -6,12 +6,8 @@ import SearchIcon from "@/icons/SearchIcon";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
-import {
-  fetchCommodityData,
-  fetchUserProfile,
-} from "../redux/slices/authSlice";
-
-const ProfileImage = "/assets/images/Ty1.png";
+import { fetchUserProfile } from "../redux/slices/authSlice";
+import { usePathname } from "next/navigation"; // add this at top
 
 interface HeaderProps {
   header?: string;
@@ -42,8 +38,15 @@ export default function Header({
 
   const { user } = useSelector((state: RootState) => state.auth) as any;
 
+  const pathname = usePathname();
   useEffect(() => {
-    if (!user) {
+    const excludedPaths = [
+      "/forgot-password",
+      "/reset-password",
+      "/verify-otp",
+    ];
+
+    if (!user && !excludedPaths.includes(pathname)) {
       dispatch(fetchUserProfile());
     }
   }, []);

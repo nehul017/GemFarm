@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 
 export default function OtherSetting() {
   const [showSignOutModal, setShowSignOutModal] = React.useState(false);
+  const [showFinancialOptions, setShowFinancialOptions] = React.useState(false);
   const router = useRouter();
 
   return (
@@ -28,12 +29,42 @@ export default function OtherSetting() {
             Onboarding
           </span>
         </div>
-        <div className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4">
+        <div
+          className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4"
+          onClick={() => setShowFinancialOptions((prev) => !prev)}
+        >
           <FinancialIcon />
           <span className="block font-medium text-black200 text-base">
             Financial
           </span>
         </div>
+        {/* Financial Sub-options */}
+
+        <div
+          className={`pl-10 overflow-hidden transition-all duration-300 ease-in-out ${
+            showFinancialOptions ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div
+            className=" flex items-center gap-4 py-3 cursor-pointer text-sm text-black200 hover:text-primary"
+            onClick={() => router.push("/financial-data")}
+          >
+            <FinancialIcon />
+            <span className="block font-medium text-black200 text-base">
+              Financial Data
+            </span>
+          </div>
+          <div
+            className="flex items-center gap-4 py-3 cursor-pointer text-sm text-black200 hover:text-primary"
+            onClick={() => router.push("/revenue-data")}
+          >
+            <FinancialIcon />
+            <span className="block font-medium text-black200 text-base">
+              Revenue Data
+            </span>
+          </div>
+        </div>
+
         <div className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4">
           <NotificationIcon />
           <span className="block font-medium text-black200 text-base">
