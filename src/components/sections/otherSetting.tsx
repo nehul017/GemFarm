@@ -8,10 +8,12 @@ import SignOutModal from "../modal/signOutModal";
 import OnBoardingIcon from "@/icons/Onbodaring";
 import FinancialIcon from "./Financial";
 import { useRouter } from "next/navigation";
+import DownIcon from "@/icons/downIcon";
 
 export default function OtherSetting() {
   const [showSignOutModal, setShowSignOutModal] = React.useState(false);
   const [showFinancialOptions, setShowFinancialOptions] = React.useState(false);
+
   const router = useRouter();
 
   return (
@@ -36,6 +38,16 @@ export default function OtherSetting() {
           <FinancialIcon />
           <span className="block font-medium text-black200 text-base">
             Financial
+          </span>
+
+          <span
+            className={`font-medium text-black200 text-base ml-auto transition-all duration-500 ease-in-out transform ${
+              showFinancialOptions
+                ? "translate-y-[0%] rotate-180"
+                : "translate-y-[0%]"
+            }`}
+          >
+            <DownIcon className="#0A3732" />
           </span>
         </div>
         {/* Financial Sub-options */}
