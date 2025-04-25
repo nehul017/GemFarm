@@ -117,6 +117,7 @@ export default function FixedExpenses() {
                 type="text"
                 inputMode="decimal" // mobile-friendly for numbers with decimals
                 value={item.amount}
+                maxLength={10}
                 onChange={(e) => {
                   const val = e.target.value;
                   if (/^\d*\.?\d{0,2}$/.test(val)) {
