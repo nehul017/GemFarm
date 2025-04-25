@@ -5,10 +5,10 @@ import CustomSearchSelect, {
 } from "../common/CustomSelectSearch/SelectOption";
 import Button from "../common/button";
 import { useRouter } from "next/navigation";
-import { AppDispatch, RootState } from "@/components/redux/store";
+import { AppDispatch, RootState } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { fetchFarms } from "../redux/slices/farmSlice";
-import { fetchContainers } from "../redux/slices/containerSlice";
+import { fetchFarms } from "../../redux/slices/farmSlice";
+import { fetchContainers } from "../../redux/slices/containerSlice";
 
 export default function SelectFarmContainerRadioGroup() {
   const dispatch = useDispatch<AppDispatch>();

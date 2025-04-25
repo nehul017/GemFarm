@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { AppDispatch } from "../redux/store"; // Ensure this path is correct
+import { AppDispatch } from "../../redux/store"; // Ensure this path is correct
 import { Filter } from "lucide-react";
 import LineChartIcon from "@/icons/lineChart";
 import LineChartRed from "@/icons/lineChartRed";
@@ -24,8 +24,8 @@ import moment from "moment";
 import CloseIcon from "@/icons/closeIcon";
 import Button from "./button";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { fetchKGPriceData } from "../redux/slices/authSlice";
+import { RootState } from "../../redux/store";
+import { fetchKGPriceData } from "../../redux/slices/authSlice";
 import Searchbar from "./searchbar";
 import TrashIcon from "@/icons/trashIcon";
 const generateMarketData = (basePrice: number, days: number) => {

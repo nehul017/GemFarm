@@ -7,12 +7,12 @@ import moment from "moment";
 import {
   fetchCommodityData,
   fetchUserProfile,
-} from "@/components/redux/slices/authSlice";
-import { AppDispatch, RootState } from "@/components/redux/store";
+} from "@/redux/slices/authSlice";
+import { AppDispatch, RootState } from "@/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
-import { fetchContainers } from "@/components/redux/slices/containerSlice";
+import { fetchContainers } from "@/redux/slices/containerSlice";
 import Header from "@/components/layout/header";
 import { useRef } from "react";
 import LeftIcon from "@/icons/leftIcon";

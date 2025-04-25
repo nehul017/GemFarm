@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Searchbar from "./searchbar";
-import { AppDispatch } from "../redux/store";
-import { fetchFarmById } from "../redux/slices/farmSlice";
+import { AppDispatch } from "../../redux/store";
+import { fetchFarmById } from "../../redux/slices/farmSlice";
 
 interface FarmCropsListProps {
   toogle: boolean;

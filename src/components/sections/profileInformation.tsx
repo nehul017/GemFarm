@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 const UserIcon = "/assets/icons/profile.svg";
 const ProfileIcon = "/assets/images/Ty1.png";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
-import { fetchUserProfile } from "../redux/slices/authSlice";
+import { AppDispatch, RootState } from "../../redux/store";
+import { fetchUserProfile } from "../../redux/slices/authSlice";
 interface User {
   profileImage?: string;
   username?: string;

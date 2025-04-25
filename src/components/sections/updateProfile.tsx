@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
-import { fetchUserProfile, updateUserProfile } from "../redux/slices/authSlice";
+import { AppDispatch, RootState } from "../../redux/store";
+import { fetchUserProfile, updateUserProfile } from "../../redux/slices/authSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { updateProfileSchema } from "../utils/validations/authValidation";

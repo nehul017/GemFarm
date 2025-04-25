@@ -8,13 +8,13 @@ import axios from "axios";
 import {
   fetchCommodityData,
   fetchUserProfile,
-} from "@/components/redux/slices/authSlice";
-import { AppDispatch, RootState } from "@/components/redux/store";
+} from "@/redux/slices/authSlice";
+import { AppDispatch, RootState } from "@/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import NotificationIcon from "@/icons/notificationIcon";
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
-import { fetchFarms } from "@/components/redux/slices/farmSlice";
+import { fetchFarms } from "@/redux/slices/farmSlice";
 import Button from "@/components/common/button";
 import GrowWhiteIcon from "@/icons/growWhiteIcon";
 import GrowPrimaryIcon from "@/icons/growPrimaryIcon";

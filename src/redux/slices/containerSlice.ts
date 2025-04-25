@@ -28,7 +28,7 @@ const initialState: ContainerState = {
 export const createContainer = createAsyncThunk(
     "container/createContainer",
     async (data: Omit<Container, "id">, { rejectWithValue }) => {
-        const axiosInstance = (await import("../../utils/axiosInstance")).default;
+        const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
         try {
             const res = await axiosInstance.post("/containers", data);
             return res.data;
@@ -41,7 +41,7 @@ export const createContainer = createAsyncThunk(
 export const fetchContainers = createAsyncThunk<Container[], string>(
     "container/fetchContainers",
     async (farmId, { rejectWithValue }) => {
-        const axiosInstance = (await import("../../utils/axiosInstance")).default;
+        const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
         try {
             const res = await axiosInstance.get(`/containers?farm_id=${farmId}`);
             return res.data;
@@ -55,7 +55,7 @@ export const updateContainer = createAsyncThunk(
     "container/updateContainer",
     async ({ id, data }: { id: string; data: Partial<Container> }, { rejectWithValue }) => {
         try {
-            const axiosInstance = (await import("../../utils/axiosInstance")).default;
+            const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
             const res = await axiosInstance.put(`/containers/${id}`, data);
             return res.data;
         } catch (error: any) {
@@ -68,7 +68,7 @@ export const deleteContainer = createAsyncThunk(
     "container/deleteContainer",
     async (id: string, { rejectWithValue }) => {
         try {
-            const axiosInstance = (await import("../../utils/axiosInstance")).default;
+            const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
             const res = await axiosInstance.delete(`/containers/${id}`);
             return res.data;
         } catch (error: any) {

@@ -5,8 +5,8 @@ import NotificationIcon from "@/icons/notificationIcon";
 import SearchIcon from "@/icons/SearchIcon";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
-import { fetchUserProfile } from "../redux/slices/authSlice";
+import { AppDispatch, RootState } from "../../redux/store";
+import { fetchUserProfile } from "../../redux/slices/authSlice";
 import { usePathname } from "next/navigation"; // add this at top
 
 interface HeaderProps {
