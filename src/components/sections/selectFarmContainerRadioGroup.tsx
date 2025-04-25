@@ -20,6 +20,26 @@ export default function SelectFarmContainerRadioGroup() {
     null
   );
   const [expenseType, setExpenseType] = useState("fixed");
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleNext = () => {
+    if (!selectedFarm && !selectedContainer) {
+      setShowError(true);
+      setErrorMessage("Please select both Farm and Container.");
+      return;
+    } else if (!selectedFarm) {
+      setShowError(true);
+      setErrorMessage("Please select Farm.");
+      return;
+    } else if (!selectedContainer) {
+      setShowError(true);
+      setErrorMessage("Please select Container.");
+      return;
+    }
+    setShowError(false);
+    router.push("/fixed-expenses");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,7 +131,11 @@ export default function SelectFarmContainerRadioGroup() {
             label="Select Farm"
             options={farmOptions}
             value={selectedFarm}
-            onChange={setSelectedFarm}
+            onChange={(value) => {
+              setSelectedFarm(value);
+              setErrorMessage(""); // Clear error when farm is selected
+              setShowError(false);
+            }}
             placeholder="Select Farm"
           />
         </div>
@@ -119,17 +143,19 @@ export default function SelectFarmContainerRadioGroup() {
           label="Select Container"
           options={containerOptions}
           value={selectedContainer}
-          onChange={setSelectedContainer}
+          onChange={(value) => {
+            setSelectedContainer(value);
+            setErrorMessage(""); // Clear error when farm is selected
+            setShowError(false);
+          }}
           placeholder="Select Container"
         />
+        {showError && (
+          <p className="text-red-600 text-sm mt-2">{errorMessage}</p>
+        )}
       </div>
       <div className="px-5">
-        <Button
-          buttonClass="w-full"
-          green
-          text="Next"
-          onClick={() => router.push("/fixed-expenses")}
-        />
+        <Button buttonClass="w-full" green text="Next" onClick={handleNext} />
       </div>
     </>
   );
