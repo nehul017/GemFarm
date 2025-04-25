@@ -68,7 +68,7 @@ export default function OtherSetting() {
           </div>
           <div
             className="flex items-center gap-4 py-3 cursor-pointer text-sm text-black200 hover:text-primary"
-            onClick={() => router.push("/revenue-data")}
+            // onClick={() => router.push("/revenue-data")}
           >
             <FinancialIcon />
             <span className="block font-medium text-black200 text-base">
