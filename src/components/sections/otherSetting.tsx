@@ -6,7 +6,7 @@ import SignOutIcon from "@/icons/signOutIcon";
 import React from "react";
 import SignOutModal from "../modal/signOutModal";
 import OnBoardingIcon from "@/icons/Onbodaring";
-import FinancialIcon from "./Financial";
+import FinancialIcon from "../../icons/FinancialIcon";
 import { useRouter } from "next/navigation";
 import DownIcon from "@/icons/downIcon";
 
