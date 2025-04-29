@@ -37,16 +37,13 @@ export default function SignupForm() {
       username: data.username.trim(),
       email: data.email.trim(),
       password: data.password.trim(),
+      role:"FarmOwner"
     };
     try {
       const resultAction = await dispatch(signupUser(trimmedData));
       if (signupUser.fulfilled.match(resultAction)) {
-        Cookies.set("authToken", resultAction.payload.token, { expires: 1 }); // Set for 7 days
-        Cookies.set("user", JSON.stringify(resultAction.payload.user), {
-          expires: 1,
-        });
 
-        router.push("/home");
+        router.push("/signin");
       } else {
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);

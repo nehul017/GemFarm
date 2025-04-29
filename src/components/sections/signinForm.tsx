@@ -101,6 +101,7 @@ export default function SigninForm() {
     try {
       const resultAction = await dispatch(loginUser(data));
       if (loginUser.fulfilled.match(resultAction)) {
+        console.log('resultAction', resultAction)
         sessionStorage.removeItem("authToken");
         sessionStorage.removeItem("user");
         Cookies.set("authToken", resultAction.payload.token, { expires: 1 }); // Set for 7 days
