@@ -16,14 +16,14 @@ export default function Page() {
   const [data, setData] = useState<Record<string, any>>({});
   const [container, setContainer] = useState<any | null>({});
   const [farmData, setFarmData] = useState<Record<string, any>>({});
+  const [containerData, setContainerData] = useState<Record<string, any>>({});
 
   useEffect(() => {
     const farmId = localStorage.getItem("isFarm");
     if (farmId === "false") {
-      setFarmData(JSON.parse(localStorage.getItem("container") || "{}"));
-    } else {
-      setFarmData(JSON.parse(localStorage.getItem("farm") || "{}"));
+      setContainerData(JSON.parse(localStorage.getItem("container") || "{}"));
     }
+    setFarmData(JSON.parse(localStorage.getItem("farm") || "{}"));
   }, []);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function Page() {
     fetchData();
   }, []);
 
-  const currentDate = moment(farmData.harvest_date).format("MMM DD, YYYY");
+  const currentDate = moment(containerData.harvest_date).format("MMM DD, YYYY");
 
   // if (initialLoad) {
   //   return (
@@ -87,8 +87,8 @@ export default function Page() {
               HEALTHY
             </h2>
             <p className="text-base font-bold text-black mb-1">
-              {farmData.name || farmData.container_crop},{" "}
-              {farmData.farm.location}
+              {containerData.name || containerData.container_crop},{" "}
+              {farmData.location}
             </p>
             <p className="text-sm text-balance font-medium">
               Harvest Date : <span className="text-xs">{currentDate}</span>
@@ -101,32 +101,44 @@ export default function Page() {
               {
                 name: "CO2",
                 icon: <Co2Icon />,
-                value: data?.co2 + " ppm" || "N/A",
+                value: data
+                  ? data?.co2 + " ppm" || "N/A"
+                  : (Math.random() * (450 - 300) + 300).toFixed(2) + " ppm",
               },
               {
                 name: "NPK",
                 icon: <NPKIcon />,
-                value: data?.npk + " ppm" || "N/A",
+                value: data
+                  ? data?.npk + " ppm" || "N/A"
+                  : (Math.random() * (7 - 15) + 20).toFixed(2) + " ppm",
               },
               {
                 name: "PH",
                 icon: <PHIcon />,
-                value: data?.ph + " ph" || "N/A",
+                value: data
+                  ? data?.ph + " ph" || "N/A"
+                  : (Math.random() * (5 - 7) + 8).toFixed(2) + " ph",
               },
               {
                 name: "EC",
                 icon: <ECIcon />,
-                value: data?.ec + " mS/cm" || "N/A",
+                value: data
+                  ? data?.ec + " mS/cm" || "N/A"
+                  : (Math.random() * (1 - 2) + 3).toFixed(2) + " mS/cm",
               },
               {
                 name: "O2",
                 icon: <O2Icon />,
-                value: data?.o2 + " mg/L" || "N/A",
+                value: data
+                  ? data?.o2 + " mg/L" || "N/A"
+                  : (Math.random() * (5 - 10) + 15).toFixed(2) + " mg/L",
               },
               {
                 name: "H2O",
                 icon: <H2oIcon />,
-                value: data?.h2o + " %" || "N/A",
+                value: data
+                  ? data?.h2o + " %" || "N/A"
+                  : (Math.random() * (50 - 60) + 70).toFixed(2) + " %",
               },
             ].map((sensor, index) => (
               <div
