@@ -3,11 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import {
-  fetchCommodityData,
-  fetchUserProfile,
-} from "@/redux/slices/authSlice";
+import { fetchCommodityData, fetchUserProfile } from "@/redux/slices/authSlice";
+const ContainerIcon = "/assets/icons/Container.svg";
+
 import { AppDispatch, RootState } from "@/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import Footer from "@/components/layout/footer";
@@ -88,14 +86,28 @@ function page() {
           <div className="px-5 pt-3">
             <div className="h-[160px]">
               <img
-                src={farm.farmImage || ContainerImage}
+                src={farm.farm_image || ContainerImage}
                 className="w-full h-full block rounded-xl object-cover"
                 alt="ContainerImage"
               />
             </div>
-            <AllContainer data={data} />
+            {data.length > 0 ? (
+              <AllContainer data={data} />
+            ) : (
+              <div className="mt-9 pb-[90px]">
+                <div className="px-3 py-4 rounded-xl">
+                  <img src={ContainerIcon} alt="ContainerIcon" />
+                  <div className="mt-9 text-center font-montserrat font-semibold text-[16px] leading-[100%] tracking-[0px] text-[#0A3732]">
+                    You haven’t added any containers yet. Let’s create one!
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="fixed right-4 bottom-24 rounded-full w-14 h-14">
-              <Button green onClick={() => router.push("/add-container-details")}>
+              <Button
+                green
+                onClick={() => router.push("/add-container-details")}
+              >
                 <Plus className="h-6 w-6" />
               </Button>
             </div>
