@@ -13,3 +13,13 @@ body {
 .card-background {
   background: linear-gradient(180deg, #E5F8F6 0%, #F1F1E6 100%);
 }
+.react-datepicker-wrapper{
+  width: 100%;
+}
+
+.react-datepicker__calendar-icon {
+  position: absolute;
+  top: 50%;
+  left: 92%;
+  transform: translate(-50%, -50%);
+}

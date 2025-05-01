@@ -2,25 +2,30 @@ import React from "react";
 import Button from "../common/button";
 const SignOutIcon = "/assets/icons/signout.svg";
 import Cookies from "js-cookie";
+import { supabase } from "@/utils/supabaseClient";
 
 interface SignOutModalProps {
   setShowSignOutModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SignOutModal({ setShowSignOutModal }: SignOutModalProps) {
+export default function SignOutModal({
+  setShowSignOutModal,
+}: SignOutModalProps) {
   const handleCloseModal = () => {
     setShowSignOutModal(false);
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     setShowSignOutModal(false);
     sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("user");
     Cookies.remove("authToken");
     Cookies.remove("user");
-    
+
     // Prevent going back to previous authenticated pages
     window.history.pushState(null, "", "/signin?error=logged_out");
+    await supabase.auth.signOut();
+
     window.location.replace("/signin?error=logged_out"); // Ensures fresh redirect
   };
 

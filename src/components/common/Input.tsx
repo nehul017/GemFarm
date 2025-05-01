@@ -8,6 +8,7 @@ export default function Input({
   type = "text",
   ...props
 }: any) {
+  
   return (
     <div className="w-full">
       {label && (

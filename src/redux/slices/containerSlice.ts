@@ -1,15 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 interface Container {
-    id: string;
-    container_name: string;
+    id?: string;
+    farm_id?: string;
+    container_name?: string;
     container_crop?: string;
-    container_image?: string;
+    crop_category?: string;
+    auto_grow_device_id?: string;
+    blue_lab_device_id?: string;
     container_status?: string;
-    autoGrowDeviceId?: string;
-    blueLabDeviceId?: string;
-    harvest_date?: string;
-    farm_id: string;
+    harvest_system?: string;
+    harvest_date?: string | null | Date;
+    container_image?: string;
 }
 
 interface ContainerState {

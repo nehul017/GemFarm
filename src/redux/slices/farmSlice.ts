@@ -3,8 +3,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 interface Farm {
     id: string;
     name: string;
-    farmImage?: string;
-    location?: string;
+    farmImage: string;
+    location: string;
 }
 
 interface FarmState {
