@@ -51,12 +51,15 @@ export default function AddFarmDetails() {
     const result = await dispatch(createFarm(data));
 
     if (createFarm.fulfilled.match(result)) {
-      router.push("/add-container-details");
+      toast.success("Farm created successfully");
+      setTimeout(() => {
+        router.push("/add-container-details");
+      }, 600);
     } else {
       toast.error("Failed to create farm: " + (result.payload as string));
     }
   };
-  console.log('imageLoader', imageLoader)
+  console.log("imageLoader", imageLoader);
 
   return (
     <div>
@@ -91,9 +94,9 @@ export default function AddFarmDetails() {
               error={errors.location}
             />
             <AddCoverPhoto setImageURL={setImage} />
-          {errors.image && (
-            <p className="text-red-500 text-sm mt-1">{errors.image}</p>
-          )}
+            {errors.image && (
+              <p className="text-red-500 text-sm mt-1">{errors.image}</p>
+            )}
           </div>
           <Button
             green

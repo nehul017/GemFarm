@@ -98,7 +98,10 @@ export default function AddContainerDetails() {
     try {
       const result = await dispatch(createContainer(data));
       if (createContainer.fulfilled.match(result)) {
-        router.push("/home");
+        toast.success("Container created successfully");
+        setTimeout(() => {
+          router.push("/home");
+        }, 600);
       } else {
         toast.error("Failed to create farm: " + (result.payload as string));
       }
