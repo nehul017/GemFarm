@@ -72,7 +72,9 @@ export default function Header({
           isOnlyBackButton && !isWhite ? "text-white" : "text-black"
         } flex w-max`}
       >
-        {header}
+        <span className="truncate max-w-[150px]">
+          {header}
+          </span>
       </div>
       <div className="flex gap-[10px]">
         {isShowProfile && user?.profileImage && (

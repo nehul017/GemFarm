@@ -8,10 +8,12 @@ import { uploadImage } from "@/redux/slices/uploadSlice"; // adjust path
 interface AddCoverPhotoProps {
   setImageURL: (url: string) => void;
   error?: string;
+  required?: boolean;
 }
 export default function AddCoverPhoto({
   setImageURL,
   error,
+  required = false,
 }: AddCoverPhotoProps) {
   const dispatch = useDispatch<AppDispatch>();
   const [image, setImage] = useState<string | null>(null);
@@ -57,6 +59,7 @@ export default function AddCoverPhoto({
     <div>
       <span className="block text-sm text-black font-medium pb-2">
         Add Cover Photo
+        {required && <span className="text-red-500 ml-1">*</span>}
       </span>
 
       <div

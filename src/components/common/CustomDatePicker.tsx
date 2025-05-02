@@ -9,6 +9,7 @@ interface CustomDatePickerProps {
   onChange: (date: Date | null) => void;
   placeholder?: string;
   error?: string;
+  required?: boolean;
 }
 
 const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
@@ -17,6 +18,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   onChange,
   placeholder = "Select Date",
   error,
+  required = false,
 }) => {
   const inputClassName = `
   h-[50px] px-3 py-2 
@@ -34,6 +36,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
       {label && (
         <label className="text-sm text-black font-medium block pb-2">
           {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
       {/* <div className={`relative ${error ? "border-red-500 focus:ring-red-500 focus:border-red-500" :""}`}> */}

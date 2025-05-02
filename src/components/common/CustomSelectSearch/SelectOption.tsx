@@ -16,6 +16,7 @@ interface CustomSearchSelectProps {
   value: OptionType | null;
   onChange: (selected: OptionType | null) => void;
   placeholder?: string;
+  required?: boolean;
 }
 
 
@@ -86,12 +87,14 @@ const CustomSearchSelect: React.FC<CustomSearchSelectProps> = ({
   value,
   onChange,
   placeholder = 'Search Farm',
+  required = false,
 }) => {
   return (
     <div>
       {label && (
         <label className='text-sm text-black font-medium block pb-2'>
           {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
       <Select

@@ -6,6 +6,7 @@ export default function Input({
   error,
   inputClass,
   type = "text",
+  required = false,
   ...props
 }: any) {
   
@@ -14,6 +15,7 @@ export default function Input({
       {label && (
         <label className="block text-sm text-black font-medium pb-2">
           {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
       <div className="relative">
@@ -21,6 +23,7 @@ export default function Input({
           {...props}
           type={type}
           placeholder={placeholder}
+           
           className={`px-4 w-full border focus:border-primary border-solid
             ${error ? "border-red-500" : "border-borderColor" }
             ${inputClass}

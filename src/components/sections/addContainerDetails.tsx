@@ -134,6 +134,8 @@ export default function AddContainerDetails() {
                 errors.containerName = "";
               }}
               error={errors.containerName}
+              required
+
             />
             <Input
               label="Container Crop"
@@ -145,6 +147,8 @@ export default function AddContainerDetails() {
                 errors.containerCrop = "";
               }}
               error={errors.containerCrop}
+              required
+
             />
             <Input
               label="Crop Category"
@@ -156,6 +160,8 @@ export default function AddContainerDetails() {
                 errors.cropCategory = "";
               }}
               error={errors.cropCategory}
+              required
+
             />
             <Input
               label="Crop Variety"
@@ -167,6 +173,8 @@ export default function AddContainerDetails() {
                 errors.cropVariety = "";
               }}
               error={errors.cropVariety}
+              required
+
             />
             <CustomSearchSelect
               label="Harvest System"
@@ -183,6 +191,7 @@ export default function AddContainerDetails() {
                 errors.harvestSystem = "";
               }}
               placeholder="Select harvest system"
+              required
             />
             {errors.harvestSystem && (
               <p className="text-xs text-red-600">{errors.harvestSystem}</p>
@@ -196,6 +205,7 @@ export default function AddContainerDetails() {
               }}
               placeholder="Select harvest date"
               error={errors.harvestDate}
+              required
             />
             <Input
               label="Auto Grow DeviceId"
@@ -207,6 +217,8 @@ export default function AddContainerDetails() {
                 errors.autoGrowId = "";
               }}
               error={errors.autoGrowId}
+              required
+
             />
             <Input
               label="Blue Lab DeviceId"
@@ -218,6 +230,8 @@ export default function AddContainerDetails() {
                 errors.blueLabId = "";
               }}
               error={errors.blueLabId}
+              required
+
             />
             <CustomSearchSelect
               label="Container Status"
@@ -234,6 +248,7 @@ export default function AddContainerDetails() {
                 errors.containerStatus = "";
               }}
               placeholder="Select container status"
+              required
             />
             {errors.containerStatus && (
               <p className="text-red-500 text-sm mt-1">
@@ -241,7 +256,7 @@ export default function AddContainerDetails() {
               </p>
             )}
 
-            <AddCoverPhoto setImageURL={setImage} error={errors.image} />
+            <AddCoverPhoto setImageURL={setImage} error={errors.image} required />
           </div>
         </div>
       </div>

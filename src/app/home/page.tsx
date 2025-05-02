@@ -135,12 +135,12 @@ function page() {
                         className="block w-full h-[105px] rounded-[10px] object-cover"
                       />
                       <div>
-                        <h2 className="text-sm font-medium text-black mb-2">
+                        <h2 className="text-sm font-medium text-black mb-2 truncate max-w-[130px]">
                           {item.name}
                         </h2>
-                        <div className="flex pb-2 items-center gap-1">
+                        <div className="flex pb-2 items-center gap-1 ">
                           <LocationIcon />
-                          <span className="text-xs font-medium text-gray800">
+                          <span className="text-xs font-medium text-gray800 truncate max-w-[130px]">
                             {" "}
                             {item.location}
                           </span>

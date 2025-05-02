@@ -82,6 +82,7 @@ export default function AddFarmDetails() {
                 setName(e.target.value)
               }
               error={errors.name}
+              required
             />
             <Input
               label="Location"
@@ -92,8 +93,10 @@ export default function AddFarmDetails() {
                 setLocation(e.target.value)
               }
               error={errors.location}
+              required
+
             />
-            <AddCoverPhoto setImageURL={setImage} />
+            <AddCoverPhoto setImageURL={setImage} required />
             {errors.image && (
               <p className="text-red-500 text-sm mt-1">{errors.image}</p>
             )}
