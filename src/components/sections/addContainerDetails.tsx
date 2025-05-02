@@ -25,7 +25,7 @@ const containerStatusOptions: OptionType[] = [
 ];
 
 const harvestSystemOptions: OptionType[] = [
-  { value: "NEF", label: "NEF" },
+  { value: "NFT", label: "NFT" },
   { value: "Dutch Bucket", label: "Dutch Bucket" }, // corrected
 ];
 export default function AddContainerDetails() {
@@ -35,6 +35,7 @@ export default function AddContainerDetails() {
   const [image, setImage] = React.useState<string>("");
   const [cropName, setCropName] = useState("");
   const [cropCategory, setCropCategory] = useState("");
+  const [cropVariety, setCropVariety] = useState("");
   const [autoGrowId, setAutoGrowId] = useState("");
   const [blueLabId, setBlueLabId] = useState("");
   const [containerStatus, setContainerStatus] = useState("Active");
@@ -44,6 +45,7 @@ export default function AddContainerDetails() {
   const [errors, setErrors] = useState({
     containerName: "",
     cropCategory: "",
+    cropVariety: "",
     autoGrowId: "",
     blueLabId: "",
     containerStatus: "",
@@ -64,6 +66,7 @@ export default function AddContainerDetails() {
     const newErrors = {
       containerName: cropName ? "" : "Container name is required",
       cropCategory: cropCategory ? "" : "Crop category is required",
+      cropVariety: cropVariety ? "" : "Crop variety is required",
       autoGrowId: autoGrowId ? "" : "Auto Grow Device ID is required",
       blueLabId: blueLabId ? "" : "Blue Lab Device ID is required",
       containerStatus: containerStatus ? "" : "Container status is required",
@@ -82,6 +85,7 @@ export default function AddContainerDetails() {
       farm_id: farmId,
       container_name: cropName,
       container_crop: containerCrop,
+      crop_variety: cropVariety,
       crop_category: cropCategory,
       auto_grow_device_id: autoGrowId,
       blue_lab_device_id: blueLabId,
@@ -92,7 +96,6 @@ export default function AddContainerDetails() {
     };
 
     try {
-      console.log("data===>", data);
       const result = await dispatch(createContainer(data));
       if (createContainer.fulfilled.match(result)) {
         router.push("/home");
@@ -150,6 +153,17 @@ export default function AddContainerDetails() {
                 errors.cropCategory = "";
               }}
               error={errors.cropCategory}
+            />
+            <Input
+              label="Crop Variety"
+              placeholder="Enter your crop variety"
+              inputClass="bg-bglight"
+              value={cropVariety}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setCropVariety(e.target.value);
+                errors.cropVariety = "";
+              }}
+              error={errors.cropVariety}
             />
             <CustomSearchSelect
               label="Harvest System"

@@ -6,6 +6,7 @@ interface Container {
     container_name?: string;
     container_crop?: string;
     crop_category?: string;
+    crop_variety?: string;
     auto_grow_device_id?: string;
     blue_lab_device_id?: string;
     container_status?: string;
@@ -92,7 +93,6 @@ const containerSlice = createSlice({
             })
             .addCase(createContainer.fulfilled, (state, action) => {
                 state.loading = false;
-                state.containers.push(action.payload);
                 if (Array.isArray(state.containers)) {
                     state.containers.push(action.payload);
                 } else {

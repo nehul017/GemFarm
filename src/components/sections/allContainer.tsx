@@ -32,6 +32,11 @@ export default function AllContainer({ data }: { data: any[] }) {
                 <div>
                   <h3 className="line-clamp-1 text-sm font-medium text-black mb-1">
                     {item.container_crop}
+                    {item.variety && (
+                      <span className="text-sm text-gray-500">
+                        ({item.variety})
+                      </span>
+                    )}
                   </h3>
                   <p className="text-sm line-clamp-1 text-gray800 font-medium mb-2">
                     {item.harvest_system} | {item.crop_category}
