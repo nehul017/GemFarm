@@ -52,6 +52,7 @@ export default function AddFarmDetails() {
 
     if (createFarm.fulfilled.match(result)) {
       toast.success("Farm created successfully");
+      setImage("");
       setTimeout(() => {
         router.push("/add-container-details");
       }, 600);
@@ -94,7 +95,6 @@ export default function AddFarmDetails() {
               }
               error={errors.location}
               required
-
             />
             <AddCoverPhoto setImageURL={setImage} required />
             {errors.image && (
