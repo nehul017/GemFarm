@@ -18,12 +18,14 @@ interface ContainerState {
     containers: Container[];
     loading: boolean;
     error: string | null;
+    container: Container;
 }
 
 const initialState: ContainerState = {
     containers: [],
     loading: false,
     error: null,
+    container: {} as Container,
 };
 
 // CREATE
@@ -33,7 +35,7 @@ export const createContainer = createAsyncThunk(
         const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
         try {
             const res = await axiosInstance.post("/containers", data);
-            return res.data;
+            return res.data.data;
         } catch (error: any) {
             return rejectWithValue(error?.response?.data?.message || "Create failed");
         }
@@ -91,6 +93,13 @@ const containerSlice = createSlice({
             .addCase(createContainer.fulfilled, (state, action) => {
                 state.loading = false;
                 state.containers.push(action.payload);
+                if (Array.isArray(state.containers)) {
+                    state.containers.push(action.payload);
+                } else {
+                    state.containers = [action.payload];  // fallback if somehow farms is not an array
+                }
+                state.error = null;
+                state.container = action.payload;
             })
             .addCase(createContainer.rejected, (state, action) => {
                 state.loading = false;

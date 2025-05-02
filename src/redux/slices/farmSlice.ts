@@ -28,7 +28,8 @@ export const createFarm = createAsyncThunk(
         const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
         try {
             const res = await axiosInstance.post("/farms", data);
-            return res.data;
+
+            return res.data.data;
         } catch (error: any) {
             return rejectWithValue(error?.response?.data?.message || "Create failed");
         }
@@ -114,8 +115,14 @@ const farmSlice = createSlice({
                 state.error = null;
             })
             .addCase(createFarm.fulfilled, (state, action) => {
-                state.farms.push(action.payload);
+                console.log('action', action)
                 state.loading = false;
+                state.farm = action.payload;
+                if (Array.isArray(state.farms)) {
+                    state.farms.push(action.payload);
+                } else {
+                    state.farms = [action.payload];  // fallback if somehow farms is not an array
+                }
                 state.error = null;
             })
             .addCase(createFarm.rejected, (state, action) => {

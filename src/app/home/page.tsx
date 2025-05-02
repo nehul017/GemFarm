@@ -84,7 +84,7 @@ function page() {
         </div>
       ) : (
         <>
-          <div className="bg-white relative min-h-[calc(100dvh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
+          <div className="bg-white relative md:max-w-[375px] md:mx-auto">
             <div className="bg-primary pt-5 px-5 pb-[80px] rounded-b-[30px]">
               <div className="grid grid-cols-[1fr_100px] pb-5 gap-1">
                 <div>
@@ -122,7 +122,7 @@ function page() {
               </div>
             </div>
             {data.length > 0 ? (
-              <div className="mt-[-50px] px-5 pb-[100px]">
+              <div className="mt-[-50px] px-5 pb-[100px] min-h-[calc(100dvh-240px)] overflow-auto h-[50px]">
                 {data.map((item, index) => (
                   <div
                     key={index}
@@ -179,11 +179,12 @@ function page() {
                 </div>
               </div>
             )}
-            <div className="absolute right-4 bottom-24 rounded-full w-14 h-14">
-              <Button green onClick={() => router.push("/add-farm-details")}>
-                <Plus className="h-6 w-6" />
-              </Button>
-            </div>
+          </div>
+          <div
+            className="fixed z-[999] right-4 bottom-24 bg-primary flex items-center justify-center text-white rounded-full w-10 h-10"
+            onClick={() => router.push("/add-farm-details")}
+          >
+            <Plus className="h-4 w-4" />
           </div>
           <Footer />
         </>

@@ -103,13 +103,11 @@ function page() {
                 </div>
               </div>
             )}
-            <div className="fixed right-4 bottom-24 rounded-full w-14 h-14">
-              <Button
-                green
-                onClick={() => router.push("/add-container-details")}
-              >
-                <Plus className="h-6 w-6" />
-              </Button>
+            <div
+              className="fixed z-[999] right-4 bottom-24 bg-primary flex items-center justify-center text-white rounded-full w-10 h-10"
+              onClick={() => router.push("/add-container-details")}
+            >
+              <Plus className="h-4 w-4" />
             </div>
           </div>
         )}
