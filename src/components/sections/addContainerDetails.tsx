@@ -41,7 +41,7 @@ export default function AddContainerDetails() {
   const [containerStatus, setContainerStatus] = useState("Active");
   const [containerCrop, setContainerCrop] = useState("");
   const [harvestDate, setHarvestDate] = useState<Date | null>(null);
-  const [harvestSystem, setHarvestSystem] = useState("NEF");
+  const [harvestSystem, setHarvestSystem] = useState("NFT");
   const [errors, setErrors] = useState({
     containerName: "",
     cropCategory: "",
