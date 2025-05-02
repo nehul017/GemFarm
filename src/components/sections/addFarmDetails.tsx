@@ -80,7 +80,7 @@ export default function AddFarmDetails() {
               inputClass="bg-bglight"
               value={name}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setName(e.target.value)
+                setName(e.target.value.trim())
               }
               error={errors.name}
               required
@@ -91,7 +91,7 @@ export default function AddFarmDetails() {
               inputClass="bg-bglight"
               value={location}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setLocation(e.target.value)
+                setLocation(e.target.value.trim())
               }
               error={errors.location}
               required

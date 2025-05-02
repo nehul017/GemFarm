@@ -130,7 +130,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={cropName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCropName(e.target.value);
+                setCropName(e.target.value.trim());
                 errors.containerName = "";
               }}
               error={errors.containerName}
@@ -143,7 +143,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={containerCrop}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setContainerCrop(e.target.value);
+                setContainerCrop(e.target.value.trim());
                 errors.containerCrop = "";
               }}
               error={errors.containerCrop}
@@ -156,7 +156,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={cropCategory}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCropCategory(e.target.value);
+                setCropCategory(e.target.value.trim());
                 errors.cropCategory = "";
               }}
               error={errors.cropCategory}
@@ -169,7 +169,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={cropVariety}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCropVariety(e.target.value);
+                setCropVariety(e.target.value.trim());
                 errors.cropVariety = "";
               }}
               error={errors.cropVariety}
@@ -213,7 +213,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={autoGrowId}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setAutoGrowId(e.target.value);
+                setAutoGrowId(e.target.value.trim());
                 errors.autoGrowId = "";
               }}
               error={errors.autoGrowId}
@@ -226,7 +226,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={blueLabId}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setBlueLabId(e.target.value);
+                setBlueLabId(e.target.value.trim());
                 errors.blueLabId = "";
               }}
               error={errors.blueLabId}
