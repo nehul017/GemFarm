@@ -54,6 +54,7 @@ export default function AddFarmDetails() {
       toast.success("Farm created successfully");
       setImage("");
       setTimeout(() => {
+        localStorage.setItem("farmId", result.payload.id);
         router.push("/add-container-details");
       }, 600);
     } else {
@@ -79,9 +80,10 @@ export default function AddFarmDetails() {
               placeholder="Enter your farm name"
               inputClass="bg-bglight"
               value={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setName(e.target.value.trim())
-              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setName(e.target.value.trim());
+                errors.name = "";
+              }}
               error={errors.name}
               required
             />
@@ -90,13 +92,14 @@ export default function AddFarmDetails() {
               placeholder="Enter your farm location"
               inputClass="bg-bglight"
               value={location}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setLocation(e.target.value.trim())
-              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setLocation(e.target.value.trim());
+                errors.location = "";
+              }}
               error={errors.location}
               required
             />
-            <AddCoverPhoto setImageURL={setImage} required />
+            <AddCoverPhoto setImageURL={setImage} error={errors.image} required />
             {errors.image && (
               <p className="text-red-500 text-sm mt-1">{errors.image}</p>
             )}

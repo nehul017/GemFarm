@@ -17,7 +17,7 @@ export const uploadImage = createAsyncThunk<string, FormData>(
   "upload/uploadImage",
   async (formData, { rejectWithValue }) => {
     try {
-      const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
+      const axiosInstance = (await import("../../utils/axiosInstance")).default;
       const res = await axiosInstance.post("/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

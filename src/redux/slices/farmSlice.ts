@@ -25,7 +25,7 @@ const initialState: FarmState = {
 export const createFarm = createAsyncThunk(
     "farm/createFarm",
     async (data: Omit<Farm, "id">, { rejectWithValue }) => {
-        const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
+        const axiosInstance = (await import("../../utils/axiosInstance")).default;
         try {
             const res = await axiosInstance.post("/farms", data);
 
@@ -40,7 +40,7 @@ export const createFarm = createAsyncThunk(
 export const fetchFarmById = createAsyncThunk<Farm, string>(
     "farm/fetchFarmById",
     async (id: string, { rejectWithValue }) => {
-        const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
+        const axiosInstance = (await import("../../utils/axiosInstance")).default;
         try {
             const res = await axiosInstance.get(`/farms/by-id/${id}`);
             return res.data;
@@ -53,7 +53,7 @@ export const fetchFarmById = createAsyncThunk<Farm, string>(
 export const fetchFarms = createAsyncThunk<Farm[]>(
     "farm/fetchFarms",
     async (_, { rejectWithValue }) => {
-        const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
+        const axiosInstance = (await import("../../utils/axiosInstance")).default;
         try {
             const res = await axiosInstance.get("/farms");
             return res.data;
@@ -68,7 +68,7 @@ export const updateFarm = createAsyncThunk(
     "farm/updateFarm",
     async ({ id, data }: { id: string; data: Partial<Farm> }, { rejectWithValue }) => {
         try {
-            const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
+            const axiosInstance = (await import("../../utils/axiosInstance")).default;
             const res = await axiosInstance.put(`/farms/${id}`, data);
             return res.data;
         } catch (error: any) {
@@ -81,7 +81,7 @@ export const updateFarm = createAsyncThunk(
 export const deleteFarm = createAsyncThunk(
     "farm/deleteFarm",
     async (id: string, { rejectWithValue }) => {
-        const axiosInstance = (await import("../../components/utils/axiosInstance")).default;
+        const axiosInstance = (await import("../../utils/axiosInstance")).default;
         try {
             await axiosInstance.delete(`/farms/${id}`);
             return id;

@@ -52,16 +52,17 @@ export default function AddCoverPhoto({
         setImage(reader.result as string);
       };
       reader.readAsDataURL(file);
-
       // Upload
       const formData = new FormData();
       formData.append("image", file);
       dispatch(uploadImage(formData));
+      error = "";
     }
   };
 
   const removeImage = () => {
     setImage(null);
+    setImageURL("");
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -84,7 +85,7 @@ export default function AddCoverPhoto({
       <div
         className={`h-[140px] border-dashed border border-borderColor rounded-md flex items-center justify-center cursor-pointer relative ${
           image ? "p-2" : ""
-        }  ${error ? "border-red-500" : "border-borderColor"}`}
+        }  ${error !=="" ? "border-red-500" : "border-borderColor"}`}
         onClick={handleContainerClick}
       >
         {!image ? (

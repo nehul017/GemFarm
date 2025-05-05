@@ -1,6 +1,6 @@
 import axios from "axios";
-import { store } from "../../redux/store";
-import { logout } from "../../redux/slices/authSlice";
+import { store } from "../redux/store";
+import { logout } from "../redux/slices/authSlice";
 import Cookies from "js-cookie";
 
 
@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL, 
   headers: {
     "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "7894",    
   },
 });
 
