@@ -22,6 +22,7 @@ export default function SelectFarmContainerRadioGroup() {
   const [expenseType, setExpenseType] = useState("fixed");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleNext = () => {
     if (!selectedFarm && !selectedContainer) {
@@ -38,7 +39,11 @@ export default function SelectFarmContainerRadioGroup() {
       return;
     }
     setShowError(false);
-    router.push("/fixed-expenses");
+    if (expenseType === "fixed") {
+      router.push("/fixed-expenses");
+    } else if (expenseType === "variable") {
+      router.push("/variable-expenses");
+    }
   };
 
   useEffect(() => {
@@ -57,11 +62,12 @@ export default function SelectFarmContainerRadioGroup() {
         console.error("API request Success");
       }
     };
-
+    
     fetchData();
   }, []);
-
+  
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async (farmId: string) => {
       try {
         const response = await dispatch(fetchContainers(farmId as string));
@@ -71,6 +77,7 @@ export default function SelectFarmContainerRadioGroup() {
           label: container.container_crop,
         }));
         setContainerOptions(formattedContainerOptions);
+        setIsLoading(false);
       } catch (error) {
         console.error("API request error:", error);
       } finally {
@@ -148,7 +155,8 @@ export default function SelectFarmContainerRadioGroup() {
             setErrorMessage(""); // Clear error when farm is selected
             setShowError(false);
           }}
-          placeholder="Select Container"
+          placeholder={isLoading ? "Loading" : "Select Container"}
+          loading={isLoading} // Show loading state if no options
         />
         {showError && (
           <p className="text-red-600 text-sm mt-2">{errorMessage}</p>

@@ -17,6 +17,7 @@ interface CustomSearchSelectProps {
   onChange: (selected: OptionType | null) => void;
   placeholder?: string;
   required?: boolean;
+  loading?: boolean; // ✅ NEW
 }
 
 
@@ -88,6 +89,7 @@ const CustomSearchSelect: React.FC<CustomSearchSelectProps> = ({
   onChange,
   placeholder = 'Search Farm',
   required = false,
+  loading = false, // ✅ NEW
 }) => {
   return (
     <div>
@@ -104,6 +106,7 @@ const CustomSearchSelect: React.FC<CustomSearchSelectProps> = ({
         placeholder={placeholder}
         styles={customStyles}
         isSearchable={true}
+        isLoading={loading} // ✅ NEW
       />
     </div>
   );
