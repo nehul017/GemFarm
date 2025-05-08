@@ -42,7 +42,7 @@ export default function SignupForm() {
     try {
       const resultAction = await dispatch(signupUser(trimmedData));
       if (signupUser.fulfilled.match(resultAction)) {
-        toast.success("Account created successfully!");
+        toast.success("Signup successfully!");
         setTimeout(() => {
           router.push("/signin");
         }, 3000);
