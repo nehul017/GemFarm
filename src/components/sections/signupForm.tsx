@@ -37,13 +37,15 @@ export default function SignupForm() {
       username: data.username.trim(),
       email: data.email.trim(),
       password: data.password.trim(),
-      role:"FarmOwner"
+      role: "FarmOwner",
     };
     try {
       const resultAction = await dispatch(signupUser(trimmedData));
       if (signupUser.fulfilled.match(resultAction)) {
-
-        router.push("/signin");
+        toast.success("Account created successfully!");
+        setTimeout(() => {
+          router.push("/signin");
+        }, 3000);
       } else {
         const errorMessage = resultAction.payload || "Something went wrong!";
         toast.error(errorMessage as string);
