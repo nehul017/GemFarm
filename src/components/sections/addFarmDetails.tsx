@@ -43,8 +43,8 @@ export default function AddFarmDetails() {
     if (!validateForm()) return;
 
     const data = {
-      name,
-      location,
+      name:name.trim(),
+      location:location.trim(),
       farmImage: image,
     };
 
@@ -81,7 +81,7 @@ export default function AddFarmDetails() {
               inputClass="bg-bglight"
               value={name}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setName(e.target.value.trim());
+                setName(e.target.value);
                 errors.name = "";
               }}
               error={errors.name}
@@ -93,7 +93,7 @@ export default function AddFarmDetails() {
               inputClass="bg-bglight"
               value={location}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setLocation(e.target.value.trim());
+                setLocation(e.target.value);
                 errors.location = "";
               }}
               error={errors.location}

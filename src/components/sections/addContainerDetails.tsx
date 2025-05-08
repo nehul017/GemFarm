@@ -47,7 +47,7 @@ export default function AddContainerDetails() {
     cropCategory: "",
     cropVariety: "",
     autoGrowId: "",
-    blueLabId: "",
+    // blueLabId: "",
     containerStatus: "",
     containerCrop: "",
     harvestSystem: "",
@@ -68,7 +68,7 @@ export default function AddContainerDetails() {
       cropCategory: cropCategory ? "" : "Crop category is required",
       cropVariety: cropVariety ? "" : "Crop variety is required",
       autoGrowId: autoGrowId ? "" : "Auto Grow Device ID is required",
-      blueLabId: blueLabId ? "" : "Blue Lab Device ID is required",
+      // blueLabId: blueLabId ? "" : "Blue Lab Device ID is required",
       containerStatus: containerStatus ? "" : "Container status is required",
       containerCrop: containerCrop ? "" : "Container crop is required",
       harvestSystem: harvestSystem ? "" : "Harvest system is required",
@@ -83,14 +83,14 @@ export default function AddContainerDetails() {
 
     const data = {
       farm_id: farmId,
-      container_name: cropName,
-      container_crop: containerCrop,
-      crop_variety: cropVariety,
-      crop_category: cropCategory,
-      auto_grow_device_id: autoGrowId,
-      blue_lab_device_id: blueLabId,
-      container_status: containerStatus,
-      harvest_system: harvestSystem,
+      container_name: cropName.trim(),
+      container_crop: containerCrop.trim(),
+      crop_variety: cropVariety.trim(),
+      crop_category: cropCategory.trim(),
+      auto_grow_device_id: autoGrowId.trim(),
+      // blue_lab_device_id: blueLabId.trim(),
+      container_status: containerStatus.trim(),
+      harvest_system: harvestSystem.trim(),
       harvest_date: harvestDate,
       container_image: image,
     };
@@ -130,7 +130,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={cropName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCropName(e.target.value.trim());
+                setCropName(e.target.value);
                 errors.containerName = "";
               }}
               error={errors.containerName}
@@ -143,7 +143,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={containerCrop}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setContainerCrop(e.target.value.trim());
+                setContainerCrop(e.target.value);
                 errors.containerCrop = "";
               }}
               error={errors.containerCrop}
@@ -156,7 +156,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={cropCategory}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCropCategory(e.target.value.trim());
+                setCropCategory(e.target.value);
                 errors.cropCategory = "";
               }}
               error={errors.cropCategory}
@@ -169,7 +169,7 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={cropVariety}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCropVariety(e.target.value.trim());
+                setCropVariety(e.target.value);
                 errors.cropVariety = "";
               }}
               error={errors.cropVariety}
@@ -213,26 +213,26 @@ export default function AddContainerDetails() {
               inputClass="bg-bglight"
               value={autoGrowId}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setAutoGrowId(e.target.value.trim());
+                setAutoGrowId(e.target.value);
                 errors.autoGrowId = "";
               }}
               error={errors.autoGrowId}
               required
 
             />
-            <Input
+            {/* <Input
               label="Blue Lab DeviceId"
               placeholder="Enter blue lab deviceId"
               inputClass="bg-bglight"
               value={blueLabId}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setBlueLabId(e.target.value.trim());
+                setBlueLabId(e.target.value);
                 errors.blueLabId = "";
               }}
               error={errors.blueLabId}
               required
 
-            />
+            /> */}
             <CustomSearchSelect
               label="Container Status"
               options={containerStatusOptions}
