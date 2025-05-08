@@ -1396,73 +1396,77 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             )}
           </div>
         </div>
-        {processedCrops.map((item, i) => (
-          <div
-            key={i}
-            className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5"
-          >
+        {processedCrops.length > 0 ? (
+          processedCrops.map((item, i) => (
             <div
-              className="grid-cols-[1fr_115px] grid gap-2 items-center"
-              onClick={() => {
-                setSelectedItem(item);
-                setShowSortMenu(false);
-              }}
+              key={i}
+              className="bg-bglight mb-[14px] border border-solid border-borderColor rounded-[10px] p-2.5"
             >
-              <div className="flex gap-3">
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="block w-[50px] min-w-[50px] rounded-sm h-[50px]"
-                />
-                <div>
-                  <p className="text-sm text-black font-semibold mb-1 truncate max-w-[130px]">
-                    {item.name}
-                    <span className="text-sm text-gray-500">
-                      ({item.variety})
-                    </span>
-                  </p>
-                  <div className="text-xs text-gray-600">
-                    <span className="block">{item.systemType}</span>
-                    <span className="block">• {item.category}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      className={`text-xs font-semibold border-none cursor-pointer py-[5px] px-[5px] rounded-sm ${
-                        item.isPositive
-                          ? "text-green bg-[#E6F4EE]"
-                          : "text-[#FF4747] bg-[#FAE8E8]"
-                      }`}
-                    >
-                      $
-                      {item?.previousDayHigh?.toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}{" "}
-                      / kg
-                    </button>
-                    {item.isPositive ? <LineChartIcon /> : <LineChartRed />}
+              <div
+                className="grid-cols-[1fr_115px] grid gap-2 items-center"
+                onClick={() => {
+                  setSelectedItem(item);
+                  setShowSortMenu(false);
+                }}
+              >
+                <div className="flex gap-3">
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    className="block w-[50px] min-w-[50px] rounded-sm h-[50px]"
+                  />
+                  <div>
+                    <p className="text-sm text-black font-semibold mb-1 truncate max-w-[130px]">
+                      {item.name}
+                      <span className="text-sm text-gray-500">
+                        ({item.variety})
+                      </span>
+                    </p>
+                    <div className="text-xs text-gray-600">
+                      <span className="block">{item.systemType}</span>
+                      <span className="block">• {item.category}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        className={`text-xs font-semibold border-none cursor-pointer py-[5px] px-[5px] rounded-sm ${
+                          item.isPositive
+                            ? "text-green bg-[#E6F4EE]"
+                            : "text-[#FF4747] bg-[#FAE8E8]"
+                        }`}
+                      >
+                        $
+                        {item?.previousDayHigh?.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}{" "}
+                        / kg
+                      </button>
+                      {item.isPositive ? <LineChartIcon /> : <LineChartRed />}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-3">
-                <button
-                  className="py-2 px-5 bg-primary text-white text-sm font-medium border-none rounded-full"
-                  onClick={(e) => handleBuyClick(item, e)}
-                >
-                  Buy
-                </button>
-                {activeView !== "My" ? (
-                  <span className="block text-sm font-medium text-primary">
-                    Add+
-                  </span>
-                ) : (
-                  <TrashIcon />
-                )}
+                <div className="flex items-center gap-3">
+                  <button
+                    className="py-2 px-5 bg-primary text-white text-sm font-medium border-none rounded-full"
+                    onClick={(e) => handleBuyClick(item, e)}
+                  >
+                    Buy
+                  </button>
+                  {activeView !== "My" ? (
+                    <span className="block text-sm font-medium text-primary">
+                      Add+
+                    </span>
+                  ) : (
+                    <TrashIcon />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div className="text-center text-primary mt-40">No Crop Found</div>
+        )}
 
         {showFinancials && selectedItemForBuy && (
           <FinancialsModal
