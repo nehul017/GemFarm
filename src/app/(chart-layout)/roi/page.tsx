@@ -55,20 +55,8 @@ export default function page() {
         isWhite={true}
       />
       <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto">
-        <div className="pt-4 pb-10 px-5">
-          <Tab
-            tabs={tabs2}
-            selectedTab={selectedTab2}
-            onChange={setSelectedTab2}
-          />
-          <div className="pt-4">
-            <Tab
-              tabs={tabs}
-              selectedTab={selectedTab}
-              onChange={setSelectedTab}
-            />
-          </div>
-          <div className="pt-6">
+        <div className=" pb-10 px-5">
+          <div className="">
             <p className="text-sm text-black font-medium mb-2">
               Forecast revenue
             </p>
@@ -126,8 +114,20 @@ export default function page() {
             ) : (
               <ROIChart selectedTab2={selectedTab2} />
             )}
+            <Tab
+              tabs={tabs2}
+              selectedTab={selectedTab2}
+              onChange={setSelectedTab2}
+            />
+            <div className="pt-4">
+              <Tab
+                tabs={tabs}
+                selectedTab={selectedTab}
+                onChange={setSelectedTab}
+              />
+            </div>
 
-            <div className="grid grid-cols-2 gap-3 pb-16">
+            <div className="grid grid-cols-2 gap-3 pb-16 pt-4">
               {selectedTab === "performance" && (
                 <>
                   <div className="card-background p-2.5 border border-solid border-borderColor2 rounded-lg">

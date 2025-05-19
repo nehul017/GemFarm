@@ -92,7 +92,10 @@ function page() {
               />
             </div>
             {data.length > 0 ? (
-              <AllContainer data={data} />
+              <>
+                <AllContainer data={data} />
+
+              </>
             ) : (
               <div className="mt-9 pb-[90px]">
                 <div className="px-3 py-4 rounded-xl">
@@ -103,60 +106,8 @@ function page() {
                 </div>
               </div>
             )}
-            <div
-              className="fixed z-[999] right-4 bottom-24 bg-primary flex items-center justify-center text-white rounded-full w-10 h-10"
-              onClick={() => router.push("/add-container-details")}
-            >
-              <Plus className="h-4 w-4" />
-            </div>
           </div>
         )}
-        {/*
-        <div className="bg-primary px-5 pb-[120px] rounded-b-[30px]">
-          <div className="pt-2 flex items-center justify-between">
-            <p className="text-sm font-medium text-white">Your Containers</p>
-            <p className="text-sm font-medium text-white">
-              <span className="text-green">{data.length}</span> Container
-            </p>
-          </div>
-        </div>
-        {loading || initialLoad ? (
-          <div className="flex justify-center items-center h-dvh">
-            <div className="relative bottom-[150px] w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          <div className="mt-[-100px] px-5 pb-[100px]">
-            {data.map((item, index) => (
-              <div
-                key={index}
-                className="bg-white p-4 rounded-xl mb-[18px] cursor-pointer shadow-[rgba(0,0,0,0.25)_0px_54px_55px,rgba(0,0,0,0.12)_0px_-12px_30px,rgba(0,0,0,0.12)_0px_4px_6px,rgba(0,0,0,0.17)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px]"
-                onClick={() => onClickFarm(item)}
-              >
-                <img
-                  src={item.container_image}
-                  alt="FarmImage"
-                  className="block w-full h-[120px] rounded-lg object-cover"
-                />
-                <div className="flex items-center justify-between pt-4">
-                  <div>
-                    <p className="text-sm font-medium text-black ">
-                      {item.farm.name} | {item.container_crop}
-                    </p>
-                    <div className="flex items-center gap-1">
-                      <LocationIcon />
-                      <span className="block text-sm text-black opacity-[.4]">
-                        {item.farm.location}
-                      </span>
-                    </div>
-                  </div>
-                  <button className="py-2 px-3 text-sm font-semibold text-green rounded-[4px] bg-[#E6F4EE] cursor-pointer border-none">
-                    ${prices[index] || 12}
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )} */}
       </div>
       <Footer />
     </div>

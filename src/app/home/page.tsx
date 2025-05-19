@@ -4,18 +4,17 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import axios from "axios";
-import { fetchCommodityData, fetchUserProfile } from "@/redux/slices/authSlice";
+import { fetchUserProfile } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import LocationIcon from "@/icons/locationIcon";
 import NotificationIcon from "@/icons/notificationIcon";
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
 import { fetchFarms } from "@/redux/slices/farmSlice";
-import Button from "@/components/common/button";
 import GrowWhiteIcon from "@/icons/growWhiteIcon";
 import GrowPrimaryIcon from "@/icons/growPrimaryIcon";
 import { Plus } from "lucide-react";
+import Button from "@/components/common/button";
 const FarmIcon = "/assets/icons/Farm.svg";
 
 // const FarmImage = "/assets/images/farm.png";
@@ -67,14 +66,12 @@ function page() {
     localStorage.setItem("farm", JSON.stringify(farm));
     localStorage.setItem("farmId", farm.id);
     localStorage.setItem("isFarm", "true");
-    router.push("/watch-list");
+    router.push("/roi");
   };
 
   const onClickSetting = () => {
     router.push("/setting");
   };
-
-  const prices = ["18.20", "12.10", "12.20", "15.55", "22.53", "16.20"];
 
   return (
     <div>
@@ -117,7 +114,8 @@ function page() {
               <div className="pt-6 flex items-center justify-between">
                 <p className="text-sm font-medium text-white">Your Farms</p>
                 <p className="text-sm font-medium text-white">
-                  <span className="text-green">{data.length}</span> Farm
+                  <span className="text-green">{data.length}</span>{" "}
+                  {data.length > 1 ? "Farms" : "Farm"}
                 </p>
               </div>
             </div>
@@ -168,6 +166,12 @@ function page() {
                     </div>
                   </div>
                 ))}
+                <Button
+                  buttonClass="w-10 h-10 bg-primary flex items-center justify-center rounded-full"
+                  text="Add Farm"
+                  green
+                  onClick={() => router.push("/add-farm-details")}
+                ></Button>
               </div>
             ) : (
               <div className="mt-[50px] px-5 pb-[100px]">
@@ -180,12 +184,7 @@ function page() {
               </div>
             )}
           </div>
-          <div
-            className="fixed z-[999] right-4 bottom-24 bg-primary flex items-center justify-center text-white rounded-full w-10 h-10"
-            onClick={() => router.push("/add-farm-details")}
-          >
-            <Plus className="h-4 w-4" />
-          </div>
+
           <Footer />
         </>
       )}

@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import LineChart from "@/icons/lineChart";
 import React from "react";
+import Button from "../common/button";
 const CardImage = "/assets/images/Strawberry.png";
 
 export default function AllContainer({ data }: { data: any[] }) {
@@ -53,6 +54,12 @@ export default function AllContainer({ data }: { data: any[] }) {
           })}
         </div>
       </div>
+        <Button
+          buttonClass="mt-3 w-15 h-10 bg-primary flex items-center justify-center rounded-full"
+          text="Add Container"
+          green
+          onClick={() => router.push("/add-container-details")}
+        ></Button>
     </div>
   );
 }

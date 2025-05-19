@@ -16,6 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePicker from "../common/CustomDatePicker";
 import { createContainer } from "@/redux/slices/containerSlice";
 import { toast, ToastContainer } from "react-toastify";
+import { cropLists } from "../utils/utils";
 
 const containerStatusOptions: OptionType[] = [
   { value: "Idle", label: "Idle" },
@@ -28,6 +29,12 @@ const harvestSystemOptions: OptionType[] = [
   { value: "NFT", label: "NFT" },
   { value: "Dutch Bucket", label: "Dutch Bucket" }, // corrected
 ];
+
+const cropOptions: OptionType[] = cropLists.map((crop) => ({
+  value: crop.name,
+  label: crop.name,
+}));
+
 export default function AddContainerDetails() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
@@ -48,7 +55,7 @@ export default function AddContainerDetails() {
     cropVariety: "",
     autoGrowId: "",
     // blueLabId: "",
-    containerStatus: "",
+    // containerStatus: "",
     containerCrop: "",
     harvestSystem: "",
     harvestDate: "",
@@ -69,7 +76,7 @@ export default function AddContainerDetails() {
       cropVariety: cropVariety ? "" : "Crop variety is required",
       autoGrowId: autoGrowId ? "" : "Auto Grow Device ID is required",
       // blueLabId: blueLabId ? "" : "Blue Lab Device ID is required",
-      containerStatus: containerStatus ? "" : "Container status is required",
+      // containerStatus: containerStatus ? "" : "Container status is required",
       containerCrop: containerCrop ? "" : "Container crop is required",
       harvestSystem: harvestSystem ? "" : "Harvest system is required",
       harvestDate: harvestDate ? "" : "Harvest date is required",
@@ -89,7 +96,7 @@ export default function AddContainerDetails() {
       crop_category: cropCategory.trim(),
       auto_grow_device_id: autoGrowId.trim(),
       // blue_lab_device_id: blueLabId.trim(),
-      container_status: containerStatus.trim(),
+      // container_status: containerStatus.trim(),
       harvest_system: harvestSystem.trim(),
       harvest_date: harvestDate,
       container_image: image,
@@ -135,21 +142,27 @@ export default function AddContainerDetails() {
               }}
               error={errors.containerName}
               required
-
             />
-            <Input
+
+            <CustomSearchSelect
               label="Container Crop"
-              placeholder="Enter container crop name"
-              inputClass="bg-bglight"
-              value={containerCrop}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setContainerCrop(e.target.value);
+              options={cropOptions}
+              value={
+                containerCrop
+                  ? cropOptions.find((opt) => opt.value === containerCrop) ||
+                    null
+                  : null
+              }
+              onChange={(selected) => {
+                setContainerCrop(selected?.value || "");
                 errors.containerCrop = "";
               }}
-              error={errors.containerCrop}
+              placeholder="Select container crop"
               required
-
             />
+            {errors.containerCrop && (
+              <p className="text-xs text-red-600">{errors.containerCrop}</p>
+            )}
             <Input
               label="Crop Category"
               placeholder="Enter your crop category"
@@ -161,7 +174,6 @@ export default function AddContainerDetails() {
               }}
               error={errors.cropCategory}
               required
-
             />
             <Input
               label="Crop Variety"
@@ -174,7 +186,6 @@ export default function AddContainerDetails() {
               }}
               error={errors.cropVariety}
               required
-
             />
             <CustomSearchSelect
               label="Harvest System"
@@ -218,7 +229,6 @@ export default function AddContainerDetails() {
               }}
               error={errors.autoGrowId}
               required
-
             />
             {/* <Input
               label="Blue Lab DeviceId"
@@ -233,7 +243,7 @@ export default function AddContainerDetails() {
               required
 
             /> */}
-            <CustomSearchSelect
+            {/* <CustomSearchSelect
               label="Container Status"
               options={containerStatusOptions}
               value={
@@ -254,9 +264,13 @@ export default function AddContainerDetails() {
               <p className="text-red-500 text-sm mt-1">
                 {errors.containerStatus}
               </p>
-            )}
+            )} */}
 
-            <AddCoverPhoto setImageURL={setImage} error={errors.image} required />
+            <AddCoverPhoto
+              setImageURL={setImage}
+              error={errors.image}
+              required
+            />
           </div>
         </div>
       </div>
