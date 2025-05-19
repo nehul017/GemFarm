@@ -52,7 +52,7 @@ export default function Footer() {
             path={DownIcon}
           />
         </div>
-        <div className="p-5 pt-0" ref={cropsListRef}>
+        <div className="pb-5 px-2 pt-0" ref={cropsListRef}>
           <CropsList toogle={toogle} />
         </div>
       </div>

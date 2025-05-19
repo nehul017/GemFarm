@@ -256,7 +256,7 @@ export default function page() {
           <div onClick={() => setToogle(!toogle)} className="p-5 pb-0">
             <h3 className="flex items-center justify-center">Farm Crops</h3>
           </div>
-          <div className="p-5 pt-0">
+          <div className="pb-5 px-2 pt-0">
             <FarmCropsList
               toogle={toogle}
               setToogle={setToogle}

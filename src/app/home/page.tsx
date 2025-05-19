@@ -29,6 +29,23 @@ function page() {
   const { user, loading } = useSelector((state: RootState) => state.auth);
   const [initialLoad, setInitialLoad] = useState(true);
   const [data, setData] = useState<any[]>([]);
+  const [showOptions, setShowOptions] = useState(false);
+  const [animateOut, setAnimateOut] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleMenu = () => {
+    if (showOptions) {
+      setAnimateOut(true);
+      setIsVisible(false);
+      setTimeout(() => {
+        setShowOptions(false);
+        setAnimateOut(false);
+      }, 300);
+    } else {
+      setShowOptions(true);
+      setTimeout(() => setIsVisible(true), 10); // slight delay to trigger transition
+    }
+  };
 
   useEffect(() => {
     setInitialLoad(true);
@@ -74,8 +91,6 @@ function page() {
     router.push("/setting");
   };
 
-  const prices = ["18.20", "12.10", "12.20", "15.55", "22.53", "16.20"];
-
   return (
     <div>
       {loading || initialLoad ? (
@@ -88,7 +103,7 @@ function page() {
             <div className="bg-primary pt-5 px-5 pb-[80px] rounded-b-[30px]">
               <div className="grid grid-cols-[1fr_100px] pb-5 gap-1">
                 <div>
-                  <h2 className="text-white text-[22px] break-words font-semibold mb-1">
+                  <h2 className="text-white text-xl break-words font-semibold mb-1">
                     Hello,{" "}
                     <span className="text-green break-all">
                       {user?.username}
@@ -180,12 +195,74 @@ function page() {
               </div>
             )}
           </div>
-          <div
+          {/* <div
             className="fixed z-[999] right-4 bottom-24 bg-primary flex items-center justify-center text-white rounded-full w-10 h-10"
             onClick={() => router.push("/add-farm-details")}
           >
             <Plus className="h-4 w-4" />
+          </div> */}
+          {/* Floating Action Button with Menu */}
+          <div className="fixed z-[999] right-4 bottom-24 flex flex-col items-end gap-2">
+            {/* Options */}
+            {showOptions && (
+              <>
+                {[
+                  {
+                    label: "Assign Manager",
+                    path: "/add-managers-details",
+                    angle: -95,
+                    x: "-6",
+                    y: "-90",
+                  },
+                  {
+                    label: "Create Farm",
+                    path: "/add-farm-details",
+                    angle: -155,
+                    x: "-6",
+                    y: "-45",
+                  },
+                ].map((item, i) => {
+                  const rad = (item.angle * Math.PI) / 180;
+                  const x = Math.cos(rad) * 80;
+                  const y = Math.sin(rad) * 80;
+
+                  return (
+                    <button
+                      key={item.label}
+                      onClick={() => {
+                        toggleMenu();
+                        router.push(item.path);
+                      }}
+                      style={{
+                        transform:
+                          animateOut || !isVisible
+                            ? "translate(0px, 0px)"
+                            : `translate(${item.x || x}px, ${item.y || y}px)`,
+                      }}
+                      className={`absolute w-[8rem] bg-primary text-white text-sm font-semibold px-1 py-1 rounded-md shadow-md border border-primary
+            transition-all duration-300 ease-in-out origin-center
+            ${
+              animateOut || !isVisible
+                ? "opacity-0 scale-75"
+                : "opacity-100 scale-100"
+            }
+          `}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </>
+            )}
+
+            <button
+              onClick={toggleMenu}
+              className="bg-primary flex items-center justify-center text-white rounded-full w-10 h-10 shadow-lg"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
           </div>
+
           <Footer />
         </>
       )}

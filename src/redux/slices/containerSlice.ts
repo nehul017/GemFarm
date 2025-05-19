@@ -20,6 +20,7 @@ interface ContainerState {
     loading: boolean;
     error: string | null;
     container: Container;
+    sensorData: any;
 }
 
 const initialState: ContainerState = {
@@ -27,6 +28,7 @@ const initialState: ContainerState = {
     loading: false,
     error: null,
     container: {} as Container,
+    sensorData: {},
 };
 
 // CREATE
@@ -58,7 +60,10 @@ export const fetchContainers = createAsyncThunk<Container[], string>(
 // UPDATE
 export const updateContainer = createAsyncThunk(
     "container/updateContainer",
-    async ({ id, data }: { id: string; data: Partial<Container> }, { rejectWithValue }) => {
+    async (
+        { id, data }: { id: string; data: Partial<Container> },
+        { rejectWithValue }
+    ) => {
         try {
             const axiosInstance = (await import("../../utils/axiosInstance")).default;
             const res = await axiosInstance.put(`/containers/${id}`, data);
@@ -81,6 +86,20 @@ export const deleteContainer = createAsyncThunk(
         }
     }
 );
+
+// Get Container Sensor Data
+export const fetchContainerSensorData = createAsyncThunk(
+    "container/fetchContainerSensorData",
+    async (containerId: string, { rejectWithValue }) => {
+        try {
+            const axiosInstance = (await import("../../utils/axiosInstance")).default;
+            const res = await axiosInstance.get(`/containers/sensor/${containerId}`);
+            return res.data.data;
+        } catch (error: any) {
+            return rejectWithValue(error?.response?.data?.message || "Fetch failed");
+        }
+    }
+);
 // Slice
 const containerSlice = createSlice({
     name: "container",
@@ -96,7 +115,7 @@ const containerSlice = createSlice({
                 if (Array.isArray(state.containers)) {
                     state.containers.push(action.payload);
                 } else {
-                    state.containers = [action.payload];  // fallback if somehow farms is not an array
+                    state.containers = [action.payload]; // fallback if somehow farms is not an array
                 }
                 state.error = null;
                 state.container = action.payload;
@@ -121,7 +140,9 @@ const containerSlice = createSlice({
             })
             .addCase(updateContainer.fulfilled, (state, action) => {
                 state.loading = false;
-                const index = state.containers.findIndex((container) => container.id === action.payload.id);
+                const index = state.containers.findIndex(
+                    (container) => container.id === action.payload.id
+                );
                 if (index !== -1) {
                     state.containers[index] = action.payload;
                 }
@@ -135,9 +156,22 @@ const containerSlice = createSlice({
             })
             .addCase(deleteContainer.fulfilled, (state, action) => {
                 state.loading = false;
-                state.containers = state.containers.filter((container) => container.id !== action.payload.id);
+                state.containers = state.containers.filter(
+                    (container) => container.id !== action.payload.id
+                );
             })
             .addCase(deleteContainer.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(fetchContainerSensorData.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchContainerSensorData.fulfilled, (state, action) => {
+                state.loading = false;
+                state.sensorData = action.payload.data;
+            })
+            .addCase(fetchContainerSensorData.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             });

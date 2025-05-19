@@ -1,9 +1,5 @@
 import React from 'react';
-import Select, {
-  StylesConfig,
-  SingleValue,
-} from 'react-select';
-
+import Select, { StylesConfig } from 'react-select';
 
 export interface OptionType {
   value: string;
@@ -13,36 +9,32 @@ export interface OptionType {
 interface CustomSearchSelectProps {
   label?: string;
   options: OptionType[];
-  value: OptionType | null;
-  onChange: (selected: OptionType | null) => void;
+  value: OptionType[];
+  onChange: (selected: OptionType[]) => void;
   placeholder?: string;
   required?: boolean;
-  loading?: boolean; // ✅ NEW
+  loading?: boolean;
   isSearchable?: boolean;
 }
 
-
-const customStyles: StylesConfig<OptionType, false> = {
+const customStyles: StylesConfig<OptionType, true> = {
   control: (provided, state) => ({
     ...provided,
     borderRadius: '6px',
     borderColor: state.isFocused ? '#36BA7E' : '#E6E6E6',
-    border : "1px solid #E6E6E6",
+    border: '1px solid #E6E6E6',
     boxShadow: state.isFocused ? '0 0 0 1px #10B981' : 'none',
     backgroundColor: '#f9f9f9',
     minHeight: '50px',
     fontSize: '16px',
     cursor: 'pointer',
-  
   }),
   placeholder: (provided) => ({
     ...provided,
     color: '#9CA3AF',
     fontSize: '16px',
-    fontFamily: "Inter",
-    fontStyle: "normal",
+    fontFamily: 'Inter',
     fontWeight: 400,
-    lineHeight: "normal",
   }),
   menu: (provided) => ({
     ...provided,
@@ -52,15 +44,15 @@ const customStyles: StylesConfig<OptionType, false> = {
     backgroundColor: '#fff',
     padding: '6px 4px',
     zIndex: 20,
-    border : "1px solid #E5E5E5"
+    border: '1px solid #E5E5E5',
   }),
   option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isFocused ? '#f5f5f5' : 'white',
     color: '#111827',
     padding: '7px 16px',
-    fontSize:'16px',
-    borderRadius : "0.5px",
+    fontSize: '16px',
+    borderRadius: '0.5px',
     cursor: 'pointer',
   }),
   menuList: (provided) => ({
@@ -83,7 +75,7 @@ const customStyles: StylesConfig<OptionType, false> = {
   }),
 };
 
-const CustomSearchSelect: React.FC<CustomSearchSelectProps> = ({
+const CustomMultiSearchSelect: React.FC<CustomSearchSelectProps> = ({
   label,
   options,
   value,
@@ -91,27 +83,28 @@ const CustomSearchSelect: React.FC<CustomSearchSelectProps> = ({
   placeholder = 'Search Farm',
   isSearchable = true,
   required = false,
-  loading = false, // ✅ NEW
+  loading = false,
 }) => {
   return (
     <div>
       {label && (
         <label className='text-sm text-black font-medium block pb-2'>
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className='text-red-500 ml-1'>*</span>}
         </label>
       )}
       <Select
         options={options}
         value={value}
-        onChange={(selected) => onChange(selected as SingleValue<OptionType>)}
-        placeholder={placeholder}
+        onChange={(selected) => onChange((selected || []) as OptionType[])}
         styles={customStyles}
         isSearchable={isSearchable}
-        isLoading={loading} // ✅ NEW
+        isLoading={loading}
+        isMulti
+        placeholder={placeholder}
       />
     </div>
   );
 };
 
-export default CustomSearchSelect;
+export default CustomMultiSearchSelect;

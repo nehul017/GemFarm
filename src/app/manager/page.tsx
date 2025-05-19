@@ -1,28 +1,26 @@
 "use client"; // 👈 Add this at the top
 
+import React from "react";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
-import UpdateProfile from "@/components/sections/updateProfile";
-import React from "react";
-import withAuth from "../withAuth";
+import ManagersPage from "@/components/sections/assigeManager";
 
 function page() {
   return (
     <>
       <div className="bg-white relative overflow-x-hidden min-h-[calc(100dvh-0px)] overflow-auto md:max-w-[375px] md:mx-auto">
-        <div className="pb-2 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <Header
-            header="Profile"
+            header="Manager"
             isNotificationIcon={false}
             isOnlyBackButton={true}
             isWhite={true}
-            isShowProfile={false}
+            isShowProfile={true}
           />
         </div>
-        <UpdateProfile />
-        <Footer />
+        <ManagersPage />
+        {/* <Footer /> */}
       </div>
-      {/* <SignOutModal/> */}
     </>
   );
 }

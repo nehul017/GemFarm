@@ -9,7 +9,7 @@ import withAuth from "../withAuth";
 
 function page() {
   return (
-    <div className="bg-white relative h-dvh md:max-w-[375px] md:mx-auto">
+    <div className="bg-white relative h-dvh md:max-w-[375px] md:mx-auto overflow-auto">
       <div className="bg-primary pt-5 pb-[100px] rounded-b-[30px]">
         <Header
           header="Settings"
@@ -18,7 +18,7 @@ function page() {
           isShowProfile={false}
         />
       </div>
-      <div className="px-5 mt-[-50px]">
+      <div className="px-5 mt-[-50px] pb-24">
         <ProfileInformation />
         <OtherSetting />
       </div>

@@ -10,8 +10,13 @@ import H2oIcon from "@/icons/H2OIcon";
 import O2Icon from "@/icons/O2Icon";
 import ECIcon from "@/icons/ECIcon";
 import Header from "@/components/layout/header";
+import { supabase } from "@/utils/supabaseClient";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { fetchContainerSensorData } from "@/redux/slices/containerSlice";
 
 export default function Page() {
+  const dispatch = useDispatch<AppDispatch>();
   const [initialLoad, setInitialLoad] = useState(true);
   const [data, setData] = useState<Record<string, any>>({});
   const [container, setContainer] = useState<any | null>({});
@@ -32,22 +37,11 @@ export default function Page() {
       const data = containerItem ? JSON.parse(containerItem) : null; // Replace with your actual container ID
       setContainer(data);
       try {
-        const response = await axios.post(
-          `https://gv5xt68i22.execute-api.us-east-1.amazonaws.com/dev/sensor-data?containerId=${
-            data.id || container.id
-          }`,
-          { action: "GET", containerId: data.id || container.id },
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+        const response = await dispatch(fetchContainerSensorData(data.id));
+        
+        setData(response.payload[0]); // Store sensor data
 
-        if (response.status === 200) {
-          const { body } = response.data;
-          setData(body[0]); // Store sensor data
-        } else {
-          console.error("API request failed with status:", response.status);
-        }
+     
       } catch (error) {
         console.error("API request error:", error);
       } finally {

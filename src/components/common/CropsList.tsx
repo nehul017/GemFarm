@@ -28,6 +28,7 @@ import { RootState } from "../../redux/store";
 import { fetchKGPriceData } from "../../redux/slices/authSlice";
 import Searchbar from "./searchbar";
 import TrashIcon from "@/icons/trashIcon";
+import CropNotFound from "@/icons/CropNotFound";
 const generateMarketData = (basePrice: number, days: number) => {
   const data = [];
   let currentPrice = basePrice;
@@ -803,7 +804,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
         <div className="bg-white rounded-t-lg  w-full h-full md:h-auto md:rounded-2xl md:w-full md:max-w-5xl md:max-h-[90vh] overflow-auto">
           <div className="sticky top-0 bg-white z-10 px-4 py-4 border-b md:border-none">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+              <h2 className="text-lg md:text-2xl font-bold text-gray-900">
                 Financial Analysis - {item.name}
                 <p className="text-[16px] text-gray-500 ml-1">
                   ({item.variety})
@@ -815,9 +816,9 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             </div>
 
             <div className="mt-2">
-              <div className="flex space-x-4 border-b overflow-x-auto">
+              <div className="grid grid-cols-2 gap-0 border-b ">
                 <button
-                  className={`py-2 px-4 whitespace-nowrap ${
+                  className={`py-2 px-4 whitespace-nowrap text-sm ${
                     activeTab === "overview"
                       ? "border-b-2 border-green text-green"
                       : "text-gray-500"
@@ -827,7 +828,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   Overview
                 </button>
                 <button
-                  className={`py-2 px-4 whitespace-nowrap ${
+                  className={`py-2 px-4 whitespace-nowrap text-sm ${
                     activeTab === "projections"
                       ? "border-b-2 border-green text-green"
                       : "text-gray-500"
@@ -1267,7 +1268,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     <>
       {/* <div className="bg-white relative min-h-[calc(100dvh-52px)] overflow-auto md:max-w-[375px] md:mx-auto"> */}
       <div
-        className="pt-0 h-[calc(100dvh-194px)]  overflow-auto"
+        className="pt-0 h-[calc(100dvh-194px)] pr-1 overflow-auto"
         ref={listRef}
         onScroll={handleScroll}
       >
@@ -1276,14 +1277,14 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             <div className="pt-2 flex items-center justify-center mb-1 text-sm">
               <Searchbar onSearch={handleSearch} toogle={toogle} />
             </div>
-            <div className="flex items-center justify-between mt-4 mb-1 text-sm">
+            <div className="flex items-center justify-between mt-4 mb-1 text-xs">
               <button
                 onClick={() => {
                   setActiveView("All");
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                className={`px-3 text-xs py-2 rounded-md font-medium border transition-colors ${
                   activeView === "All"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1297,7 +1298,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                className={`px-3 text-xs py-2 rounded-lg font-medium border transition-colors ${
                   activeView === "My"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1311,7 +1312,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                className={`px-3 text-xs py-2 rounded-lg font-medium border transition-colors ${
                   activeView === "NFT"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1325,7 +1326,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   setShowSortMenu(false);
                   listRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`px-2.5 py-2.5 rounded-lg font-medium border transition-colors ${
+                className={`px-3 text-xs py-2 rounded-lg font-medium border transition-colors ${
                   activeView === "Dutch Bucket"
                     ? "bg-primary text-white"
                     : "bg-white/10 text-black"
@@ -1335,7 +1336,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
               </button>
               <button
                 onClick={() => setShowSortMenu(!showSortMenu)}
-                className="flex items-center gap-1 h-[42px] w-[42px] flex items-center justify-center  p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
+                className="flex items-center gap-1 h-[38px] w-[38px] justify-center  p-[5px] bg-white border rounded-lg shadow-sm hover:bg-gray-50"
               >
                 <Filter className="w-4 h-4" />
               </button>
@@ -1345,7 +1346,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                 <div className="py-1">
                   <button
                     className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
-                      sortBy === "systemType" ? "bg-blue-50 text-blue-600" : ""
+                      sortBy === "systemType" ? "bg-primary text-white" : ""
                     }`}
                     onClick={() => {
                       setSortBy("systemType");
@@ -1357,7 +1358,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   </button>
                   <button
                     className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
-                      sortBy === "category" ? "bg-blue-50 text-blue-600" : ""
+                      sortBy === "category" ? "bg-primary text-white" : ""
                     }`}
                     onClick={() => {
                       setSortBy("category");
@@ -1369,7 +1370,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   </button>
                   <button
                     className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
-                      sortBy === "name" ? "bg-blue-50 text-blue-600" : ""
+                      sortBy === "name" ? "bg-primary text-white" : ""
                     }`}
                     onClick={() => {
                       setSortBy("name");
@@ -1381,7 +1382,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
                   </button>
                   <button
                     className={`w-full text-sm text-left px-4 py-2 hover:bg-gray-100 ${
-                      sortBy === "variety" ? "bg-blue-50 text-blue-600" : ""
+                      sortBy === "variety" ? "bg-primary text-white" : ""
                     }`}
                     onClick={() => {
                       setSortBy("variety");
@@ -1465,7 +1466,13 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
             </div>
           ))
         ) : (
-          <div className="text-center text-primary mt-40">No Crop Found</div>
+          <div className="px-3 py-4 rounded-xl mt-20">
+            <CropNotFound />
+
+            <div className="text-center text-primary mt-4">
+               Oops! Couldn’t find any crops
+            </div>
+          </div>
         )}
 
         {showFinancials && selectedItemForBuy && (

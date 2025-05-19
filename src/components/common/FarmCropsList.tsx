@@ -62,7 +62,10 @@ export default function FarmCropsList({
   );
   return (
     <>
-      <div className="pt-0 h-[calc(100dvh-194px)]  overflow-auto" ref={listRef}>
+      <div
+        className="pt-0 h-[calc(100dvh-194px)] pr-2 overflow-auto"
+        ref={listRef}
+      >
         <div className="flex items-center mb-2 sticky top-0 bg-white z-10">
           <div className="w-full">
             <div className="pt-2 flex items-center justify-center mb-1 text-sm">

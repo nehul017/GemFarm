@@ -33,17 +33,17 @@ export default function ProfileInformation() {
           className="w-[60px] min-w-[60px] h-[60px] object-cover block rounded-full"
           src={user?.profileImage || ProfileIcon}
         />
-        <div>
+        <div className="">
           <p className="text-base font-semibold text-black200 m-0 break-all w-[140px]">
             {user?.username}
           </p>
-          <span className="text-[14px] text-gray600 block leading-4">
+          <p className="text-xs text-gray600 break-all leading-4 line-clamp-1 w-full">
             {user?.email}
-          </span>
+          </p>
         </div>
       </div>
       <Link href="/profile">
-        <img src={UserIcon} alt="UserIcon" />
+        <img className="min-w-8" src={UserIcon} alt="UserIcon" />
       </Link>
     </div>
   );

@@ -18,6 +18,7 @@ export default {
         bglight:'#FAFAFA',
         borderColor:'#E6E6E6',
         borderColorlight:'#CDCDCD',
+        borderColorlight500:'#E5E5E5',
         borderColor2:'rgba(218, 218, 218, 0.80)',
         borderColor3:'rgba(255, 255, 255, 0.10)',
         borderColor4:'rgba(208, 213, 220, 0.60)',
@@ -35,7 +36,22 @@ export default {
         md:'0px 0px 6px 0px rgba(113, 128, 150, 0.16)',
         lg:'0px 2px 15px 0px rgba(0, 0, 0, 0.08)',
         cardShadow:'0px 2px 10px 0px rgba(113, 128, 150, 1)',
-      }
+        cardShadowLight:'0px 6px 10px 2px rgba(0, 0, 0, 0.04), 0px 2px 3px 0px rgba(0, 0, 0, 0.08)',
+      },
+      keyframes: {
+        'fade-in-scale': {
+          '0%': { opacity: '0', transform: 'scale(0.7)' },
+          '100%': { opacity: '1', transform: 'scale(0.7)' },
+        },
+        'fade-out-scale': {
+          '0%': { opacity: '1', transform: 'scale(0.7)' },
+          '100%': { opacity: '0', transform: 'scale(0.7)' },
+        },
+      },
+      animation: {
+        'fade-in-scale': 'fade-in-scale 0.5s ease-out forwards',
+        'fade-out-scale': 'fade-out-scale 0.5s ease-in forwards',
+      },
     },
   },
   plugins: [],
