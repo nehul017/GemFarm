@@ -30,10 +30,10 @@ const harvestSystemOptions: OptionType[] = [
   { value: "Dutch Bucket", label: "Dutch Bucket" }, // corrected
 ];
 
-const cropOptions: OptionType[] = cropLists.map((crop) => ({
-  value: crop.name,
-  label: crop.name,
-}));
+const cropOptions: OptionType[] = cropLists
+  .map((crop) => crop.name)
+  .filter((value, index, self) => self.indexOf(value) === index) // unique
+  .map((name) => ({ label: name, value: name }));
 
 export default function AddContainerDetails() {
   const router = useRouter();
@@ -49,6 +49,12 @@ export default function AddContainerDetails() {
   const [containerCrop, setContainerCrop] = useState("");
   const [harvestDate, setHarvestDate] = useState<Date | null>(null);
   const [harvestSystem, setHarvestSystem] = useState("NFT");
+  const [categoryOptions, setCategoryOptions] = React.useState<
+    { label: string; value: string }[]
+  >([]);
+  const [varietyOptions, setVarietyOptions] = React.useState<
+    { label: string; value: string }[]
+  >([]);
   const [errors, setErrors] = useState({
     containerName: "",
     cropCategory: "",
@@ -117,6 +123,42 @@ export default function AddContainerDetails() {
     }
   };
 
+  const handleCropChange = (selected: any) => {
+    setContainerCrop(selected.value);
+
+    if (selected) {
+      // Filter cropLists for the selected crop
+      const filtered = cropLists.filter((crop) => crop.name === selected.value);
+
+      // Extract unique categories & varieties from filtered results
+      const categories = [
+        ...new Set(filtered.map((crop) => crop.category)),
+      ].map((cat) => ({
+        label: cat,
+        value: cat,
+      }));
+
+      const varieties = [...new Set(filtered.map((crop) => crop.variety))].map(
+        (variety) => ({
+          label: variety,
+          value: variety,
+        })
+      );
+
+      setCategoryOptions(categories);
+      setVarietyOptions(varieties);
+
+      // Reset selections on new crop select
+      setCropCategory("");
+      setCropVariety("");
+    } else {
+      setCategoryOptions([]);
+      setVarietyOptions([]);
+      setCropCategory("");
+      setCropVariety("");
+    }
+  };
+
   return (
     <div>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -155,6 +197,7 @@ export default function AddContainerDetails() {
               }
               onChange={(selected) => {
                 setContainerCrop(selected?.value || "");
+                handleCropChange(selected);
                 errors.containerCrop = "";
               }}
               placeholder="Select container crop"
@@ -163,18 +206,25 @@ export default function AddContainerDetails() {
             {errors.containerCrop && (
               <p className="text-xs text-red-600">{errors.containerCrop}</p>
             )}
-            <Input
+            <CustomSearchSelect
               label="Crop Category"
-              placeholder="Enter your crop category"
-              inputClass="bg-bglight"
-              value={cropCategory}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCropCategory(e.target.value);
+              options={categoryOptions}
+              value={
+                cropCategory
+                  ? cropOptions.find((opt) => opt.value === cropCategory) ||
+                    null
+                  : null
+              }
+              onChange={(selected) => {
+                setCropCategory(selected?.value || "");
                 errors.cropCategory = "";
               }}
-              error={errors.cropCategory}
+              placeholder="Select container crop"
               required
             />
+            {errors.cropCategory && (
+              <p className="text-xs text-red-600">{errors.cropCategory}</p>
+            )}
             <Input
               label="Crop Variety"
               placeholder="Enter your crop variety"

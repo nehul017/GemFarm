@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import LineChart from "@/icons/lineChart";
 import React from "react";
 import Button from "../common/button";
+import { cropLists } from "../utils/utils";
 const CardImage = "/assets/images/Strawberry.png";
 
 export default function AllContainer({ data }: { data: any[] }) {
@@ -16,7 +17,7 @@ export default function AllContainer({ data }: { data: any[] }) {
   return (
     <div className="mt-3 pb-[90px]">
       <div className="bg-bglight border border-solid border-borderColorlight px-3 py-4 rounded-xl">
-        <h2 className="text-sm font-semibold text-black mb-4">All Container</h2>
+        <h2 className="text-sm font-semibold text-black mb-4">All Containers</h2>
         <div>
           {data.map((item, i) => {
             return (
@@ -44,7 +45,12 @@ export default function AllContainer({ data }: { data: any[] }) {
                   </p>
                   <div className="flex items-center gap-3">
                     <button className="p-[5px] rounded-sm text-green font-semibold text-xs bg-[#E6F4EE]">
-                      $1.29 / Kg
+                      {cropLists.find(
+                        (crop: { name: string; variety: string }) =>
+                          crop.name === item.container_crop ||
+                          crop.variety === item.container_crop
+                      )?.basePrice || ""}{" "}
+                      / Kg
                     </button>
                     <LineChart />
                   </div>
@@ -54,12 +60,12 @@ export default function AllContainer({ data }: { data: any[] }) {
           })}
         </div>
       </div>
-        <Button
-          buttonClass="mt-3 w-15 h-10 bg-primary flex items-center justify-center rounded-full"
-          text="Add Container"
-          green
-          onClick={() => router.push("/add-container-details")}
-        ></Button>
+      <Button
+        buttonClass="mt-3 w-15 h-10 bg-primary flex items-center justify-center rounded-full"
+        text="Add Container"
+        green
+        onClick={() => router.push("/add-container-details")}
+      ></Button>
     </div>
   );
 }
