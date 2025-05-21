@@ -19,7 +19,7 @@ export interface CropItem {
   category: string;
   variety: string;
   marketData: MarketDataItem[];
-  previousDayHigh: number | null;
+  previousDayHigh?: number | null;
 }
 
 interface CropsState {

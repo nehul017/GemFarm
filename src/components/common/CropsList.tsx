@@ -5,8 +5,7 @@ import { Filter } from "lucide-react";
 import LineChartIcon from "@/icons/lineChart";
 import LineChartRed from "@/icons/lineChartRed";
 const JalapenosImage = "/assets/images/Jalapenos.png";
-const TomatoImage = "/assets/images/Tomato.png";
-const CucumberImage = "/assets/images/Cucumber.png";
+
 import {
   Line,
   XAxis,
@@ -29,6 +28,7 @@ import { fetchKGPriceData } from "../../redux/slices/authSlice";
 import Searchbar from "./searchbar";
 import TrashIcon from "@/icons/trashIcon";
 import { cropLists } from "@/data/crops";
+import { CropItem } from "../../redux/slices/cropsSlice";
 
 const generateMarketData = (basePrice: number, days: number) => {
   const data = [];
@@ -62,7 +62,6 @@ const generateMarketData = (basePrice: number, days: number) => {
   }
   return data;
 };
-
 
 const myCrops = [
   {
@@ -105,8 +104,9 @@ const myCrops = [
   const marketData = generateMarketData(item.basePrice, 30);
 
   // Find the high price of the previous day
-  const previousDayHigh =
-    marketData.length > 1 ? marketData[marketData.length - 1].high : null;
+  const previousDayHigh = cropLists.find(
+    (crop) => crop.name === item.name && crop.variety === item.variety
+  )?.previousDayHigh;
 
   return {
     ...item,
@@ -309,9 +309,7 @@ export default function CropsList({ toogle }: { toogle: boolean }) {
     setShowSortMenu(false);
   };
 
-  const [selectedItem, setSelectedItem] = useState<null | (typeof cropLists)[0]>(
-    null
-  );
+  const [selectedItem, setSelectedItem] = useState<null | CropItem>(null);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
