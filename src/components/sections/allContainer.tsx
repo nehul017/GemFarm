@@ -2,11 +2,12 @@ import { useRouter } from "next/navigation";
 import LineChart from "@/icons/lineChart";
 import React from "react";
 import Button from "../common/button";
-import { cropLists } from "../utils/utils";
-const CardImage = "/assets/images/Strawberry.png";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function AllContainer({ data }: { data: any[] }) {
   const router = useRouter();
+  const cropLists = useSelector((state: RootState) => state.crops.crops);
 
   const onClickFarm = (container: any) => {
     localStorage.setItem("container", JSON.stringify(container));
@@ -17,7 +18,9 @@ export default function AllContainer({ data }: { data: any[] }) {
   return (
     <div className="mt-3 pb-[90px]">
       <div className="bg-bglight border border-solid border-borderColorlight px-3 py-4 rounded-xl">
-        <h2 className="text-sm font-semibold text-black mb-4">All Containers</h2>
+        <h2 className="text-sm font-semibold text-black mb-4">
+          All Containers
+        </h2>
         <div>
           {data.map((item, i) => {
             return (
@@ -45,11 +48,16 @@ export default function AllContainer({ data }: { data: any[] }) {
                   </p>
                   <div className="flex items-center gap-3">
                     <button className="p-[5px] rounded-sm text-green font-semibold text-xs bg-[#E6F4EE]">
-                      {cropLists.find(
-                        (crop: { name: string; variety: string }) =>
-                          crop.name === item.container_crop ||
-                          crop.variety === item.container_crop
-                      )?.basePrice || ""}{" "}
+                      {cropLists
+                        .find(
+                          (crop: { name: string; variety: string }) =>
+                            crop.name === item.container_crop ||
+                            crop.variety === item.container_crop
+                        )
+                        ?.previousDayHigh?.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        }) || ""}{" "}
                       / Kg
                     </button>
                     <LineChart />

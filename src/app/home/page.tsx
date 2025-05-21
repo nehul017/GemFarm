@@ -15,12 +15,11 @@ import GrowWhiteIcon from "@/icons/growWhiteIcon";
 import GrowPrimaryIcon from "@/icons/growPrimaryIcon";
 import { Plus } from "lucide-react";
 import Button from "@/components/common/button";
-const FarmIcon = "/assets/icons/Farm.svg";
+import { cropLists } from "@/data/crops";
+import { setCrops } from "@/redux/slices/cropsSlice";
 
-// const FarmImage = "/assets/images/farm.png";
+const FarmIcon = "/assets/icons/Farm.svg";
 const ProfileImage = "/assets/images/Ty1.png";
-// const TomatoesFarmImage = "/assets/images/Tomatoes.avif";
-// const NFTFarmImage = "/assets/images/NFT.jpg";
 
 function page() {
   const dispatch = useDispatch<AppDispatch>();
@@ -34,6 +33,7 @@ function page() {
     if (!user) {
       dispatch(fetchUserProfile());
     }
+    dispatch(setCrops(cropLists));
   }, []);
 
   useEffect(() => {

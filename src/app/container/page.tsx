@@ -3,21 +3,18 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCommodityData, fetchUserProfile } from "@/redux/slices/authSlice";
-const ContainerIcon = "/assets/icons/Container.svg";
-
+import { fetchUserProfile } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
-import LocationIcon from "@/icons/locationIcon";
 import Footer from "@/components/layout/footer";
 import withAuth from "../withAuth";
 import { fetchContainers } from "@/redux/slices/containerSlice";
 import Header from "@/components/layout/header";
 import { useRef } from "react";
-import LeftIcon from "@/icons/leftIcon";
-import SearchIcon from "@/icons/SearchIcon";
 import AllContainer from "@/components/sections/allContainer";
-import Button from "@/components/common/button";
-import { Plus } from "lucide-react";
+import { setCrops } from "@/redux/slices/cropsSlice";
+import { cropLists } from "@/data/crops";
+
+const ContainerIcon = "/assets/icons/Container.svg";
 const ContainerImage = "/assets/images/container.png";
 
 function page() {
@@ -33,6 +30,7 @@ function page() {
     if (!user) {
       dispatch(fetchUserProfile());
     }
+        dispatch(setCrops(cropLists));
   }, []);
   useRouter;
 
@@ -58,14 +56,7 @@ function page() {
     }
   }, []);
 
-  const router = useRouter();
 
-  const onClickFarm = (container: any) => {
-    localStorage.setItem("container", JSON.stringify(container));
-    router.push("/watch-list");
-  };
-
-  const prices = ["18.20", "12.10", "12.20", "15.55", "22.53", "16.20"];
 
   return (
     <div>

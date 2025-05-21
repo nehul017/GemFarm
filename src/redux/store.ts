@@ -3,6 +3,7 @@ import authReducer from "./slices/authSlice";
 import farmReducer from "./slices/farmSlice";
 import containerReducer from "./slices/containerSlice";
 import uploadReducer from "./slices/uploadSlice";
+import cropsReducer from './slices/cropsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     farm: farmReducer,
     container: containerReducer,
     upload: uploadReducer,
+    crops: cropsReducer,
   },
 });
 
