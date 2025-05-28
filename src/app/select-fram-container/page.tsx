@@ -7,7 +7,7 @@ export default function page() {
     <div>
       <Header
         header="Financial Data"
-        isNotificationIcon={false}
+        isNotificationIcon={true}
         isOnlyBackButton={true}
         isWhite={true}
       />

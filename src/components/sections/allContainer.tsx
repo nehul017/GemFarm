@@ -48,7 +48,7 @@ export default function AllContainer({ data }: { data: any[] }) {
                   </p>
                   <div className="flex items-center gap-3">
                     <button className="p-[5px] rounded-sm text-green font-semibold text-xs bg-[#E6F4EE]">
-                      {cropLists
+                      $ {cropLists
                         .find(
                           (crop: { name: string; variety: string }) =>
                             crop.name === item.container_crop ||

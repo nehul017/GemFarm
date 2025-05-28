@@ -1,0 +1,5 @@
+apps:
+  - name: 11farms-web-app
+    restart_delay: 100
+    script: npm run start
+    autorestart: true

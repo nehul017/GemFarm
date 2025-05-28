@@ -13,12 +13,15 @@ import { useRef } from "react";
 import AllContainer from "@/components/sections/allContainer";
 import { setCrops } from "@/redux/slices/cropsSlice";
 import { cropLists } from "@/data/crops";
+import Button from "@/components/common/button";
 
 const ContainerIcon = "/assets/icons/Container.svg";
 const ContainerImage = "/assets/images/container.png";
 
 function page() {
   const hasFetched = useRef(false);
+  const router = useRouter();
+
   const dispatch = useDispatch<AppDispatch>();
   const { user, loading } = useSelector((state: RootState) => state.auth);
   const [initialLoad, setInitialLoad] = useState(true);
@@ -30,9 +33,8 @@ function page() {
     if (!user) {
       dispatch(fetchUserProfile());
     }
-        dispatch(setCrops(cropLists));
+    dispatch(setCrops(cropLists));
   }, []);
-  useRouter;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,13 +58,11 @@ function page() {
     }
   }, []);
 
-
-
   return (
     <div>
       <Header
         header={farm.name}
-        isNotificationIcon={false}
+        isNotificationIcon={true}
         isOnlyBackButton={true}
         isWhite={true}
         isShowProfile={loading || initialLoad ? false : true}
@@ -85,7 +85,6 @@ function page() {
             {data.length > 0 ? (
               <>
                 <AllContainer data={data} />
-
               </>
             ) : (
               <div className="mt-9 pb-[90px]">
@@ -94,6 +93,12 @@ function page() {
                   <div className="mt-9 text-center font-montserrat font-semibold text-[16px] leading-[100%] tracking-[0px] text-[#0A3732]">
                     You haven’t added any containers yet. Let’s create one!
                   </div>
+                  <Button
+                    buttonClass="mt-3 w-15 h-10 bg-primary flex items-center justify-center rounded-full"
+                    text="Add Container"
+                    green
+                    onClick={() => router.push("/add-container-details")}
+                  ></Button>
                 </div>
               </div>
             )}

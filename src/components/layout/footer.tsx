@@ -21,7 +21,7 @@ export default function Footer() {
   return (
     <div>
       {!toogle && (
-        <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-[9] max-w-[380px] w-full mx-auto">
+        <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-[9] max-w-[410px] w-full mx-auto">
           <div className="px-5" onClick={() => setToogle(!toogle)}>
             <Button
               rotateClass="rotate-180"
@@ -40,7 +40,7 @@ export default function Footer() {
         ></div>
       )}
       <div
-        className={`bg-white max-w-[380px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${
+        className={`bg-white max-w-[410px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${
           toogle ? "translate-y-[0%]" : "translate-y-[100%]"
         }`}
       >

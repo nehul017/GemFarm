@@ -59,6 +59,25 @@ export default function OtherSetting() {
         >
           <div
             className=" flex items-center gap-4 py-3 cursor-pointer text-sm text-black200 hover:text-primary"
+            onClick={() => router.push("/farm-pnl")}
+          >
+            <FinancialIcon />
+            <span className="block font-medium text-black200 text-base">
+              Farm PnL
+            </span>
+          </div>
+          <div
+            className=" flex items-center gap-4 py-3 cursor-pointer text-sm text-black200 hover:text-primary"
+            onClick={() => router.push("/edit-pnl-data")}
+          >
+            <FinancialIcon />
+            <span className="block font-medium text-black200 text-base">
+              Edit PnL Data
+            </span>
+          </div>
+          {/*
+          <div
+            className=" flex items-center gap-4 py-3 cursor-pointer text-sm text-black200 hover:text-primary"
             onClick={() => router.push("/select-fram-container")}
           >
             <FinancialIcon />
@@ -66,7 +85,7 @@ export default function OtherSetting() {
               Financial Data
             </span>
           </div>
-          <div
+           <div
             className="flex items-center gap-4 py-3 cursor-pointer text-sm text-black200 hover:text-primary"
             // onClick={() => router.push("/revenue-data")}
           >
@@ -74,7 +93,7 @@ export default function OtherSetting() {
             <span className="block font-medium text-black200 text-base">
               Revenue Data
             </span>
-          </div>
+          </div> */}
         </div>
 
         <div className="py-5 flex items-center gap-4 border-b border-solid border-borderColor4">

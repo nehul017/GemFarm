@@ -1,9 +1,5 @@
-import React from 'react';
-import Select, {
-  StylesConfig,
-  SingleValue,
-} from 'react-select';
-
+import React from "react";
+import Select, { StylesConfig, SingleValue } from "react-select";
 
 export interface OptionType {
   value: string;
@@ -18,26 +14,25 @@ interface CustomSearchSelectProps {
   placeholder?: string;
   required?: boolean;
   loading?: boolean; // ✅ NEW
+  error?: string;
 }
-
 
 const customStyles: StylesConfig<OptionType, false> = {
   control: (provided, state) => ({
     ...provided,
-    borderRadius: '6px',
-    borderColor: state.isFocused ? '#36BA7E' : '#E6E6E6',
-    border : "1px solid #E6E6E6",
-    boxShadow: state.isFocused ? '0 0 0 1px #10B981' : 'none',
-    backgroundColor: '#f9f9f9',
-    minHeight: '50px',
-    fontSize: '16px',
-    cursor: 'pointer',
-  
+    borderRadius: "6px",
+    borderColor: state.isFocused ? "#36BA7E" : "#E6E6E6",
+    border: "1px solid #E6E6E6",
+    boxShadow: state.isFocused ? "0 0 0 1px #10B981" : "none",
+    backgroundColor: "#f9f9f9",
+    minHeight: "50px",
+    fontSize: "16px",
+    cursor: "pointer",
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: '#9CA3AF',
-    fontSize: '16px',
+    color: "#9CA3AF",
+    fontSize: "16px",
     fontFamily: "Inter",
     fontStyle: "normal",
     fontWeight: 400,
@@ -45,22 +40,23 @@ const customStyles: StylesConfig<OptionType, false> = {
   }),
   menu: (provided) => ({
     ...provided,
-    marginTop: '4px',
-    borderRadius: '6px',
-    boxShadow: '0px 6px 10px 2px rgba(0, 0, 0, 0.04), 0px 2px 3px 0px rgba(0, 0, 0, 0.08)',
-    backgroundColor: '#fff',
-    padding: '6px 4px',
+    marginTop: "4px",
+    borderRadius: "6px",
+    boxShadow:
+      "0px 6px 10px 2px rgba(0, 0, 0, 0.04), 0px 2px 3px 0px rgba(0, 0, 0, 0.08)",
+    backgroundColor: "#fff",
+    padding: "6px 4px",
     zIndex: 20,
-    border : "1px solid #E5E5E5"
+    border: "1px solid #E5E5E5",
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isFocused ? '#f5f5f5' : 'white',
-    color: '#111827',
-    padding: '7px 16px',
-    fontSize:'16px',
-    borderRadius : "0.5px",
-    cursor: 'pointer',
+    backgroundColor: state.isFocused ? "#f5f5f5" : "white",
+    color: "#111827",
+    padding: "7px 16px",
+    fontSize: "16px",
+    borderRadius: "0.5px",
+    cursor: "pointer",
   }),
   menuList: (provided) => ({
     ...provided,
@@ -70,15 +66,15 @@ const customStyles: StylesConfig<OptionType, false> = {
     ...provided,
     margin: 0,
     padding: 0,
-    color: '#111827',
+    color: "#111827",
   }),
   indicatorSeparator: () => ({
-    display: 'none',
+    display: "none",
   }),
   dropdownIndicator: (provided) => ({
     ...provided,
-    padding: '8px',
-    color: '#111827',
+    padding: "8px",
+    color: "#111827",
   }),
 };
 
@@ -87,14 +83,15 @@ const CustomSearchSelect: React.FC<CustomSearchSelectProps> = ({
   options,
   value,
   onChange,
-  placeholder = 'Search Farm',
+  placeholder = "Search Farm",
   required = false,
-  loading = false, // ✅ NEW
+  loading = false, // ✅ NEW.
+  error,
 }) => {
   return (
     <div>
       {label && (
-        <label className='text-sm text-black font-medium block pb-2'>
+        <label className="text-sm text-black font-medium block pb-2">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
@@ -108,6 +105,9 @@ const CustomSearchSelect: React.FC<CustomSearchSelectProps> = ({
         isSearchable={true}
         isLoading={loading} // ✅ NEW
       />
+      {error && (
+        <p className="text-red-500 text-sm mt-1">{error}</p>
+      )}
     </div>
   );
 };

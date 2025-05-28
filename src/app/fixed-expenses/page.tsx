@@ -7,7 +7,7 @@ export default function page() {
     <div>
       <Header
         header="Fixed Expenses"
-        isNotificationIcon={false}
+        isNotificationIcon={true}
         isOnlyBackButton={true}
         isWhite={true}
       />

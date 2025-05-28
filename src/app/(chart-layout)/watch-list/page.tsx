@@ -32,7 +32,7 @@ export default function page() {
     <>
       <Header
         header={data.name || data.container_crop}
-        isNotificationIcon={false}
+        isNotificationIcon={true}
         isOnlyBackButton={true}
         isWhite={true}
       />

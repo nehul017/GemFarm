@@ -50,7 +50,7 @@ export default function page() {
     <div>
       <Header
         header={data.name || data.container_crop}
-        isNotificationIcon={false}
+        isNotificationIcon={true}
         isOnlyBackButton={true}
         isWhite={true}
       />
@@ -244,12 +244,12 @@ export default function page() {
                 setToogle(false);
               }
             }}
-            className="fixed top-0  w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[380px] mobile:max-w-[100%]"
+            className="fixed top-0  w-full h-full bg-modalBackdrop z-[99] mx-auto max-w-[410px] mobile:max-w-[100%]"
           ></div>
         )}
 
         <div
-          className={`bg-white max-w-[380px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${
+          className={`bg-white max-w-[410px] w-full bottom-0 left-[50%] translate-x-[-50%] mx-auto fixed  z-[999] rounded-t-lg h-[calc(100dvh-100px)] transition-all duration-500 ease-in-out ${
             toogle ? "translate-y-[0%]" : "translate-y-[100%]"
           }`}
         >

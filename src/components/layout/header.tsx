@@ -27,7 +27,15 @@ export default function Header({
   const dispatch = useDispatch<AppDispatch>();
 
   const handleLeftIconClick = () => {
-    window.history.back();
+    const currentPath = window.location.pathname;
+  
+    if (currentPath.includes('reset-password')) {
+      // Redirect to forget password page
+      window.location.href = '/forgot-password';
+    } else {
+      // Go back to previous page
+      window.history.back();
+    }
   };
   const router = useRouter();
   const { commodity } = useSelector((state: RootState) => state.auth);

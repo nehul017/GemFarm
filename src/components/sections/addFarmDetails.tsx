@@ -43,8 +43,8 @@ export default function AddFarmDetails() {
     if (!validateForm()) return;
 
     const data = {
-      name:name.trim(),
-      location:location.trim(),
+      name: name.trim(),
+      location: location.trim(),
       farmImage: image,
     };
 
@@ -68,7 +68,7 @@ export default function AddFarmDetails() {
       <ToastContainer position="top-right" autoClose={3000} />
       <Header
         header="Create Farm"
-        isNotificationIcon={false}
+        isNotificationIcon={true}
         isOnlyBackButton={true}
         isWhite={true}
       />
@@ -99,10 +99,11 @@ export default function AddFarmDetails() {
               error={errors.location}
               required
             />
-            <AddCoverPhoto setImageURL={setImage} error={errors.image} required />
-            {errors.image && (
-              <p className="text-red-500 text-sm mt-1">{errors.image}</p>
-            )}
+            <AddCoverPhoto
+              setImageURL={setImage}
+              error={errors.image}
+              required
+            />
           </div>
           <Button
             green

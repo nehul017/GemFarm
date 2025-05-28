@@ -16,7 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePicker from "../common/CustomDatePicker";
 import { createContainer } from "@/redux/slices/containerSlice";
 import { toast, ToastContainer } from "react-toastify";
-import { cropLists } from "../utils/utils";
+import { cropLists } from "@/data/crops";
 
 const containerStatusOptions: OptionType[] = [
   { value: "Idle", label: "Idle" },
@@ -44,8 +44,6 @@ export default function AddContainerDetails() {
   const [cropCategory, setCropCategory] = useState("");
   const [cropVariety, setCropVariety] = useState("");
   const [autoGrowId, setAutoGrowId] = useState("");
-  const [blueLabId, setBlueLabId] = useState("");
-  const [containerStatus, setContainerStatus] = useState("Active");
   const [containerCrop, setContainerCrop] = useState("");
   const [harvestDate, setHarvestDate] = useState<Date | null>(null);
   const [harvestSystem, setHarvestSystem] = useState("NFT");
@@ -55,6 +53,11 @@ export default function AddContainerDetails() {
   const [varietyOptions, setVarietyOptions] = React.useState<
     { label: string; value: string }[]
   >([]);
+  const [containerSize, setContainerSize] = useState("");
+  const [numPlantSites, setNumPlantSites] = useState<number | "">("");
+  const [plantingDate, setPlantingDate] = useState<Date | null>(null);
+  const [timeToFirstHarvest, setTimeToFirstHarvest] = useState<Date | null>(null);
+  const [harvestFrequency, setHarvestFrequency] = useState("");
   const [errors, setErrors] = useState({
     containerName: "",
     cropCategory: "",
@@ -64,8 +67,13 @@ export default function AddContainerDetails() {
     // containerStatus: "",
     containerCrop: "",
     harvestSystem: "",
-    harvestDate: "",
+    // harvestDate: "",
     image: "",
+    containerSize: "",
+    numPlantSites: "",
+    plantingDate: "",
+    timeToFirstHarvest: "",
+    harvestFrequency: "",
   });
 
   const { loading } = useSelector((state: RootState) => state.container);
@@ -85,8 +93,18 @@ export default function AddContainerDetails() {
       // containerStatus: containerStatus ? "" : "Container status is required",
       containerCrop: containerCrop ? "" : "Container crop is required",
       harvestSystem: harvestSystem ? "" : "Harvest system is required",
-      harvestDate: harvestDate ? "" : "Harvest date is required",
+      // harvestDate: harvestDate ? "" : "Harvest date is required",
       image: image ? "" : "Cover photo is required",
+      containerSize: containerSize ? "" : "Container size is required",
+      numPlantSites:
+        numPlantSites && numPlantSites > 0
+          ? ""
+          : "Number of plant sites is required and must be greater than 0",
+      plantingDate: plantingDate ? "" : "Planting date is required",
+      timeToFirstHarvest: timeToFirstHarvest
+        ? ""
+        : "Time to first harvest is required",
+      harvestFrequency: harvestFrequency ? "" : "Harvest frequency is required",
     };
 
     setErrors(newErrors);
@@ -106,6 +124,11 @@ export default function AddContainerDetails() {
       harvest_system: harvestSystem.trim(),
       harvest_date: harvestDate,
       container_image: image,
+      container_size: containerSize.trim(),
+      num_plant_sites: numPlantSites,
+      planting_date: plantingDate,
+      time_to_first_harvest: timeToFirstHarvest,
+      harvest_frequency: harvestFrequency.trim(),
     };
 
     try {
@@ -165,7 +188,7 @@ export default function AddContainerDetails() {
 
       <Header
         header="Create Container"
-        isNotificationIcon={false}
+        isNotificationIcon={true}
         isOnlyBackButton={true}
         isWhite={true}
       />
@@ -202,16 +225,15 @@ export default function AddContainerDetails() {
               }}
               placeholder="Select container crop"
               required
+              error={errors.containerCrop}
             />
-            {errors.containerCrop && (
-              <p className="text-xs text-red-600">{errors.containerCrop}</p>
-            )}
+
             <CustomSearchSelect
               label="Crop Category"
               options={categoryOptions}
               value={
                 cropCategory
-                  ? cropOptions.find((opt) => opt.value === cropCategory) ||
+                  ? categoryOptions.find((opt) => opt.value === cropCategory) ||
                     null
                   : null
               }
@@ -219,23 +241,27 @@ export default function AddContainerDetails() {
                 setCropCategory(selected?.value || "");
                 errors.cropCategory = "";
               }}
-              placeholder="Select container crop"
+              placeholder="Select crop category"
               required
+              error={errors.cropCategory}
             />
-            {errors.cropCategory && (
-              <p className="text-xs text-red-600">{errors.cropCategory}</p>
-            )}
-            <Input
+
+            <CustomSearchSelect
               label="Crop Variety"
-              placeholder="Enter your crop variety"
-              inputClass="bg-bglight"
-              value={cropVariety}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCropVariety(e.target.value);
+              options={varietyOptions}
+              value={
+                cropVariety
+                  ? varietyOptions.find((opt) => opt.value === cropVariety) ||
+                    null
+                  : null
+              }
+              onChange={(selected) => {
+                setCropVariety(selected?.value || "");
                 errors.cropVariety = "";
               }}
-              error={errors.cropVariety}
+              placeholder="Select crop variety"
               required
+              error={errors.cropVariety}
             />
             <CustomSearchSelect
               label="Harvest System"
@@ -253,11 +279,9 @@ export default function AddContainerDetails() {
               }}
               placeholder="Select harvest system"
               required
+              error={errors.harvestSystem}
             />
-            {errors.harvestSystem && (
-              <p className="text-xs text-red-600">{errors.harvestSystem}</p>
-            )}
-            <CustomDatePicker
+            {/* <CustomDatePicker
               label="Harvest Date"
               selectedDate={harvestDate}
               onChange={(date) => {
@@ -267,7 +291,72 @@ export default function AddContainerDetails() {
               placeholder="Select harvest date"
               error={errors.harvestDate}
               required
+            /> */}
+            <Input
+              label="Size of Container"
+              placeholder="Enter size of container"
+              inputClass="bg-bglight"
+              value={containerSize}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setContainerSize(e.target.value);
+                errors.containerSize = "";
+              }}
+              error={errors.containerSize}
+              required
             />
+
+            <Input
+              label="Number of Plant Sites"
+              placeholder="Enter number of plant sites"
+              inputClass="bg-bglight"
+              type="number"
+              value={numPlantSites}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const value = e.target.value;
+                setNumPlantSites(value === "" ? "" : parseInt(value));
+                errors.numPlantSites = "";
+              }}
+              error={errors.numPlantSites}
+              required
+            />
+
+            <CustomDatePicker
+              label="Planting Date"
+              selectedDate={plantingDate}
+              onChange={(date) => {
+                setPlantingDate(date);
+                errors.plantingDate = "";
+              }}
+              placeholder="Select planting date"
+              error={errors.plantingDate}
+              required
+            />
+
+            <CustomDatePicker
+              label="Time to First Harvest"
+              selectedDate={plantingDate}
+              onChange={(date) => {
+                setTimeToFirstHarvest(date);
+                errors.timeToFirstHarvest = "";
+              }}
+              placeholder="Select First Harvest date"
+              error={errors.timeToFirstHarvest}
+              required
+            />
+
+            <Input
+              label="Harvest Frequency"
+              placeholder="Enter harvest frequency"
+              inputClass="bg-bglight"
+              value={harvestFrequency}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setHarvestFrequency(e.target.value);
+                errors.harvestFrequency = "";
+              }}
+              error={errors.harvestFrequency}
+              required
+            />
+
             <Input
               label="Auto Grow DeviceId"
               placeholder="Enter auto grow deviceId"
